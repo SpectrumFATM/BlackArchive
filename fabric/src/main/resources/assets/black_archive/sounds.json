@@ -1,0 +1,8 @@
+{
+  "vortex_teleport": {
+    "subtitle": "sounds.black_archive.vortex_teleport.subtitle",
+    "sounds": [
+      "black_archive:vortex_teleport"
+    ]
+  }
+}

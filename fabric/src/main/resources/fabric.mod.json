@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "black_archive",
+	"version": "${version}",
+	"name": "Black Archive",
+	"description": "A description of your mod.",
+	"authors": [
+		"Your Name"
+	],
+	"contact": {
+		"homepage": "https://example.com",
+		"sources": "https://github.com/yourname/black_archive"
+	},
+	"license": "MIT",
+	"icon": "assets/black_archive/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.SpectrumFATM.black_archive.fabric.BlackArchive"
+		]
+	},
+	"mixins": [
+		"black_archive.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.12.0",
+		"fabric": "*",
+		"minecraft": "1.20.1",
+		"architectury": ">=9.2.14"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -30,10 +30,16 @@ subprojects {
             url = "https://api.modrinth.com/maven"
         }
 
-        // Forge Config Port maven
+        // Forge Config Port Maven
         maven {
             name = "Fuzs Mod Resources"
             url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+
+        // Cardinal Components Maven
+        maven {
+            name = 'Ladysnake Mods'
+            url = 'https://maven.ladysnake.org/releases'
         }
 
     }

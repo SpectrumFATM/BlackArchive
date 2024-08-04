@@ -13,4 +13,7 @@ dependencies {
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_fabric"
 
+    // Forge Config API Port
+    modCompileOnlyApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forge_config_api_port_version}"
+
 }

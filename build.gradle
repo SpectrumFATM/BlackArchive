@@ -30,6 +30,12 @@ subprojects {
             url = "https://api.modrinth.com/maven"
         }
 
+        // Forge Config Port maven
+        maven {
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+
     }
 
     dependencies {

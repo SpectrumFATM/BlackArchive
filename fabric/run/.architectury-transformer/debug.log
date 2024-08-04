@@ -1,7 +1,7 @@
 [Architectury Transformer] Architectury Runtime 5.2.83
 [Architectury Transformer DEBUG] Closed File Systems for /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar
 [Architectury Transformer DEBUG] Preparing tiny remapper prepared transformer: dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Provided 113 classpath jar(s):
+[Architectury Transformer DEBUG] Provided 115 classpath jar(s):
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/dev.architectury/architectury-injectables/1.0.10/62db2a366d662606d1b23ad02ccc3212ed37ec3/architectury-injectables-1.0.10.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/net.fabricmc/fabric-loader/0.16.0/f159d2d7c743eb5dda5624fcd77883c4711be3b1/fabric-loader-0.16.0.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/24.1.0/7af6a669488450c4a07c2c3254e2151df42d7d04/annotations-24.1.0.jar
@@ -57,11 +57,12 @@
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.1/ff1914111ef2e3e0110ef2dabc8d8cdaad82347/lwjgl-tinyfd-3.3.1.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.1/ae58664f88e18a9bb2c77b063833ca7aaec484cb/lwjgl-3.3.1.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.1/f48d81adce2abf5ad3cfe463df517952749e03bc/slf4j-api-2.0.1.jar
-[Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-9b38c06a74/1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.1-v2/minecraft-merged-9b38c06a74-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.1-v2.jar
+[Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-4ceb6f6ae8/1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.1-v2/minecraft-merged-4ceb6f6ae8-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.1-v2.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-epoll/4.1.82.Final/c7350a71920f3ae9142945e25fed4846cce53374/netty-transport-native-epoll-4.1.82.Final-linux-x86_64.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-epoll/4.1.82.Final/476409d6255001ca53a55f65b01c13822f8dc93a/netty-transport-native-epoll-4.1.82.Final-linux-aarch_64.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-api/0.92.2+1.20.1/fabric-api-0.92.2+1.20.1.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/dev/architectury/architectury-fabric/9.2.14/architectury-fabric-9.2.14.jar
+[Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/maven/modrinth/tardis-refined/fabric-mc1.20.1-v2.0.5/tardis-refined-fabric-mc1.20.1-v2.0.5.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-transfer-api-v1/3.3.5+8dd72ea377/fabric-transfer-api-v1-3.3.5+8dd72ea377.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-api-lookup-api-v1/1.6.36+1802ada577/fabric-api-lookup-api-v1-1.6.36+1802ada577.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-blockrenderlayer-v1/1.1.41+1802ada577/fabric-blockrenderlayer-v1-1.1.41+1802ada577.jar
@@ -115,17 +116,18 @@
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-resource-loader-v0/0.11.10+1802ada577/fabric-resource-loader-v0-0.11.10+1802ada577.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-sound-api-v1/1.0.13+1802ada577/fabric-sound-api-v1-1.0.13+1802ada577.jar
 [Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/net/fabricmc/fabric-api/fabric-transitive-access-wideners-v1/4.3.1+1802ada577/fabric-transitive-access-wideners-v1-4.3.1+1802ada577.jar
-[Architectury Transformer] Read classpath in 1.253 s
+[Architectury Transformer DEBUG]  - /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/.gradle/loom-cache/remapped_mods/net_fabricmc_yarn_1_20_1_1_20_1_build_1_v2/fuzs/forgeconfigapiport/forgeconfigapiport-fabric/8.0.0/forgeconfigapiport-fabric-8.0.0.jar
+[Architectury Transformer] Read classpath in 1.214 s
 [Architectury Transformer DEBUG] Closed File Systems for /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Transforming 5 transformer(s) from /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar to /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/850365043156583572.jar: 
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RuntimeMixinRefmapDetector@1139b2f3
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeFabricMod@7a69b07
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@5e82df6a
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@3f197a46
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@636be97c
-[Architectury Transformer DEBUG] Transforming from /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar to /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/850365043156583572.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming 5 transformer(s) from /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar to /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/1695798148279035985.jar: 
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RuntimeMixinRefmapDetector@31d7b7bf
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeFabricMod@635eaaf1
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@5c30a9b0
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@1ddf84b8
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@1139b2f3
+[Architectury Transformer DEBUG] Transforming from /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar to /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/1695798148279035985.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/SpectrumFATM/ExampleMod with maxs=true frames=true
 [Architectury Transformer DEBUG] Checking whether /black_archive.mixins.json is a mixin config.
-[Architectury Transformer DEBUG] Closed File Systems for /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/850365043156583572.jar
+[Architectury Transformer DEBUG] Closed File Systems for /var/folders/lq/88vk2sk116g_n58sdb2qrn2r0000gn/T/1695798148279035985.jar
 [Architectury Transformer] Listening at /Users/thomaseastwood/Downloads/black_archive-1.20.1-fabric-forge-template/common/build/devlibs/black_archive-common-1.0.0-dev.jar

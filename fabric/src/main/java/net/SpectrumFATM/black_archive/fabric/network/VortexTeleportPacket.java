@@ -51,7 +51,7 @@ public class VortexTeleportPacket {
                 if (targetWorld != null) {
 
                     player.getServerWorld().spawnParticles(ParticleTypes.SMOKE, player.getX(), player.getY(), player.getZ(), 10, 0.5, 0.5, 0.5, 0.0);
-                    player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.5f, 1.0f);
+                    player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.25f, 1.0f);
 
                     int newY = (int) y;
                     boolean foundSafePosition = false;
@@ -76,8 +76,10 @@ public class VortexTeleportPacket {
 
                     if (foundSafePosition) {
                         player.teleport(targetWorld, x, newY, z, player.getYaw(), player.getPitch());
-                        targetWorld.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.5f, 1.0f);
-                        player.getItemCooldownManager().set(player.getMainHandStack().getItem(), COOLDOWN_TIME);
+                        targetWorld.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.25f, 1.0f);
+                        if (!player.isCreative()) {
+                            player.getItemCooldownManager().set(player.getMainHandStack().getItem(), COOLDOWN_TIME);
+                        }
                     } else {
                         player.sendMessage(Text.literal("No suitable ground position.").formatted(Formatting.RED), false);
                     }

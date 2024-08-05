@@ -12,6 +12,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -139,7 +140,7 @@ public class VortexScreen extends Screen {
         double yCoord = yText.isEmpty() ? client.player.getY() : Double.parseDouble(yText);
         double zCoord = zText.isEmpty() ? client.player.getZ() : Double.parseDouble(zText);
 
-        if (!dimension.isEmpty()) {
+        if (!dimension.isEmpty() && !dimension.startsWith("tardis_refined:")) {
             VortexTeleportPacket.send(xCoord, yCoord, zCoord, dimension);
         }
     }
@@ -153,7 +154,9 @@ public class VortexScreen extends Screen {
                 double Wy = client.player.getY();
                 double Wz = client.player.getZ();
                 String dimension = client.player.getWorld().getDimensionKey().getValue().toString();
+
                 SaveWaypointPacket.send(waypointName, Wx, Wy, Wz, dimension);
+
             }
         }
     }

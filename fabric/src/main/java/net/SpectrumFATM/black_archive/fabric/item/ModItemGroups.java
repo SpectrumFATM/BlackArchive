@@ -15,6 +15,7 @@ public class ModItemGroups {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.black_archive"))
                     .icon(() -> new ItemStack(ModItems.VORTEXMANIP)).entries((displayContext, entries) -> {
                         entries.add(ModItems.VORTEXMANIP);
+                        entries.add(ModItems.CONTACTLENS);
                     }).build());
 
 

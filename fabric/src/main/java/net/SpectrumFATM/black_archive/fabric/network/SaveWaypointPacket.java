@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.network;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -32,18 +33,28 @@ public class SaveWaypointPacket {
 
             server.execute(() -> {
                 ItemStack heldItem = player.getMainHandStack();
+
+                if (heldItem.getItem() != ModItems.VORTEXMANIP) {
+                    heldItem = player.getOffHandStack();
+                    BlackArchive.LOGGER.info("Switched to offhand");
+                }
+
                 if (!heldItem.isEmpty()) {
-                    NbtCompound nbt = heldItem.getOrCreateNbt();
-                    NbtCompound waypointData = new NbtCompound();
-                    waypointData.putDouble("x", x);
-                    waypointData.putDouble("y", y);
-                    waypointData.putDouble("z", z);
-                    waypointData.putString("dimension", dimension);
-                    nbt.put(name, waypointData);
-                    heldItem.setNbt(nbt);
-                    BlackArchive.LOGGER.info("Saved waypoint " + name + " at " + x + ", " + y + ", " + z + " in dimension " + dimension);
+                    saveWaypoint(heldItem, name, x, y, z, dimension);
                 }
             });
         });
+    }
+
+    public static void saveWaypoint(ItemStack heldItem, String name, double x, double y, double z, String dimension) {
+        NbtCompound nbt = heldItem.getOrCreateNbt();
+        NbtCompound waypointData = new NbtCompound();
+        waypointData.putDouble("x", x);
+        waypointData.putDouble("y", y);
+        waypointData.putDouble("z", z);
+        waypointData.putString("dimension", dimension);
+        nbt.put(name, waypointData);
+        heldItem.setNbt(nbt);
+        BlackArchive.LOGGER.info("Saved waypoint " + name + " at " + x + ", " + y + ", " + z + " in dimension " + dimension);
     }
 }

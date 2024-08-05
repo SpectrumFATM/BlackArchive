@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.item.custom;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.screen.VortexScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,13 +19,17 @@ public class VortexManipulatorItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
 
-        if (user.getWorld().isClient && !user.getWorld().getRegistryKey().getValue().toString().contains("tardis_refined:")) {
-            openVortexScreen();
-        } else {
-            user.sendMessage(Text.literal("You can't use the Vortex Manipulator here!").formatted(Formatting.RED), true);
+        if (user.getWorld().isClient) {
+            if (!user.getWorld().getRegistryKey().getValue().toString().startsWith("tardis_refined:")) {
+                openVortexScreen();
+            } else {
+                user.sendMessage(Text.literal("You can't use the Vortex Manipulator in the TARDIS.").formatted(Formatting.RED), true);
+            }
         }
-        return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
+
+        return TypedActionResult.success(stack, world.isClient());
     }
 
     private void openVortexScreen() {

@@ -184,6 +184,9 @@ public class VortexScreen extends Screen {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
             ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
+            if (heldItem.isEmpty() || !heldItem.hasNbt()) {
+                heldItem = MinecraftClient.getInstance().player.getOffHandStack();
+            }
             if (!heldItem.isEmpty() && heldItem.hasNbt()) {
                 NbtCompound nbt = heldItem.getNbt();
                 if (nbt != null && nbt.contains(waypointName)) {

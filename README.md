@@ -20,6 +20,6 @@ The Black Archive mod is designed to be compatible with most popular mods. Howev
 
 **Join the Community:**
 
-Connect with other Doctor Who enthusiasts and share your adventures using the Black Archive mod. Visit our forum and Discord server for updates, discussions, and more!
+Connect with other Doctor Who enthusiasts and share your adventures using the Black Archive mod. This mod is part of the Adventure In Time and Space family, join our discord [here](https://discord.gg/FBRx7nFzDS)!
 
 Prepare to experience the universe like never before with the Black Archive mod. Allons-y!

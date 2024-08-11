@@ -57,21 +57,20 @@ public class VortexTeleportPacket {
                     boolean foundSafePosition = false;
 
                     BlockPos targetPos = new BlockPos((int) x, newY, (int) z);
-                    if (targetWorld.getBlockState(targetPos).isAir()) {
 
-                        while (newY < targetWorld.getHeight() && targetWorld.getBlockState(targetPos.up()).isAir()) {
+                    // Only search upwards if the current block is solid
+                    if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
+                        // Search upwards for the nearest space where there isn't a solid block
+                        while (newY < targetWorld.getHeight()) {
+                            if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.up()).isAir()) {
+                                foundSafePosition = true;
+                                break;
+                            }
                             newY++;
                             targetPos = targetPos.up();
                         }
-
-                        while (newY > 0 && targetWorld.getBlockState(targetPos.down()).isAir()) {
-                            newY--;
-                            targetPos = targetPos.down();
-                        }
-
-                        if (newY > 0 && newY < targetWorld.getHeight() && !targetWorld.getBlockState(targetPos.down()).isAir()) {
-                            foundSafePosition = true;
-                        }
+                    } else {
+                        foundSafePosition = true; // Current position is already safe
                     }
 
                     if (foundSafePosition) {

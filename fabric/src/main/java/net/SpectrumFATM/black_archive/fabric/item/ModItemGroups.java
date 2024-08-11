@@ -17,6 +17,7 @@ public class ModItemGroups {
                         entries.add(ModItems.VORTEXMANIP);
                         entries.add(ModItems.CONTACTLENS);
                         entries.add(ModItems.TARDISKEYCLASSIC);
+                        entries.add(ModItems.TARDISKEYMODERN);
                     }).build());
 
 

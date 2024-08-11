@@ -1,5 +1,4 @@
 {
-	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "black_archive:item/vortex_manipulator",

@@ -17,6 +17,6 @@ public class ContactLensItem extends GlassesItem {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(Text.literal("Allows you to fly the TARDIS without those bulky glasses.").formatted(Formatting.GOLD));
+         tooltip.add(Text.translatable("item.contact_lens.tooltip").formatted(Formatting.GOLD));
     }
 }

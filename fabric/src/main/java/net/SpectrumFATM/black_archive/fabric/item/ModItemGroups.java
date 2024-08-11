@@ -16,6 +16,7 @@ public class ModItemGroups {
                     .icon(() -> new ItemStack(ModItems.VORTEXMANIP)).entries((displayContext, entries) -> {
                         entries.add(ModItems.VORTEXMANIP);
                         entries.add(ModItems.CONTACTLENS);
+                        entries.add(ModItems.TARDISKEYCLASSIC);
                     }).build());
 
 

@@ -1,6 +1,8 @@
 {
   "item.black_archive.vortex_manipulator": "Vortex Manipulator",
   "item.black_archive.contact_lens": "AR Contact Lens",
+  "item.black_archive.key_01": "Classic TARDIS Key",
   "itemgroup.black_archive": "Black Archive",
-  "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks"
+  "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
+  "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses."
 }

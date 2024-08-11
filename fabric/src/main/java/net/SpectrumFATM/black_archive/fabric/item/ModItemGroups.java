@@ -18,6 +18,7 @@ public class ModItemGroups {
                         entries.add(ModItems.CONTACTLENS);
                         entries.add(ModItems.TARDISKEYCLASSIC);
                         entries.add(ModItems.TARDISKEYMODERN);
+                        entries.add(ModItems.REMOTE);
                     }).build());
 
 

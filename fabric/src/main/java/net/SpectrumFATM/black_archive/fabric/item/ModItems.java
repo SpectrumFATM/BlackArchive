@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.item;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.item.custom.ContactLensItem;
+import net.SpectrumFATM.black_archive.fabric.item.custom.RemoteItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -16,6 +17,7 @@ public class ModItems {
     public static final Item CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new FabricItemSettings()));
     public static final Item TARDISKEYCLASSIC = registerItem("key_01", new KeyItem(new FabricItemSettings()));
     public static final Item TARDISKEYMODERN = registerItem("key_02", new KeyItem(new FabricItemSettings()));
+    public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(BlackArchive.MOD_ID, name), item);

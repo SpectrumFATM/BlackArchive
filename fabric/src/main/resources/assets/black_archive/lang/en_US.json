@@ -7,6 +7,5 @@
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
-  "item.remote.tooltip": "A device used to control the TARDIS remotely.",
-  "item.wip.tooltip": "(WIP, Functionality not yet implemented)"
+  "item.remote.tooltip": "A device used to control the TARDIS remotely."
 }

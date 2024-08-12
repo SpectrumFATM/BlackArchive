@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IBS",
+    "LZL",
+    "   "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blue_stained_glass"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Z": {
+      "item": "tardis_refined:zeiton_block"
+    },
+    "S": {
+      "item": "minecraft:stone_button"
+    }
+  },
+  "result": {
+    "item": "black_archive:vortex_manipulator"
+  }
+}

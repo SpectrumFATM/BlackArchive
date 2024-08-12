@@ -2,6 +2,8 @@ package net.SpectrumFATM.black_archive.fabric.item.custom;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.screen.VortexScreen;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -32,6 +34,7 @@ public class VortexManipulatorItem extends Item {
         return TypedActionResult.success(stack, world.isClient());
     }
 
+    @Environment(EnvType.CLIENT)
     private void openVortexScreen() {
         MinecraftClient.getInstance().setScreen(new VortexScreen());
     }

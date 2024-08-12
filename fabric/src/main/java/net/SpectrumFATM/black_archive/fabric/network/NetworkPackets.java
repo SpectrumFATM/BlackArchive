@@ -4,11 +4,14 @@ public class NetworkPackets {
 
     public static void registerPackets() {
         VortexTeleportPacket.register();
-        DimensionRequestPacket.register();
-        DimensionResponsePacket.register();
+        AllowedDimensionsRequestPacket.register();
         SaveWaypointPacket.register();
-        SendWaypointsPacket.register();
         RequestWaypointsPacket.register();
         DeleteWaypointPacket.register();
+    }
+
+    public static void registerClientSidePackets() {
+        AllowedDimensionsResponsePacket.registerClient();
+        SendWaypointsPacket.register();
     }
 }

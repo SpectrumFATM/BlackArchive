@@ -2,6 +2,8 @@ package net.SpectrumFATM.black_archive.fabric.network;
 
 import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
@@ -24,6 +26,7 @@ public class SendWaypointsPacket {
         ServerPlayNetworking.send(player, ID, buf);
     }
 
+    @Environment(EnvType.CLIENT)
     public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(ID, (client, handler, buf, responseSender) -> {
             int size = buf.readInt();

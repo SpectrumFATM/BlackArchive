@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "   ",
+    "WAW",
+    "   "
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:white_stained_glass_pane"
+    },
+    "A": {
+      "item": "tardis_refined:glasses"
+    }
+  },
+  "result": {
+    "item": "black_archive:contact_lens"
+  }
+}

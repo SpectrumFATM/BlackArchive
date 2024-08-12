@@ -11,10 +11,13 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
+import whocraft.tardis_refined.common.util.DimensionUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +55,7 @@ public class VortexScreen extends Screen {
 
     @Override
     protected void init() {
+        BlackArchive.LOGGER.info("Index: " + currentDimensionIndex);
         super.init();
         int x = (width - BACKGROUND_WIDTH) / 2;
         int y = (height - BACKGROUND_HEIGHT) / 2;
@@ -59,7 +63,7 @@ public class VortexScreen extends Screen {
         initTextFields(x, y);
         initButtons(x, y);
 
-        DimensionRequestPacket.send();
+        AllowedDimensionsRequestPacket.send();
         RequestWaypointsPacket.send();
     }
 
@@ -131,6 +135,11 @@ public class VortexScreen extends Screen {
     }
 
     private void teleportPlayer() {
+        if (currentDimensionIndex < 0 || currentDimensionIndex >= dimensions.size()) {
+            BlackArchive.LOGGER.error("Invalid dimension index: " + currentDimensionIndex);
+            return;
+        }
+
         String xText = textFieldWidgetX.getText();
         String yText = textFieldWidgetY.getText();
         String zText = textFieldWidgetZ.getText();
@@ -305,5 +314,13 @@ public class VortexScreen extends Screen {
 
     private boolean handleTextFieldKeyPress(TextFieldWidget textField, int keyCode, int scanCode, int modifiers) {
         return textField.keyPressed(keyCode, scanCode, modifiers) || textField.isActive();
+    }
+
+    private List<String> getDimensions() {
+        List<String> dimensions = new ArrayList<>();
+        for (RegistryKey<World> worldKey : MinecraftClient.getInstance().getServer().getWorldRegistryKeys()) {
+            dimensions.add(worldKey.getValue().toString());
+        }
+        return dimensions;
     }
 }

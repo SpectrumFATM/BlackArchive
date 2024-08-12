@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " B",
+    " S ",
+    " I "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blue_stained_glass"
+    },
+    "S": {
+      "item": "tardis_refined:amethyst_screwdriver"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "black_archive:sonic_screwdriver"
+  }
+}

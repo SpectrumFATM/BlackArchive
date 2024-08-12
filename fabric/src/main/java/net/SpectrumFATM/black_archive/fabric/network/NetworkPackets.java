@@ -8,6 +8,7 @@ public class NetworkPackets {
         SaveWaypointPacket.register();
         RequestWaypointsPacket.register();
         DeleteWaypointPacket.register();
+        RemotePacket.register();
     }
 
     public static void registerClientSidePackets() {

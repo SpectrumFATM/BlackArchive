@@ -4,8 +4,11 @@
   "item.black_archive.key_01": "Classic TARDIS Key",
   "item.black_archive.key_02": "Modern TARDIS Key",
   "item.black_archive.remote": "Stattenheim Remote",
+  "item.black_archive.sonic_screwdriver": "Sonic Screwdriver",
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
-  "item.remote.tooltip": "A device used to control the TARDIS remotely."
+  "item.remote.tooltip": "A device used to control the TARDIS remotely.",
+  "item.sonic.tooltip": "Same software different case!",
+  "sonic.title.scan": "Scan Results"
 }

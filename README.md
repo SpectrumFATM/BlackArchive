@@ -7,12 +7,7 @@ Vortex Manipulator: Master the art of time travel with the Vortex Manipulator, a
 
 Contact Lenses: Sick of AR Glasses ruining your look? Craft some AR Lenses to look fly, whilst you fly.
 
-**Installation:**
-
-Download the Black Archive mod file.
-Extract the contents into your game's mod folder.
-Enable the mod through your game's mod manager.
-Start your game and enjoy the wonders of the Black Archive!
+Sonic Screwdriver: Now you can upgrade your amethyst screwdriver to something a little more functional!
 
 **Compatibility:**
 

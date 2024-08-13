@@ -70,6 +70,15 @@ public class SonicItem extends ScrewdriverItem {
 
                        cooldown(player, stack);
                    }
+
+                   if (state.getBlock() instanceof CandleBlock) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(CandleBlock.LIT), Block.NOTIFY_ALL);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
                }
            }
        }
@@ -128,4 +137,5 @@ public class SonicItem extends ScrewdriverItem {
             player.getItemCooldownManager().set(stack.getItem(), 40);
         }
     }
+
 }

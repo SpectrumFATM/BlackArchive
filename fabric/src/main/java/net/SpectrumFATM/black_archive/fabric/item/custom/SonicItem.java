@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.item.custom;
 
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -15,7 +16,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.items.ScrewdriverMode;
@@ -71,7 +74,7 @@ public class SonicItem extends ScrewdriverItem {
                        cooldown(player, stack);
                    }
 
-                   if (state.getBlock() instanceof CandleBlock) {
+                   if (state.getBlock() instanceof CandleBlock && player.isSneaking()) {
                        world.setBlockState(context.getBlockPos(), state.cycle(CandleBlock.LIT), Block.NOTIFY_ALL);
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
@@ -79,6 +82,53 @@ public class SonicItem extends ScrewdriverItem {
                        cooldown(player, stack);
                    }
 
+                   if (state.getBlock() instanceof CampfireBlock) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(CampfireBlock.LIT), Block.NOTIFY_ALL);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof PaneBlock) {
+                       world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof GlassBlock) {
+                       world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof StainedGlassPaneBlock) {
+                       world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof StainedGlassBlock) {
+                       world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof TintedGlassBlock) {
+                       world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
                }
            }
        }
@@ -137,5 +187,4 @@ public class SonicItem extends ScrewdriverItem {
             player.getItemCooldownManager().set(stack.getItem(), 40);
         }
     }
-
 }

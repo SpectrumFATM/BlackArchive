@@ -26,10 +26,12 @@ import java.util.List;
 public class SonicItem extends ScrewdriverItem {
 
     String tooltipKey;
+    Formatting colorFormat;
 
-    public SonicItem(Settings properties, String tooltipKey) {
+    public SonicItem(Settings properties, String tooltipKey, Formatting colorFormat) {
         super(properties);
         this.tooltipKey = tooltipKey;
+        this.colorFormat = colorFormat;
     }
 
     @Override
@@ -157,18 +159,16 @@ public class SonicItem extends ScrewdriverItem {
                     int zPos = entity.getBlockZ();
                     double health = entity.getHealth();
 
-                    user.sendMessage(Text.translatable("sonic.title.scan").formatted(Formatting.BLUE).formatted(Formatting.BOLD).formatted(Formatting.UNDERLINE), false);
-                    user.sendMessage(Text.literal("Name: " + entityName).formatted(Formatting.BLUE), false);
-                    user.sendMessage(Text.literal("X: " + xPos).formatted(Formatting.BLUE), false);
-                    user.sendMessage(Text.literal("Y: " + yPos).formatted(Formatting.BLUE), false);
-                    user.sendMessage(Text.literal("Z: " + zPos).formatted(Formatting.BLUE), false);
-                    user.sendMessage(Text.literal("Health: " + health).formatted(Formatting.BLUE), false);
-                    user.sendMessage(Text.literal("Armour: " + entity.getArmor()).formatted(Formatting.BLUE), false);
+                    user.sendMessage(Text.translatable("sonic.title.scan").formatted(colorFormat).formatted(Formatting.BOLD).formatted(Formatting.UNDERLINE), false);
+                    user.sendMessage(Text.literal("Name: " + entityName).formatted(colorFormat), false);
+                    user.sendMessage(Text.literal("X: " + xPos).formatted(colorFormat), false);
+                    user.sendMessage(Text.literal("Y: " + yPos).formatted(colorFormat), false);
+                    user.sendMessage(Text.literal("Z: " + zPos).formatted(colorFormat), false);
+                    user.sendMessage(Text.literal("Health: " + Math.round(health)).formatted(colorFormat), false);
+                    user.sendMessage(Text.literal("Armour: " + entity.getArmor()).formatted(colorFormat), false);
                 }
 
                 playScrewdriverSound(serverWorld, user.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                cooldown(user, stack);
             }
         }
 

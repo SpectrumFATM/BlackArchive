@@ -1,8 +1,8 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "black_archive:item/sonic_screwdriver",
-		"particle": "black_archive:item/sonic_screwdriver"
+		"0": "black_archive:item/14thsonic",
+		"particle": "black_archive:item/14thsonic"
 	},
 	"elements": [
 		{

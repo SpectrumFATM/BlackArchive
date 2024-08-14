@@ -19,8 +19,9 @@ public class ModItemGroups {
                         entries.add(ModItems.TARDISKEYCLASSIC);
                         entries.add(ModItems.TARDISKEYMODERN);
                         entries.add(ModItems.REMOTE);
-                        entries.add(ModItems.SONIC);
-                        entries.add(ModItems.SONIC2);
+                        entries.add(ModItems.SONIC13);
+                        entries.add(ModItems.SONIC14);
+                        entries.add(ModItems.SONIC15);
                     }).build());
 
 

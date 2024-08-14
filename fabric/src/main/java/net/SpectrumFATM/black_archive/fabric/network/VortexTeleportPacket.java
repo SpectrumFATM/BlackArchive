@@ -58,19 +58,32 @@ public class VortexTeleportPacket {
 
                     BlockPos targetPos = new BlockPos((int) x, newY, (int) z);
 
-                    // Only search upwards if the current block is solid
-                    if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
-                        // Search upwards for the nearest space where there isn't a solid block
-                        while (newY < targetWorld.getHeight()) {
-                            if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.up()).isAir()) {
+                    // Check if the target position is in mid-air
+                    if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.down()).isAir()) {
+                        // Search downwards for the nearest ground position
+                        while (newY > 0) {
+                            if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
                                 foundSafePosition = true;
+                                newY++; // Move to the first air block above the ground
                                 break;
                             }
-                            newY++;
-                            targetPos = targetPos.up();
+                            newY--;
+                            targetPos = targetPos.down();
                         }
                     } else {
-                        foundSafePosition = true; // Current position is already safe
+                        // Search upwards for the nearest safe position
+                        if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
+                            while (newY < targetWorld.getHeight()) {
+                                if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.up()).isAir()) {
+                                    foundSafePosition = true;
+                                    break;
+                                }
+                                newY++;
+                                targetPos = targetPos.up();
+                            }
+                        } else {
+                            foundSafePosition = true; // Current position is already safe
+                        }
                     }
 
                     if (foundSafePosition) {

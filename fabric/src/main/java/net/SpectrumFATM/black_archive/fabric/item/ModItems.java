@@ -19,8 +19,9 @@ public class ModItems {
     public static final Item TARDISKEYCLASSIC = registerItem("key_01", new KeyItem(new FabricItemSettings()));
     public static final Item TARDISKEYMODERN = registerItem("key_02", new KeyItem(new FabricItemSettings()));
     public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings()));
-    public static final Item SONIC = registerItem("sonic_screwdriver", new SonicItem(new FabricItemSettings(), "item.sonic.tooltip"));
-    public static final Item SONIC2 = registerItem("15thsonic", new SonicItem(new FabricItemSettings(), "item.sonic15.tooltip"));
+    public static final Item SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings(), "item.sonic.tooltip"));
+    public static final Item SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings(), "item.sonic15.tooltip"));
+    public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings(), "item.sonic13.tooltip"));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(BlackArchive.MOD_ID, name), item);

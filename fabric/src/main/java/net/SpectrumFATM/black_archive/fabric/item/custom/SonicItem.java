@@ -24,8 +24,12 @@ import whocraft.tardis_refined.registry.TRSoundRegistry;
 import java.util.List;
 
 public class SonicItem extends ScrewdriverItem {
-    public SonicItem(Settings properties) {
+
+    String tooltipKey;
+
+    public SonicItem(Settings properties, String tooltipKey) {
         super(properties);
+        this.tooltipKey = tooltipKey;
     }
 
     @Override
@@ -176,7 +180,7 @@ public class SonicItem extends ScrewdriverItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.remove(1);
-        tooltip.add(Text.translatable("item.sonic.tooltip").formatted(Formatting.GOLD));
+        tooltip.add(Text.translatable(tooltipKey).formatted(Formatting.GOLD));
     }
 
     public static void cooldown(PlayerEntity player, ItemStack stack) {

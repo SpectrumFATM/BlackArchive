@@ -20,6 +20,7 @@ public class ModItemGroups {
                         entries.add(ModItems.TARDISKEYMODERN);
                         entries.add(ModItems.REMOTE);
                         entries.add(ModItems.SONIC);
+                        entries.add(ModItems.SONIC2);
                     }).build());
 
 

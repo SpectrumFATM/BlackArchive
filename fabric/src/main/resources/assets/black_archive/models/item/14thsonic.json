@@ -1,4 +1,5 @@
 {
+	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "black_archive:item/14thsonic",
@@ -385,13 +386,11 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [-90, 0, 0],
-			"translation": [0, -0.75, -1],
+			"translation": [0, 0.5, 0.75],
 			"scale": [0.5, 0.6, 0.5]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [-90, 0, 0],
-			"translation": [0, -0.75, -1],
+			"translation": [0, 0.5, 0.75],
 			"scale": [0.5, 0.6, 0.5]
 		},
 		"firstperson_righthand": {

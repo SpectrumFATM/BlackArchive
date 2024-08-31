@@ -57,11 +57,7 @@ public class SonicItem extends ScrewdriverItem {
                    }
 
                    if (state.getBlock() instanceof DoorBlock door) {
-                       if (door.isOpen(state)) {
-                            door.setOpen(player, world, state, context.getBlockPos(), false);
-                          } else {
-                           door.setOpen(player, world, state, context.getBlockPos(), true);
-                       }
+                       door.setOpen(player, world, state, context.getBlockPos(), !door.isOpen(state));
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
@@ -127,6 +123,22 @@ public class SonicItem extends ScrewdriverItem {
 
                    if (state.getBlock() instanceof TintedGlassBlock) {
                        world.breakBlock(context.getBlockPos(), true);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof IceBlock) {
+                       world.setBlockState(context.getBlockPos(), Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof PowderSnowBlock) {
+                       world.setBlockState(context.getBlockPos(), Blocks.SNOW_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 

@@ -26,7 +26,6 @@ public class SendWaypointsPacket {
         ServerPlayNetworking.send(player, ID, buf);
     }
 
-    @Environment(EnvType.CLIENT)
     public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(ID, (client, handler, buf, responseSender) -> {
             int size = buf.readInt();

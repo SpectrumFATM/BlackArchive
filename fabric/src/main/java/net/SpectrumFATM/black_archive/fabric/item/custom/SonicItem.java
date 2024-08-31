@@ -56,9 +56,8 @@ public class SonicItem extends ScrewdriverItem {
                        cooldown(player, stack);
                    }
 
-                   if (state.getBlock() instanceof DoorBlock door) {
-                       door.setOpen(player, world, state, context.getBlockPos(), !door.isOpen(state));
-
+                   if (state.getBlock() instanceof DoorBlock) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(DoorBlock.OPEN), Block.NOTIFY_ALL);
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);

@@ -15,7 +15,6 @@ import java.util.List;
 public class AllowedDimensionsResponsePacket {
     public static final Identifier ID = new Identifier(BlackArchive.MOD_ID, "allowed_dimensions_response");
 
-    @Environment(EnvType.CLIENT)
     public static void registerClient() {
         ClientPlayNetworking.registerGlobalReceiver(ID, (client, handler, buf, responseSender) -> {
             int size = buf.readInt();

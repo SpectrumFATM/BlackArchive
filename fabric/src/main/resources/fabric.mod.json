@@ -8,10 +8,9 @@
 		"SpectrumFATM"
 	],
 	"contact": {
-		"homepage": "https://example.com",
-		"sources": "https://github.com/yourname/black_archive"
+		"sources": "https://github.com/SpectrumFATM/BlackArchive"
 	},
-	"license": "MIT",
+	"license": "All Rights Reserved",
 	"icon": "assets/black_archive/icon.png",
 	"environment": "*",
 	"entrypoints": {

@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"net.SpectrumFATM.black_archive.fabric.BlackArchive"
+		],
+		"fabric-datagen": [
+			"net.SpectrumFATM.black_archive.fabric.BlackArchiveDataGenerator"
 		]
 	},
 	"mixins": [

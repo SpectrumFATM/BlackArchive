@@ -2,7 +2,8 @@ package net.SpectrumFATM.black_archive.fabric.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
-import net.SpectrumFATM.black_archive.fabric.network.*;
+import net.SpectrumFATM.black_archive.fabric.network.AllowedDimensionsRequestPacket;
+import net.SpectrumFATM.black_archive.fabric.network.VortexTeleportPacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,13 +12,9 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
-import whocraft.tardis_refined.common.util.DimensionUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +52,6 @@ public class VortexScreen extends Screen {
 
     @Override
     protected void init() {
-        BlackArchive.LOGGER.info("Index: " + currentDimensionIndex);
         super.init();
         int x = (width - BACKGROUND_WIDTH) / 2;
         int y = (height - BACKGROUND_HEIGHT) / 2;
@@ -64,7 +60,7 @@ public class VortexScreen extends Screen {
         initButtons(x, y);
 
         AllowedDimensionsRequestPacket.send();
-        RequestWaypointsPacket.send();
+        fetchWaypoints();
     }
 
     private void initTextFields(int x, int y) {
@@ -104,7 +100,7 @@ public class VortexScreen extends Screen {
         });
 
         buttonSaveWaypoint = createButton(x + (34 * 4), y + (41 * 4), 92, 20, "Save Waypoint", (button) -> {
-            saveWaypoint();
+            saveWaypoint(client.player.getMainHandStack(), textFieldWidgetWaypointSaveName.getText(), client.player.getX(), client.player.getY(), client.player.getZ(), dimensions.get(currentDimensionIndex));
             this.close();
         });
 
@@ -154,32 +150,60 @@ public class VortexScreen extends Screen {
         }
     }
 
-    private void saveWaypoint() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player != null) {
-            String waypointName = textFieldWidgetWaypointSaveName.getText();
-            if (!waypointName.isEmpty()) {
-                double Wx = client.player.getX();
-                double Wy = client.player.getY();
-                double Wz = client.player.getZ();
-                String dimension = client.player.getWorld().getDimensionKey().getValue().toString();
-
-                SaveWaypointPacket.send(waypointName, Wx, Wy, Wz, dimension);
-
-            }
-        }
+    public static void saveWaypoint(ItemStack heldItem, String name, double x, double y, double z, String dimension) {
+        NbtCompound nbt = heldItem.getOrCreateNbt();
+        NbtCompound waypointData = new NbtCompound();
+        waypointData.putDouble("x", x);
+        waypointData.putDouble("y", y);
+        waypointData.putDouble("z", z);
+        waypointData.putString("dimension", dimension);
+        nbt.put(name, waypointData);
+        heldItem.setNbt(nbt);
+        BlackArchive.LOGGER.info("Saved waypoint " + name + " at " + x + ", " + y + ", " + z + " in dimension " + dimension);
     }
 
     private void deleteWaypoint() {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
-            DeleteWaypointPacket.send(waypointName);
+            ItemStack heldItem = getHeldItem();
+            if (!heldItem.isEmpty() && heldItem.hasNbt()) {
+                NbtCompound nbt = heldItem.getNbt();
+                if (nbt != null && nbt.contains(waypointName)) {
+                    nbt.remove(waypointName);
+                    heldItem.setNbt(nbt);
+                    BlackArchive.LOGGER.info("Deleted waypoint " + waypointName);
+                }
+            }
             waypoints.remove(currentWaypointIndex);
             if (currentWaypointIndex >= waypoints.size()) {
                 currentWaypointIndex = waypoints.size() - 1;
             }
             updateWaypointFields();
         }
+    }
+
+    private void fetchWaypoints() {
+        ItemStack heldItem = getHeldItem();
+        if (!heldItem.isEmpty() && heldItem.hasNbt()) {
+            NbtCompound nbt = heldItem.getNbt();
+            if (nbt != null) {
+                waypoints.clear();
+                for (String key : nbt.getKeys()) {
+                    if (nbt.getCompound(key).contains("x") && nbt.getCompound(key).contains("y") && nbt.getCompound(key).contains("z")) {
+                        waypoints.add(key);
+                    }
+                }
+                BlackArchive.LOGGER.info("Fetched waypoints: " + waypoints);
+            }
+        }
+    }
+
+    private ItemStack getHeldItem() {
+        ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
+        if (heldItem.isEmpty() || !heldItem.hasNbt()) {
+            heldItem = MinecraftClient.getInstance().player.getOffHandStack();
+        }
+        return heldItem;
     }
 
     private void cycleWaypoint(int direction) {
@@ -192,10 +216,7 @@ public class VortexScreen extends Screen {
     private void updateWaypointFields() {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
-            ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
-            if (heldItem.isEmpty() || !heldItem.hasNbt()) {
-                heldItem = MinecraftClient.getInstance().player.getOffHandStack();
-            }
+            ItemStack heldItem = getHeldItem();
             if (!heldItem.isEmpty() && heldItem.hasNbt()) {
                 NbtCompound nbt = heldItem.getNbt();
                 if (nbt != null && nbt.contains(waypointName)) {
@@ -204,15 +225,23 @@ public class VortexScreen extends Screen {
                     textFieldWidgetY.setText(String.valueOf(Math.round(waypointData.getDouble("y"))));
                     textFieldWidgetZ.setText(String.valueOf(Math.round(waypointData.getDouble("z"))));
                     currentDimensionIndex = getDimensionIndex(waypointData.getString("dimension"));
-                    updateDimensionField();
                     textFieldWidgetDisplayWaypoint.setText(waypointName);
+                    updateDimensionField();
                 }
             }
+            updateDimensionField();
+            BlackArchive.LOGGER.info("Dimension Index: " + currentDimensionIndex);
         }
     }
 
     public int getDimensionIndex(String namespace) {
-        return dimensions.indexOf(namespace);
+        int index = dimensions.indexOf(namespace);
+        if (index == -1) {
+            BlackArchive.LOGGER.warn("Dimension not found: " + namespace);
+        } else {
+            BlackArchive.LOGGER.info("Retrieved dimension index: " + index + " for namespace: " + namespace);
+        }
+        return index;
     }
 
     public void setWaypoints(List<String> waypoints) {
@@ -223,7 +252,7 @@ public class VortexScreen extends Screen {
         this.dimensions = dimensions;
         if (!dimensions.isEmpty()) {
             String currentDimension = MinecraftClient.getInstance().player.getWorld().getRegistryKey().getValue().toString();
-            currentDimensionIndex = dimensions.indexOf(currentDimension);
+            currentDimensionIndex = getDimensionIndex(currentDimension);
             updateDimensionField();
         }
     }
@@ -314,13 +343,5 @@ public class VortexScreen extends Screen {
 
     private boolean handleTextFieldKeyPress(TextFieldWidget textField, int keyCode, int scanCode, int modifiers) {
         return textField.keyPressed(keyCode, scanCode, modifiers) || textField.isActive();
-    }
-
-    private List<String> getDimensions() {
-        List<String> dimensions = new ArrayList<>();
-        for (RegistryKey<World> worldKey : MinecraftClient.getInstance().getServer().getWorldRegistryKeys()) {
-            dimensions.add(worldKey.getValue().toString());
-        }
-        return dimensions;
     }
 }

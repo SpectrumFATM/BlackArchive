@@ -1,11 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.network;
 
-import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.black_archive.fabric.screen.VortexScreen;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 
@@ -24,8 +20,9 @@ public class AllowedDimensionsResponsePacket {
             }
 
             client.execute(() -> {
-                if (client.currentScreen instanceof VortexScreen) {
-                    ((VortexScreen) client.currentScreen).setDimensions(allowedDimensions);
+                BlackArchive.LOGGER.info("Allowed dimensions: " + allowedDimensions);
+                if (client.currentScreen instanceof VortexScreen vortexScreen)  {
+                    vortexScreen.setDimensions(allowedDimensions);
                 }
             });
         });

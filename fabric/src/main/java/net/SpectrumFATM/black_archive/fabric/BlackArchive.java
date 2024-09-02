@@ -1,8 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric;
 
-import net.SpectrumFATM.black_archive.fabric.datagen.ModWorldGenerator;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
-import net.SpectrumFATM.black_archive.fabric.world.dimension.ModDimensions;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 

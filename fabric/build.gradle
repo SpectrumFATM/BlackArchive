@@ -7,8 +7,6 @@ architectury {
     fabric()
 }
 
-
-
 configurations {
     common {
         canBeResolved = true
@@ -73,3 +71,4 @@ remapJar {
 fabricApi {
     configureDataGeneration()
 }
+

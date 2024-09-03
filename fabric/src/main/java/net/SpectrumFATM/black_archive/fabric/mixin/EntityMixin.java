@@ -43,7 +43,7 @@ public abstract class EntityMixin {
         }
 
         //Skip if tardis nearby
-        if (!tardisNearby(entity, 3)) {
+        if (tardisNearby(entity, 3)) {
             return;
         }
 
@@ -148,15 +148,7 @@ public abstract class EntityMixin {
         }
     }
 
-    private boolean shouldSuffocate(Entity entity) {
-        if (isInZeroGravityDimension(entity.getWorld())) {
-            return !tardisNearby(entity, 3);
-        }
-        return false;
-    }
-
     private boolean tardisNearby(Entity entity, int radius) {
-        boolean tardisNearby = true;
         BlockPos entityPos = entity.getBlockPos();
 
         for (int x = entityPos.getX() - radius; x <= entityPos.getX() + radius; x++) {
@@ -165,14 +157,18 @@ public abstract class EntityMixin {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState state = entity.getWorld().getBlockState(pos);
                     if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get()) {
-                        tardisNearby = false; // If there is any ice block, the player should not suffocate
-                        break;
+                        return true; // TARDIS is nearby
                     }
                 }
-                if (!tardisNearby) break;
             }
-            if (!tardisNearby) break;
         }
-        return tardisNearby;
+        return false; // TARDIS is not nearby
+    }
+
+    private boolean shouldSuffocate(Entity entity) {
+        if (isInZeroGravityDimension(entity.getWorld())) {
+            return !tardisNearby(entity, 3);
+        }
+        return false;
     }
 }

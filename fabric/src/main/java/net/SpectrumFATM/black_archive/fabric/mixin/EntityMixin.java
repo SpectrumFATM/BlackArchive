@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -8,6 +9,8 @@ import net.minecraft.world.World;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Block;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -36,8 +39,16 @@ public abstract class EntityMixin {
             return;
         }
 
+        BlackArchive.LOGGER.info(String.valueOf(entity.getVelocity().y - this.prevMotionY));
+        BlackArchive.LOGGER.info(String.valueOf(entity.getVelocity().y));
+        BlackArchive.LOGGER.info(String.valueOf(this.prevMotionY));
+
         // Skip if entity is on the ground
         if (!isInFreefall(entity)) {
+            //update previous motion, otherwise it could be invalid after the player steps off the ground
+            this.prevMotionX = 0;
+            this.prevMotionY = 0;
+            this.prevMotionZ = 0;
             return;
         }
 
@@ -91,12 +102,9 @@ public abstract class EntityMixin {
 
         //if the acceleration in the y direction is equal to gravity, set it to zero
         //i worry that this might cause any slight vertical acceleration to cause the player to drop.
-        if(deltaY == -0.08){//minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick.
-            deltaY = 0;//we're in space, so accelerate by 0 blocks per tick per tick.
+        if(deltaY - -0.08 < 0.000001){//minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick
+            deltaY = 0.0;//we're in space, so accelerate by 0 blocks per tick per tick.
         }
-
-
-
 
         //give the updated velocity back to the entity
         entity.setVelocity(

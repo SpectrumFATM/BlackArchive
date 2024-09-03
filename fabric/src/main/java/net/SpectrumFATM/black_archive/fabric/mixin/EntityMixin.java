@@ -49,10 +49,6 @@ public abstract class EntityMixin {
 
         // Skip if entity is on the ground
         if (!isInFreefall(entity)) {
-            //update previous motion, otherwise it could be invalid after the player steps off the ground
-            this.prevMotionX = 0;
-            this.prevMotionY = 0;
-            this.prevMotionZ = 0;
             return;
         }
 
@@ -106,9 +102,12 @@ public abstract class EntityMixin {
 
         //if the acceleration in the y direction is equal to gravity, set it to zero
         //i worry that this might cause any slight vertical acceleration to cause the player to drop.
-        if(deltaY - -0.08 < 0.000001){//minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick
-            deltaY = 0.0;//we're in space, so accelerate by 0 blocks per tick per tick.
+        if(deltaY == -0.08){//minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick.
+            deltaY = 0;//we're in space, so accelerate by 0 blocks per tick per tick.
         }
+
+
+
 
         //give the updated velocity back to the entity
         entity.setVelocity(

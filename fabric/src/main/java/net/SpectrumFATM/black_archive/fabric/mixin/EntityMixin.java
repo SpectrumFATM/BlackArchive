@@ -23,8 +23,6 @@ public abstract class EntityMixin {
     private double prevMotionZ;
     private int air = 300;
 
-    Entity entity = (Entity) (Object) this;
-
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
         Entity entity = (Entity) (Object) this;
@@ -37,23 +35,22 @@ public abstract class EntityMixin {
 
         World world = entity.getWorld();
 
-        // Skip if not in a custom zero-gravity dimension (replace with your dimension check)
+        // Skip if not in a custom zero-gravity dimension (replace with your dimension check).
         if (!isInZeroGravityDimension(world)) {
             return;
         }
 
-        //Skip if tardis nearby
+        // Skip if TARDIS is nearby.
         if (tardisNearby(entity, 3)) {
             return;
         }
 
-        // Skip if entity is on the ground
+        // Skip if entity is on the ground.
         if (!isInFreefall(entity)) {
             return;
         }
 
-
-        // Handle freefall motion
+        // Handle freefall motion.
         handleFreefallMotion(entity);
 
         this.prevMotionX = entity.getVelocity().x;
@@ -62,7 +59,7 @@ public abstract class EntityMixin {
     }
 
     private boolean isInZeroGravityDimension(World world) {
-        // Replace with actual logic to determine if the dimension is zero gravity
+        // Replace with actual logic to determine if the dimension is zero gravity.
         return world.getRegistryKey().getValue().toString().equals("black_archive:space");
     }
 
@@ -86,56 +83,53 @@ public abstract class EntityMixin {
     }
 
     private void handleFreefallMotion(Entity entity) {
-        //reverse drag. doing it before everything makes the math easier.
-        //minecraft applies a small drag by multiplying the motion by 0.91. if we divide the motion by 0.91, the velocity is back to where it should be
+        // Reverse drag. Doing it before everything makes the math easier.
+        // Minecraft applies a small drag by multiplying the motion by 0.91. If we divide the motion by 0.91, the velocity is back to where it should be.
         entity.setVelocity(
                 entity.getVelocity().getX() / 0.91F,
                 entity.getVelocity().y / 0.9800000190734863D,
                 entity.getVelocity().z / 0.91F
-        );//i have no clue why galacticraft reversed vertical drag using the above number, but they must be right
+        ); // I have no clue why Galacticraft reversed vertical drag using the above number, but they must be right.
 
-        // get difference between velocity last frame and this frame.
+        // Get difference between velocity last frame and this frame.
         // In physics terms, this is the acceleration between frames.
         double deltaX = entity.getVelocity().x - this.prevMotionX;
         double deltaY = entity.getVelocity().y - this.prevMotionY;
         double deltaZ = entity.getVelocity().z - this.prevMotionZ;
 
-        //if the acceleration in the y direction is equal to gravity, set it to zero
-        //i worry that this might cause any slight vertical acceleration to cause the player to drop.
-        if(deltaY == -0.08){//minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick.
-            deltaY = 0;//we're in space, so accelerate by 0 blocks per tick per tick.
+        // If the acceleration in the Y direction is equal to gravity, set it to zero.
+        // I worry that this might cause any slight vertical acceleration to cause the player to drop.
+        if (deltaY == -0.08) { // Minecraft accelerates entities by 0.08 blocks per tick per tick. This means that deltaY changes by 0.08 each tick.
+            deltaY = 0; // We're in space, so accelerate by 0 blocks per tick per tick.
         }
 
-
-
-
-        //give the updated velocity back to the entity
+        // Give the updated velocity back to the entity.
         entity.setVelocity(
                 this.prevMotionX + deltaX,
                 this.prevMotionY + deltaY,
                 this.prevMotionZ + deltaZ
         );
 
-        // Limit speed to avoid infinite acceleration. this is just so the player doesn't fly out of loaded chunks uncontrollably
+        // Limit speed to avoid infinite acceleration. This is just so the player doesn't fly out of loaded chunks uncontrollably.
         float speedLimit = 0.1f;
         entity.setVelocity(
-                Math.max(Math.min(entity.getVelocity().x,speedLimit),-speedLimit),
-                Math.max(Math.min(entity.getVelocity().y,speedLimit),-speedLimit),
-                Math.max(Math.min(entity.getVelocity().z,speedLimit),-speedLimit)
+                Math.max(Math.min(entity.getVelocity().x, speedLimit), -speedLimit),
+                Math.max(Math.min(entity.getVelocity().y, speedLimit), -speedLimit),
+                Math.max(Math.min(entity.getVelocity().z, speedLimit), -speedLimit)
         );
     }
 
     private void suffocate(Entity entity) {
-        // Check if the entity should suffocate
+        // Check if the entity should suffocate.
         if (shouldSuffocate(entity) && entity instanceof PlayerEntity player) {
             if (!player.isCreative() && !player.isSpectator()) {
-                // Only decrement air once per tick
+                // Only decrement air once per tick.
                 if (air > -20) {
                     air--;
                     player.setAir(air);
-                } else{
+                } else {
                     player.damage(entity.getDamageSources().generic(), 1.0f);
-                    air = -20; // Ensure air doesn't go further below the threshold
+                    air = -20; // Ensure air doesn't go further below the threshold.
                 }
             }
         } else {
@@ -157,12 +151,12 @@ public abstract class EntityMixin {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState state = entity.getWorld().getBlockState(pos);
                     if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get()) {
-                        return true; // TARDIS is nearby
+                        return true; // TARDIS is nearby.
                     }
                 }
             }
         }
-        return false; // TARDIS is not nearby
+        return false; // TARDIS is not nearby.
     }
 
     private boolean shouldSuffocate(Entity entity) {

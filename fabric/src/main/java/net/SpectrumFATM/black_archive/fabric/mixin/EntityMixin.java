@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -12,6 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import whocraft.tardis_refined.registry.TRBlockRegistry;
+
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -19,20 +22,29 @@ public abstract class EntityMixin {
     private double prevMotionX;
     private double prevMotionY;
     private double prevMotionZ;
+    private int air = 300;
 
-    private boolean wasOnGround;
+    Entity entity = (Entity) (Object) this;
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
-        applyZeroGravity();
+        Entity entity = (Entity) (Object) this;
+
+        applyZeroGravity(entity);
+        suffocate(entity);
     }
 
-    private void applyZeroGravity() {
-        Entity entity = (Entity) (Object) this;
+    private void applyZeroGravity(Entity entity) {
+
         World world = entity.getWorld();
 
         // Skip if not in a custom zero-gravity dimension (replace with your dimension check)
         if (!isInZeroGravityDimension(world)) {
+            return;
+        }
+
+        //Skip if tardis nearby
+        if (!tardisNearby(entity, 3)) {
             return;
         }
 
@@ -112,5 +124,56 @@ public abstract class EntityMixin {
                 Math.max(Math.min(entity.getVelocity().y,speedLimit),-speedLimit),
                 Math.max(Math.min(entity.getVelocity().z,speedLimit),-speedLimit)
         );
+    }
+
+    private void suffocate(Entity entity) {
+        // Check if the entity should suffocate
+        if (shouldSuffocate(entity) && entity instanceof PlayerEntity player) {
+            if (!player.isCreative() && !player.isSpectator()) {
+                // Only decrement air once per tick
+                if (air > -20) {
+                    air--;
+                    player.setAir(air);
+                } else{
+                    player.damage(entity.getDamageSources().generic(), 1.0f);
+                    air = -20; // Ensure air doesn't go further below the threshold
+                }
+            }
+        } else {
+            if (air < 300) {
+                air = Math.min(air + 1, 300);
+                if (entity instanceof PlayerEntity player) {
+                    player.setAir(air);
+                }
+            }
+        }
+    }
+
+    private boolean shouldSuffocate(Entity entity) {
+        if (isInZeroGravityDimension(entity.getWorld())) {
+            return !tardisNearby(entity, 3);
+        }
+        return false;
+    }
+
+    private boolean tardisNearby(Entity entity, int radius) {
+        boolean tardisNearby = true;
+        BlockPos entityPos = entity.getBlockPos();
+
+        for (int x = entityPos.getX() - radius; x <= entityPos.getX() + radius; x++) {
+            for (int y = entityPos.getY() - radius; y <= entityPos.getY() + radius; y++) {
+                for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    BlockState state = entity.getWorld().getBlockState(pos);
+                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get()) {
+                        tardisNearby = false; // If there is any ice block, the player should not suffocate
+                        break;
+                    }
+                }
+                if (!tardisNearby) break;
+            }
+            if (!tardisNearby) break;
+        }
+        return tardisNearby;
     }
 }

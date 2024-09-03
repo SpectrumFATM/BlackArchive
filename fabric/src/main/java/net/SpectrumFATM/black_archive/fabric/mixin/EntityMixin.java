@@ -23,7 +23,11 @@ public abstract class EntityMixin {
     private boolean wasOnGround;
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void applyZeroGravity(CallbackInfo info) {
+    private void tick(CallbackInfo info) {
+        applyZeroGravity();
+    }
+
+    private void applyZeroGravity() {
         Entity entity = (Entity) (Object) this;
         World world = entity.getWorld();
 

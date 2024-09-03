@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import whocraft.tardis_refined.registry.TRBlockRegistry;
 
-
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 

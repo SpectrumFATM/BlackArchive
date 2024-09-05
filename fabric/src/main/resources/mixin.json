@@ -4,7 +4,8 @@
   "package": "net.SpectrumFATM.black_archive.fabric.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityMixin"
+    "EntityMixin",
+    "TardisPilotingMixin"
   ],
   "injectors": {
     "defaultRequire": 1

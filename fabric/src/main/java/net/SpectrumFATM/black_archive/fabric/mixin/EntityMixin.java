@@ -150,13 +150,26 @@ public abstract class EntityMixin {
                 for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState state = entity.getWorld().getBlockState(pos);
-                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get()) {
-                        return true; // TARDIS is nearby.
+                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(entity.getWorld(), pos.down())) {
+                        return true; // TARDIS is nearby and on a solid platform.
                     }
                 }
             }
         }
-        return false; // TARDIS is not nearby.
+        return false; // TARDIS is not nearby or not on a solid platform.
+    }
+
+    private boolean isSolidPlatform(World world, BlockPos pos) {
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                BlockPos checkPos = pos.add(x, 0, z);
+                BlockState state = world.getBlockState(checkPos);
+                if (!state.isSolidBlock(world, checkPos)) {
+                    return false; // Not a solid block.
+                }
+            }
+        }
+        return true; // All blocks in the 3x3 area are solid.
     }
 
     private boolean shouldSuffocate(Entity entity) {

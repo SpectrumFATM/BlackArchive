@@ -29,7 +29,7 @@ public class ModDimensions {
                 false, // hasCeiling
                 false, // ultraWarm
                 true, // natural
-                1.0, // coordinateScale
+                16, // coordinateScale
                 true, // bedWorks
                 false, // respawnAnchorWorks
                 0, // minY
@@ -37,7 +37,7 @@ public class ModDimensions {
                 256, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
                 DimensionTypes.OVERWORLD_ID, // effectsLocation
-                1.0f, // ambientLight
+                0.5f, // ambientLight
                 new DimensionType.MonsterSettings(false, false, UniformIntProvider.create(0, 0), 0)));
     }
 }

@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityMixin",
-    "TardisPilotingMixin"
+    "TardisPilotingMixin",
+    "RenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

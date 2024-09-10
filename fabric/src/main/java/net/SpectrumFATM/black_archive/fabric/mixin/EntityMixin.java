@@ -1,5 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
+import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
+import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +23,7 @@ public abstract class EntityMixin {
     private double prevMotionX;
     private double prevMotionY;
     private double prevMotionZ;
+    private boolean shouldSuffocate = false;
     private int air = 300;
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -38,10 +41,18 @@ public abstract class EntityMixin {
         // Skip if not in a custom zero-gravity dimension (replace with your dimension check).
         if (!isInZeroGravityDimension(world)) {
             return;
+        } else {
+            shouldSuffocate = true;
         }
 
         // Skip if TARDIS is nearby.
         if (tardisNearby(entity, 3)) {
+            shouldSuffocate = false;
+            return;
+        }
+
+        // Skip if powered gravity generator is nearby.
+        if (gravityGenNearby(entity)) {
             return;
         }
 
@@ -121,7 +132,7 @@ public abstract class EntityMixin {
 
     private void suffocate(Entity entity) {
         // Check if the entity should suffocate.
-        if (shouldSuffocate(entity) && entity instanceof PlayerEntity player) {
+        if (shouldSuffocate && entity instanceof PlayerEntity player) {
             if (!player.isCreative() && !player.isSpectator()) {
                 // Only decrement air once per tick.
                 if (air > -20) {
@@ -150,8 +161,8 @@ public abstract class EntityMixin {
                 for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState state = entity.getWorld().getBlockState(pos);
-                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(entity.getWorld(), pos.down())) {
-                        return true; // TARDIS is nearby and on a solid platform.
+                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(entity.getWorld(), pos.down(), radius)) {
+                        return true;// TARDIS is nearby and on a solid platform.
                     }
                 }
             }
@@ -159,9 +170,30 @@ public abstract class EntityMixin {
         return false; // TARDIS is not nearby or not on a solid platform.
     }
 
-    private boolean isSolidPlatform(World world, BlockPos pos) {
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
+    private boolean gravityGenNearby(Entity entity) {
+        BlockPos entityPos = entity.getBlockPos();
+        World world = entity.getWorld();
+        int searchRadius = 33;
+
+        for (BlockPos pos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
+            BlockState state = world.getBlockState(pos);
+            if (state.getBlock() instanceof DalekGravityGenBlock) {
+                for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -18, -searchRadius), entityPos.add(searchRadius, 18, searchRadius))) {
+                    if (state.getBlock() instanceof DalekGravityGenBlock) {
+                        if (state.get(GravityGenBlock.POWERED)) {
+                            shouldSuffocate = false;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isSolidPlatform(World world, BlockPos pos, int radius) {
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
                 BlockPos checkPos = pos.add(x, 0, z);
                 BlockState state = world.getBlockState(checkPos);
                 if (!state.isSolidBlock(world, checkPos)) {
@@ -170,12 +202,5 @@ public abstract class EntityMixin {
             }
         }
         return true; // All blocks in the 3x3 area are solid.
-    }
-
-    private boolean shouldSuffocate(Entity entity) {
-        if (isInZeroGravityDimension(entity.getWorld())) {
-            return !tardisNearby(entity, 3);
-        }
-        return false;
     }
 }

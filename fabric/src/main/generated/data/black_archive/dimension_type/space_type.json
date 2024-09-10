@@ -1,7 +1,7 @@
 {
-  "ambient_light": 1.0,
+  "ambient_light": 0.5,
   "bed_works": true,
-  "coordinate_scale": 1.0,
+  "coordinate_scale": 16.0,
   "effects": "minecraft:overworld",
   "fixed_time": 18000,
   "has_ceiling": false,

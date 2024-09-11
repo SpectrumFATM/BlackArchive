@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "minecraft:redstone",
+  "ingredients": [
+    {
+      "item": "black_archive:14thsonic"
+    }
+  ],
+  "result": {
+    "item": "black_archive:15thsonic"
+  }
+}

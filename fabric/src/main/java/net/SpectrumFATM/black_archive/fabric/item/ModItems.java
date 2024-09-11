@@ -24,6 +24,7 @@ public class ModItems {
 
     public static final TooltipBlockItem DALEK_GRAV_GEN = registerBlockItem("dalek_gravity_generator", new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN, new FabricItemSettings(), "block.dalek_gravity.tooltip"));
     public static final TooltipBlockItem GRAVITY_GEN = registerBlockItem("gravity_generator", new TooltipBlockItem(ModBlocks.GRAVITY_GEN, new FabricItemSettings(), "block.gravity.tooltip"));
+    public static final TooltipBlockItem OXYGEN_GEN = registerBlockItem("oxygen_field", new TooltipBlockItem(ModBlocks.OXYGEN_GEN, new FabricItemSettings(), "block.oxygen.tooltip"));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(BlackArchive.MOD_ID, name), item);

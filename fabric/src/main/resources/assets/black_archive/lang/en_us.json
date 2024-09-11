@@ -10,6 +10,7 @@
   "item.black_archive.15thsonic": "Sonic Screwdriver",
   "block.black_archive.dalek_gravity_generator": "Dalek Ship Core",
   "block.black_archive.gravity_generator": "Gravity Generator",
+  "block.black_archive.oxygen_field": "Oxygen Field Generator",
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
@@ -19,5 +20,6 @@
   "item.sonic13.tooltip": "Made with Sheffield steel.",
   "block.dalek_gravity.tooltip": "The core computer of a Dalek ship responsible for all life support.",
   "block.gravity.tooltip": "When powered provides a gravity field in a radius of 8 blocks.",
+  "block.oxygen.tooltip": "When powered provides an oxygen field in a radius of 8 blocks.",
   "sonic.title.scan": "Scan Results"
 }

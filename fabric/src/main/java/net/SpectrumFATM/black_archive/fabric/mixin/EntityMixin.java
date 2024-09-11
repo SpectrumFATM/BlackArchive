@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.mixin;
 
 import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
+import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -43,6 +44,10 @@ public abstract class EntityMixin {
             return;
         } else {
             shouldSuffocate = true;
+        }
+
+        if (oxygenNearby(entity, 8)) {
+            shouldSuffocate = false;
         }
 
         // Skip if TARDIS is nearby.
@@ -168,6 +173,25 @@ public abstract class EntityMixin {
             }
         }
         return false; // TARDIS is not nearby or not on a solid platform.
+    }
+
+    private boolean oxygenNearby(Entity entity, int radius) {
+        BlockPos entityPos = entity.getBlockPos();
+
+        for (int x = entityPos.getX() - radius; x <= entityPos.getX() + radius; x++) {
+            for (int y = entityPos.getY() - radius; y <= entityPos.getY() + radius; y++) {
+                for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    BlockState state = entity.getWorld().getBlockState(pos);
+                    if (state.getBlock() instanceof OxygenGenBlock) {
+                        if (state.get(OxygenGenBlock.POWERED)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private boolean gravityGenNearby(Entity entity) {

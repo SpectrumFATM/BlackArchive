@@ -4,6 +4,7 @@ public class NetworkPackets {
 
     public static void registerPackets() {
         VortexTeleportPacket.register();
+        VortexSaveWaypointPacket.register();
         AllowedDimensionsRequestPacket.register();
         DeleteWaypointPacket.register();
         RemotePacket.register();

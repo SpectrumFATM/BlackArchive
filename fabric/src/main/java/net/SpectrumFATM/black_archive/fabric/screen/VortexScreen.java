@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.network.AllowedDimensionsRequestPacket;
+import net.SpectrumFATM.black_archive.fabric.network.VortexSaveWaypointPacket;
 import net.SpectrumFATM.black_archive.fabric.network.VortexTeleportPacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -100,7 +101,7 @@ public class VortexScreen extends Screen {
         });
 
         buttonSaveWaypoint = createButton(x + (34 * 4), y + (41 * 4), 92, 20, "Save Waypoint", (button) -> {
-            saveWaypoint(client.player.getMainHandStack(), textFieldWidgetWaypointSaveName.getText(), client.player.getX(), client.player.getY(), client.player.getZ(), dimensions.get(currentDimensionIndex));
+            saveWaypoint();
             this.close();
         });
 
@@ -150,16 +151,14 @@ public class VortexScreen extends Screen {
         }
     }
 
-    public static void saveWaypoint(ItemStack heldItem, String name, double x, double y, double z, String dimension) {
-        NbtCompound nbt = heldItem.getOrCreateNbt();
-        NbtCompound waypointData = new NbtCompound();
-        waypointData.putDouble("x", x);
-        waypointData.putDouble("y", y);
-        waypointData.putDouble("z", z);
-        waypointData.putString("dimension", dimension);
-        nbt.put(name, waypointData);
-        heldItem.setNbt(nbt);
-        BlackArchive.LOGGER.info("Saved waypoint " + name + " at " + x + ", " + y + ", " + z + " in dimension " + dimension);
+    private void saveWaypoint() {
+        String name = textFieldWidgetWaypointSaveName.getText();
+        double x = Double.parseDouble(textFieldWidgetX.getText());
+        double y = Double.parseDouble(textFieldWidgetY.getText());
+        double z = Double.parseDouble(textFieldWidgetZ.getText());
+        String dimension = dimensions.get(currentDimensionIndex);
+
+        VortexSaveWaypointPacket.send(name, x, y, z, dimension);
     }
 
     private void deleteWaypoint() {

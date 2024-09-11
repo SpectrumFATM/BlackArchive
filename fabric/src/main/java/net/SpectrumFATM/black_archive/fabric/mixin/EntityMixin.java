@@ -186,6 +186,13 @@ public abstract class EntityMixin {
                         }
                     }
                 }
+            } else if (state.getBlock() instanceof GravityGenBlock) {
+                searchRadius = 8;
+                for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
+                    if (state.get(GravityGenBlock.POWERED)) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

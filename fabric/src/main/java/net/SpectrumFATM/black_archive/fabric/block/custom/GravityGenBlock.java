@@ -1,8 +1,11 @@
 package net.SpectrumFATM.black_archive.fabric.block.custom;
 
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.MapColor;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -15,7 +18,7 @@ public class GravityGenBlock extends Block {
     public static final BooleanProperty POWERED = BooleanProperty.of("powered");
 
     public GravityGenBlock(Settings settings) {
-        super(settings);
+        super(settings.luminance((state) -> state.get(POWERED) ? 15 : 0).strength(3.0f, 3.0f).mapColor(MapColor.GRAY));
         this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false));
         settings.hardness(2.0f);
     }
@@ -50,5 +53,13 @@ public class GravityGenBlock extends Block {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(POWERED);
+    }
+
+    @Override
+    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
+        super.onStacksDropped(state, world, pos, tool, dropExperience);
+        if (!world.isClient) {
+            dropStack(world, pos, new ItemStack(ModItems.GRAVITY_GEN, 1));
+        }
     }
 }

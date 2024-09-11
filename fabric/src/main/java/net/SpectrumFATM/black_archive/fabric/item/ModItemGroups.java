@@ -22,6 +22,7 @@ public class ModItemGroups {
                         entries.add(ModItems.SONIC13);
                         entries.add(ModItems.SONIC14);
                         entries.add(ModItems.SONIC15);
+                        entries.add(ModItems.GRAVITY_GEN);
                     }).build());
 
 

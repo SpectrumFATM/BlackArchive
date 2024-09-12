@@ -18,6 +18,9 @@
 		"main": [
 			"net.SpectrumFATM.black_archive.fabric.BlackArchive"
 		],
+		"client": [
+			"net.SpectrumFATM.black_archive.fabric.BlackArchiveClient"
+		],
 		"fabric-datagen": [
 			"net.SpectrumFATM.black_archive.fabric.BlackArchiveDataGenerator"
 		]

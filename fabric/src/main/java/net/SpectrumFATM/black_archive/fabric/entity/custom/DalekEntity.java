@@ -12,10 +12,13 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import whocraft.tardis_refined.registry.TRItemRegistry;
 
 public class DalekEntity extends HostileEntity implements RangedAttackMob {
     public DalekEntity(EntityType<DalekEntity> type, World world) {
@@ -36,9 +39,9 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
 
     public static DefaultAttributeContainer.Builder createDalekAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0)
-                .add(EntityAttributes.GENERIC_ARMOR, 5.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0)
+                .add(EntityAttributes.GENERIC_ARMOR, 10.0)
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 5.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0);
@@ -48,7 +51,7 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
     protected void playStepSound(BlockPos pos, BlockState state) {
         super.playStepSound(pos, state);
         this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(8), entity -> true)
-                .forEach(entity -> entity.playSound(ModSounds.DALEK_MOVE, 0.05F, 1.0F));
+                .forEach(entity -> entity.playSound(ModSounds.DALEK_MOVE, 0.01F, 1.0F));
     }
 
     @Override
@@ -66,5 +69,14 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
         laser.setVelocity(d1, d2, d3, 1.6f, 0.0f);
         this.playSound(ModSounds.DALEK_LASER, 0.5f, 1.0f);
         this.getWorld().spawnEntity(laser);
+    }
+
+    @Override
+    public void onDeath(DamageSource source) {
+        super.onDeath(source);
+        if (!this.getWorld().isClient) {
+            this.dropStack(new ItemStack(Items.COPPER_BLOCK, 2));
+                this.dropStack(new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 1));
+        }
     }
 }

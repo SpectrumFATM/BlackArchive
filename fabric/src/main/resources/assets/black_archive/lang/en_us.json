@@ -8,7 +8,7 @@
   "item.black_archive.13thsonic": "Sonic Screwdriver",
   "item.black_archive.14thsonic": "Sonic Screwdriver",
   "item.black_archive.15thsonic": "Sonic Screwdriver",
-    "item.black_archive.dalek_spawn_egg": "Dalek Spawner",
+  "item.black_archive.dalek_spawn_egg": "Dalek Progenitor",
   "block.black_archive.dalek_gravity_generator": "Dalek Ship Core",
   "block.black_archive.gravity_generator": "Gravity Generator",
   "block.black_archive.oxygen_field": "Oxygen Field Generator",
@@ -16,6 +16,8 @@
   "entity.black_archive.laser": "Laser",
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
+  "sounds.black_archive.dalek_laser.subtitle": "Dalek laser fires",
+    "sounds.black_archive.dalek_move.subtitle": "Dalek moves",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
   "item.remote.tooltip": "A device used to control the TARDIS remotely.",
   "item.sonic.tooltip": "Same software different case!",
@@ -25,4 +27,5 @@
   "block.gravity.tooltip": "When powered provides a gravity field in a radius of 8 blocks.",
   "block.oxygen.tooltip": "When powered provides an oxygen field in a radius of 8 blocks.",
   "sonic.title.scan": "Scan Results"
+
 }

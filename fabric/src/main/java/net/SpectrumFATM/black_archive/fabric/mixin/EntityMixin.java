@@ -200,10 +200,10 @@ public abstract class EntityMixin {
         World world = entity.getWorld();
         int searchRadius = 33;
 
-        for (BlockPos pos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
-            BlockState state = world.getBlockState(pos);
-            if (state.getBlock() instanceof DalekGravityGenBlock) {
-                for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -18, -searchRadius), entityPos.add(searchRadius, 18, searchRadius))) {
+        for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
+            BlockState state = world.getBlockState(generatorPos);
+            if (state.getBlock() instanceof DalekGravityGenBlock block) {
+                for (BlockPos pos : BlockPos.iterate(generatorPos.add(-searchRadius, -18, -searchRadius), generatorPos.add(searchRadius, 18, searchRadius))) {
                     if (state.getBlock() instanceof DalekGravityGenBlock) {
                         if (state.get(GravityGenBlock.POWERED)) {
                             shouldSuffocate = false;
@@ -212,8 +212,8 @@ public abstract class EntityMixin {
                     }
                 }
             } else if (state.getBlock() instanceof GravityGenBlock) {
-                searchRadius = 8;
-                for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
+                int verticalSearchRadius = 10;
+                for (BlockPos pos : BlockPos.iterate(generatorPos.add(-searchRadius, -verticalSearchRadius, -searchRadius), generatorPos.add(searchRadius, verticalSearchRadius, searchRadius))) {
                     if (state.get(GravityGenBlock.POWERED)) {
                         return true;
                     }

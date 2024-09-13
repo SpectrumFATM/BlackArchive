@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "black_archive:item/dalek_spawn_egg"
+  }
+}

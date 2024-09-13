@@ -11,7 +11,7 @@ public class DalekRenderer extends MobEntityRenderer<DalekEntity, DalekModel<Dal
     private static final Identifier TEXTURE = new Identifier("black_archive", "textures/entity/dalek.png");
 
     public DalekRenderer(EntityRendererFactory.Context context) {
-        super(context, new DalekModel<>(context.getPart(ModModelLayers.DALEK)), 1f);
+        super(context, new DalekModel<>(context.getPart(ModModelLayers.DALEK)), 0.6f);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class DalekRenderer extends MobEntityRenderer<DalekEntity, DalekModel<Dal
     @Override
     public void render(DalekEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
-        matrixStack.scale(0.75f, 0.75f, 0.75f); // Scale down by 0.5x
+        matrixStack.scale(0.65f, 0.65f, 0.65f);
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
         matrixStack.pop();
     }

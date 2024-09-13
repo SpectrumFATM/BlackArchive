@@ -4,6 +4,7 @@ import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import whocraft.tardis_refined.registry.TRBlockRegistry;
 
-@Mixin(Entity.class)
+@Mixin(LivingEntity.class)
 public abstract class EntityMixin {
 
     private double prevMotionX;

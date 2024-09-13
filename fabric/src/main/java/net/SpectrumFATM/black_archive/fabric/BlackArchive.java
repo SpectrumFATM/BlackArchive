@@ -25,6 +25,7 @@ public class BlackArchive implements ModInitializer {
 
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
+		ModItemGroups.registerToVanillaItemGroups();
 		NetworkPackets.registerPackets();
 
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {

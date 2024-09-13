@@ -4,5 +4,17 @@
     "sounds": [
       "black_archive:vortex_teleport"
     ]
+  },
+  "dalek_laser": {
+    "subtitle": "sounds.black_archive.dalek_laser.subtitle",
+    "sounds": [
+      "black_archive:dalek_laser"
+    ]
+  },
+  "dalek_move": {
+    "subtitle": "sounds.black_archive.dalek_move.subtitle",
+    "sounds": [
+      "black_archive:dalek_move"
+    ]
   }
 }

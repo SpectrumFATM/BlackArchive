@@ -1,7 +1,11 @@
 package net.SpectrumFATM.black_archive.fabric.entity;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
+import net.SpectrumFATM.black_archive.fabric.entity.client.*;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.LaserEntity;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -17,8 +21,21 @@ public class ModEntities {
                     .build("dalek")
     );
 
-    public static void registerModEntities() {
-       BlackArchive.LOGGER.info("Registering Entities for " + BlackArchive.MOD_ID);
+    public static final EntityType<LaserEntity> LASER = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(BlackArchive.MOD_ID, "laser"),
+            EntityType.Builder.<LaserEntity>create(LaserEntity::new, SpawnGroup.MISC)
+                    .setDimensions(0.5f, 0.5f)
+                    .build("laser")
+    );
+
+    public static void registerRenderers() {
+        EntityRendererRegistry.register(ModEntities.DALEK, DalekRenderer::new);
+        EntityRendererRegistry.register(ModEntities.LASER, LaserRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
     }
 
+    public static void registerModEntities() {
+        BlackArchive.LOGGER.info("Registering Entities for " + BlackArchive.MOD_ID);
+    }
 }

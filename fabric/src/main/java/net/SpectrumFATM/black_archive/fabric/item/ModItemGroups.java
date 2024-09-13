@@ -2,7 +2,9 @@ package net.SpectrumFATM.black_archive.fabric.item;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -26,6 +28,12 @@ public class ModItemGroups {
                         entries.add(ModItems.OXYGEN_GEN);
                     }).build());
 
+
+    public static void registerToVanillaItemGroups() {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {
+            content.add(ModItems.DALEK_EGG);
+        });
+    }
 
     public static void registerItemGroups() {
         BlackArchive.LOGGER.info("Registering Item Groups for " + BlackArchive.MOD_ID);

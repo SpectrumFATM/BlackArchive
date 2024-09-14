@@ -46,7 +46,6 @@ public class LifeSupportUtil {
                     }
                 }
             } else if (state.getBlock() instanceof GravityGenBlock) {
-                int verticalSearchRadius = 10;
                 for (BlockPos pos : BlockPos.iterate(generatorPos.add(-searchRadius, -searchRadius, -searchRadius), generatorPos.add(searchRadius, searchRadius, searchRadius))) {
                     if (state.get(GravityGenBlock.POWERED)) {
                         return true;

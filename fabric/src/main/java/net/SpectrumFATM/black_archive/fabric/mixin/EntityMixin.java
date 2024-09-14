@@ -54,6 +54,9 @@ public abstract class EntityMixin {
         }
 
         if (LifeSupportUtil.gravityGenNearby(entity)) {
+            if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
+                shouldSuffocate = false;
+            }
             return;
         }
 

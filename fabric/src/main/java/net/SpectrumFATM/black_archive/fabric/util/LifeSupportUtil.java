@@ -15,15 +15,10 @@ public class LifeSupportUtil {
         BlockPos entityPos = entity.getBlockPos();
         World world = entity.getWorld();
 
-        for (int x = entityPos.getX() - radius; x <= entityPos.getX() + radius; x++) {
-            for (int y = entityPos.getY() - radius; y <= entityPos.getY() + radius; y++) {
-                for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
-                    BlockPos pos = new BlockPos(x, y, z);
-                    BlockState state = world.getBlockState(pos);
-                    if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(world, pos.down(), radius)) {
-                        return true;
-                    }
-                }
+        for (BlockPos pos : BlockPos.iterate(entityPos.add(-radius, -radius, -radius), entityPos.add(radius, radius, radius))) {
+            BlockState state = world.getBlockState(pos);
+            if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(world, pos.down(), radius)) {
+                return true;
             }
         }
         return false;
@@ -37,22 +32,25 @@ public class LifeSupportUtil {
         BlockPos entityPos = entity.getBlockPos();
         World world = entity.getWorld();
 
+        boolean dalekGenFound = false;
+
         for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
             BlockState state = world.getBlockState(generatorPos);
-            if (dalekGravityGenNearby(entity, searchRadius)) {
-                if (state.getBlock() instanceof DalekGravityGenBlock) {
-                    if (state.get(GravityGenBlock.POWERED)) {
-                            return true;
-                    }
+            if (state.getBlock() instanceof DalekGravityGenBlock) {
+                if (state.get(GravityGenBlock.POWERED)) {
+                    dalekGenFound = true;
                 }
             } else if (state.getBlock() instanceof GravityGenBlock) {
-                for (BlockPos pos : BlockPos.iterate(generatorPos.add(-searchRadius, -searchRadius, -searchRadius), generatorPos.add(searchRadius, searchRadius, searchRadius))) {
-                    if (state.get(GravityGenBlock.POWERED)) {
-                        return true;
-                    }
+                if (state.get(GravityGenBlock.POWERED)) {
+                    return true;
                 }
             }
         }
+
+        if (dalekGenFound) {
+            return true;
+        }
+
         return false;
     }
 
@@ -77,16 +75,11 @@ public class LifeSupportUtil {
         BlockPos entityPos = entity.getBlockPos();
         World world = entity.getWorld();
 
-        for (int x = entityPos.getX() - radius; x <= entityPos.getX() + radius; x++) {
-            for (int y = entityPos.getY() - radius; y <= entityPos.getY() + radius; y++) {
-                for (int z = entityPos.getZ() - radius; z <= entityPos.getZ() + radius; z++) {
-                    BlockPos pos = new BlockPos(x, y, z);
-                    BlockState state = world.getBlockState(pos);
-                    if (state.getBlock() instanceof OxygenGenBlock) {
-                        if (state.get(OxygenGenBlock.POWERED)) {
-                            return true;
-                        }
-                    }
+        for (BlockPos pos : BlockPos.iterate(entityPos.add(-radius, -radius, -radius), entityPos.add(radius, radius, radius))) {
+            BlockState state = world.getBlockState(pos);
+            if (state.getBlock() instanceof OxygenGenBlock) {
+                if (state.get(OxygenGenBlock.POWERED)) {
+                    return true;
                 }
             }
         }

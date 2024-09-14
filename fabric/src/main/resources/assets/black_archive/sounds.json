@@ -11,6 +11,12 @@
       "black_archive:dalek_laser"
     ]
   },
+  "dalek_laser_malfunction": {
+    "subtitle": "sounds.black_archive.dalek_laser_malfunction.subtitle",
+    "sounds": [
+      "black_archive:dalek_laser_malfunction"
+    ]
+  },
   "dalek_move": {
     "subtitle": "sounds.black_archive.dalek_move.subtitle",
     "sounds": [

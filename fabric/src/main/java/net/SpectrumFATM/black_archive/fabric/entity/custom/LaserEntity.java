@@ -11,6 +11,9 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 
 public class LaserEntity extends ThrownEntity {
+
+    private float damage;
+
     public LaserEntity(EntityType<? extends ThrownEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -20,10 +23,11 @@ public class LaserEntity extends ThrownEntity {
         this.setPosition(x, y, z);
     }
 
-    public LaserEntity(World world, LivingEntity owner) {
+    public LaserEntity(World world, LivingEntity owner, float damage) {
         this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
         this.setOwner(owner);
         this.setNoGravity(true);
+        this.damage = damage;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class LaserEntity extends ThrownEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        entityHitResult.getEntity().damage(entityHitResult.getEntity().getDamageSources().generic(), 1.0f);
+        entityHitResult.getEntity().damage(entityHitResult.getEntity().getDamageSources().generic(), this.damage);
         this.kill();
     }
 

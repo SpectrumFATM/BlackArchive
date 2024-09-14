@@ -4,11 +4,13 @@ import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.block.ModBlocks;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.item.custom.*;
+import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import whocraft.tardis_refined.common.items.KeyItem;
@@ -23,6 +25,7 @@ public class ModItems {
     public static final Item SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings(), "item.sonic.tooltip", Formatting.BLUE));
     public static final Item SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings(), "item.sonic15.tooltip", Formatting.BLUE));
     public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings(), "item.sonic13.tooltip", Formatting.GOLD));
+    public static final Item DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings(), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER, ModSounds.DALEK_MALFUNCTION));
 
     public static final Item DALEK_GRAV_GEN = registerItem("dalek_gravity_generator", (Item)new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN, new FabricItemSettings(), "block.dalek_gravity.tooltip"));
     public static final Item GRAVITY_GEN = registerItem("gravity_generator", (Item)new TooltipBlockItem(ModBlocks.GRAVITY_GEN, new FabricItemSettings(), "block.gravity.tooltip"));

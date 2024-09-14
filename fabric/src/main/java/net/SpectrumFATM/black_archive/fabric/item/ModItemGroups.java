@@ -24,6 +24,7 @@ public class ModItemGroups {
                         entries.add(ModItems.SONIC13);
                         entries.add(ModItems.SONIC14);
                         entries.add(ModItems.SONIC15);
+                        entries.add(ModItems.DALEK_LASER_GUN);
                         entries.add(ModItems.GRAVITY_GEN);
                         entries.add(ModItems.OXYGEN_GEN);
                     }).build());

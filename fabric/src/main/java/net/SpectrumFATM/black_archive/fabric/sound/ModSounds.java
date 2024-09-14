@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class ModSounds {
     public static final SoundEvent VORTEX_TP = registerSoundEvent("vortex_teleport");
     public static final SoundEvent DALEK_LASER = registerSoundEvent("dalek_laser");
+    public static final SoundEvent DALEK_MALFUNCTION = registerSoundEvent("dalek_laser_malfunction");
     public static final SoundEvent DALEK_MOVE = registerSoundEvent("dalek_move");
 
     private static SoundEvent registerSoundEvent(String name) {

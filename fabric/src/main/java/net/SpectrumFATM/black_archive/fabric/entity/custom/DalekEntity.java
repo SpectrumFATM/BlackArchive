@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -61,7 +62,7 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     public void attack(LivingEntity target, float pullProgress) {
-        LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f);
+        LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false);
         double d0 = target.getY() + (target.getHeight() / 2.0) - laser.getY();
         double d1 = target.getX() - this.getX();
         double d2 = d0;
@@ -75,8 +76,12 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
     public void onDeath(DamageSource source) {
         super.onDeath(source);
         if (!this.getWorld().isClient) {
-            this.dropStack(new ItemStack(Items.COPPER_BLOCK, 2));
+            if (random.nextInt(20) == 1) {
+                this.dropStack(new ItemStack(ModItems.DALEK_LASER_GUN, 1));
+            } else {
+                this.dropStack(new ItemStack(Items.COPPER_BLOCK, 2));
                 this.dropStack(new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 1));
+            }
         }
     }
 }

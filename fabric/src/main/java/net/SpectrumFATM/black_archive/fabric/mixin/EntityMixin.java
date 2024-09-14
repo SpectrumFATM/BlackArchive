@@ -1,4 +1,3 @@
-
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
 import net.SpectrumFATM.black_archive.fabric.util.LifeSupportUtil;
@@ -31,32 +30,22 @@ public abstract class EntityMixin {
         Entity entity = (Entity) (Object) this;
 
         applyZeroGravity(entity);
-        suffocate(entity);
+        if (entity instanceof PlayerEntity) {
+            suffocate(entity);
+        }
     }
 
     private void applyZeroGravity(Entity entity) {
-
         World world = entity.getWorld();
 
         if (!LifeSupportUtil.isInZeroGravityDimension(world)) {
             return;
-        } else {
-            shouldSuffocate = true;
         }
 
-        if (LifeSupportUtil.oxygenNearby(entity, 8)) {
+        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, 8) && !LifeSupportUtil.tardisNearby(entity, 3);
+
+        if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
             shouldSuffocate = false;
-        }
-
-        if (LifeSupportUtil.tardisNearby(entity, 3)) {
-            shouldSuffocate = false;
-            return;
-        }
-
-        if (LifeSupportUtil.gravityGenNearby(entity)) {
-            if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
-                shouldSuffocate = false;
-            }
             return;
         }
 

@@ -6,7 +6,8 @@
   "mixins": [
     "EntityMixin",
     "TardisPilotingMixin",
-    "RenderMixin"
+    "RenderMixin",
+    "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

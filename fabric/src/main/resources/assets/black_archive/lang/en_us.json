@@ -15,6 +15,7 @@
   "block.black_archive.oxygen_field": "Oxygen Field Generator",
   "entity.black_archive.dalek": "Dalek",
   "entity.black_archive.laser": "Laser",
+  "effect.black_archive.dalek_nanocloud": "Dalek Nanocloud",
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
   "sounds.black_archive.dalek_laser.subtitle": "Dalek laser fires",

@@ -1,14 +1,18 @@
 package net.SpectrumFATM.black_archive.fabric.util;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import whocraft.tardis_refined.registry.TRBlockRegistry;
+
+import java.util.Random;
 
 public class LifeSupportUtil {
 
@@ -66,6 +70,10 @@ public class LifeSupportUtil {
         for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadiusXY, -searchRadiusZ, -searchRadiusXY), entityPos.add(searchRadiusXY, searchRadiusZ, searchRadiusXY))) {
             BlockState state = world.getBlockState(generatorPos);
             if (state.getBlock() instanceof DalekGravityGenBlock) {
+                Random random = new Random();
+                if (random.nextInt(100) < 5 && entity instanceof PlayerEntity player) {
+                    BlackArchive.DALEK_NANOCLOUD.applyUpdateEffect(player, 999999);
+                }
                 return true;
             }
         }

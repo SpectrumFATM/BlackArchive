@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric;
 
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.effects.DalekNanocloudEffect;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
@@ -12,6 +13,10 @@ import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +25,17 @@ public class BlackArchive implements ModInitializer {
 	public static final String MOD_ID = "black_archive";
 	public static final Logger LOGGER = LoggerFactory.getLogger("black_archive");
 
+	public static final StatusEffect DALEK_NANOCLOUD = new DalekNanocloudEffect();
+
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Hello Fabric world!");
 
 		// Initialize the configuration
 		BlackArchiveConfig.register();
+
+		// Register the effect with the game
+		Registry.register(Registries.STATUS_EFFECT, new Identifier(BlackArchive.MOD_ID, "dalek_nanocloud"), DALEK_NANOCLOUD);
 
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();

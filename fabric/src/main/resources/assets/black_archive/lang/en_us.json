@@ -27,8 +27,8 @@
   "item.sonic13.tooltip": "Made with Sheffield steel.",
   "item.dalek_laser.tooltip": "A laser weapon salvaged from a Dalek's casing!",
   "block.dalek_gravity.tooltip": "The core computer of a Dalek ship responsible for all life support.",
-  "block.gravity.tooltip": "When powered provides a gravity field in a radius of 8 blocks.",
-  "block.oxygen.tooltip": "When powered provides an oxygen field in a radius of 8 blocks.",
+  "block.gravity.tooltip": "When powered provides a gravity field.",
+  "block.oxygen.tooltip": "When powered provides an oxygen field.",
   "sonic.title.scan": "Scan Results",
   "laser.gun.outofcharge": "Error: No charge remaining."
 }

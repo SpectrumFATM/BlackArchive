@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.config.ConfigHelper;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -57,7 +58,7 @@ public class LaserEntity extends ThrownEntity {
         super.onBlockHit(blockHitResult);
         BlockState state = this.getWorld().getBlockState(blockHitResult.getBlockPos());
 
-        if (state.getBlock() instanceof DoorBlock) {
+        if (state.getBlock() instanceof DoorBlock && ConfigHelper.getConfig().shouldDalekGunStickDestroyDoors) {
             // Get the position where the block was hit
             BlockPos pos = blockHitResult.getBlockPos();
 

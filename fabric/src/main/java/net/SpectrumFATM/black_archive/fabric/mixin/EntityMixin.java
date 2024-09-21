@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
+import net.SpectrumFATM.black_archive.fabric.config.ConfigHelper;
 import net.SpectrumFATM.black_archive.fabric.util.LifeSupportUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -42,7 +43,7 @@ public abstract class EntityMixin {
             return;
         }
 
-        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, 8) && !LifeSupportUtil.tardisNearby(entity, 3);
+        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, ConfigHelper.getConfig().oxygenFieldRange) && !LifeSupportUtil.tardisNearby(entity, 3);
 
         if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
             shouldSuffocate = false;

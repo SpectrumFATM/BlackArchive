@@ -1,5 +1,8 @@
 package net.SpectrumFATM.black_archive.fabric;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
@@ -22,6 +25,7 @@ public class BlackArchive implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Hello Fabric world!");
+		AutoConfig.register(BlackArchiveConfig.class, GsonConfigSerializer::new);
 
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();

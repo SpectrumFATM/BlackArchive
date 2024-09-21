@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric.util;
 import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
+import net.SpectrumFATM.black_archive.fabric.config.ConfigHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
@@ -36,13 +37,17 @@ public class LifeSupportUtil {
 
         for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
             BlockState state = world.getBlockState(generatorPos);
-            if (state.getBlock() instanceof DalekGravityGenBlock) {
+            if (state.getBlock() instanceof DalekGravityGenBlock && state.getBlock() instanceof DalekGravityGenBlock) {
                 if (state.get(GravityGenBlock.POWERED)) {
                     dalekGenFound = true;
                 }
             } else if (state.getBlock() instanceof GravityGenBlock) {
-                if (state.get(GravityGenBlock.POWERED)) {
-                    return true;
+                searchRadius = ConfigHelper.getConfig().gravityGeneratorRange; // Set the search radius to 8 for GravityGenBlock
+                for (BlockPos gravPos: BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
+                    state = world.getBlockState(gravPos);
+                    if (state.getBlock() instanceof GravityGenBlock && state.get(GravityGenBlock.POWERED)) {
+                        return true;
+                    }
                 }
             }
         }

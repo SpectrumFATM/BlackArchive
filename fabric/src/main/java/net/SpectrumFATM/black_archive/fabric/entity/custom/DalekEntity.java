@@ -1,6 +1,5 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
-import net.SpectrumFATM.black_archive.fabric.config.ConfigHelper;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.minecraft.block.BlockState;
@@ -16,16 +15,11 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import whocraft.tardis_refined.registry.TRItemRegistry;
-
-import java.util.List;
-import java.util.Optional;
 
 public class DalekEntity extends HostileEntity implements RangedAttackMob {
     public DalekEntity(EntityType<DalekEntity> type, World world) {

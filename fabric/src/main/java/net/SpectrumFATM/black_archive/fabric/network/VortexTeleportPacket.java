@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.network;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
-import net.SpectrumFATM.black_archive.fabric.config.ConfigHelper;
+import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -20,7 +20,7 @@ import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 
 public class VortexTeleportPacket {
     public static final Identifier ID = new Identifier(BlackArchive.MOD_ID, "vortex_teleport");
-    private static final int COOLDOWN_TIME = ConfigHelper.getConfig().vortexManipulatorCooldown * 20;
+    private static final int COOLDOWN_TIME = BlackArchiveConfig.COMMON.vortexManipulatorCooldown.get() * 20;
 
     public static void send(double x, double y, double z, String dimension) {
         PacketByteBuf buf = PacketByteBufs.create();

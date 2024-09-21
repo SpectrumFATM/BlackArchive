@@ -1,7 +1,5 @@
 package net.SpectrumFATM.black_archive.fabric;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
@@ -20,12 +18,14 @@ import org.slf4j.LoggerFactory;
 public class BlackArchive implements ModInitializer {
 
 	public static final String MOD_ID = "black_archive";
-    public static final Logger LOGGER = LoggerFactory.getLogger("black_archive");
+	public static final Logger LOGGER = LoggerFactory.getLogger("black_archive");
 
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Hello Fabric world!");
-		AutoConfig.register(BlackArchiveConfig.class, GsonConfigSerializer::new);
+
+		// Initialize the configuration
+		BlackArchiveConfig.register();
 
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();

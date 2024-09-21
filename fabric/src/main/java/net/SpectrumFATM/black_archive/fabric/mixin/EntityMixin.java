@@ -49,6 +49,10 @@ public abstract class EntityMixin {
             return;
         }
 
+        if (LifeSupportUtil.gravityGenNearby(entity)) {
+            return;
+        }
+
         if (!isInFreefall(entity)) {
             return;
         }

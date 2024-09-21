@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "black_archive:asteroid",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 761548767,
+    "spacing": 70,
+    "separation": 40
+  }
+}

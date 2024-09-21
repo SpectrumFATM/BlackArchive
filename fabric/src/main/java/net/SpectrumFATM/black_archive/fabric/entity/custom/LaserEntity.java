@@ -69,7 +69,9 @@ public class LaserEntity extends ThrownEntity {
                     0.0, 0.0, 0.0);
 
             getWorld().playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, 1.2f, 1.0f);
-            getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), DoorBlock.NOTIFY_ALL);
+            if (shouldDamageBlocks) {
+                getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), DoorBlock.NOTIFY_ALL);
+            }
 
             // Add smoke particles in a 3-block radius
             for (int x = -1; x <= 1; x++) {

@@ -49,7 +49,7 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
             boolean isSlim = MinecraftClient.getInstance().player.getModel().equals("slim");
             if (isSlim) {
                 // Adjust for slim (Alex) model
-                matrices.translate(-0.065, 0.525, -0.1); // Adjust for slim arms
+                matrices.translate(-0.03525, 0.525, -0.1); // Adjust for slim arms
                 matrices.scale(0.75f, 1.0f, 1.0f); // Scale it slightly smaller on X-axis to fit slim arm
             } else {
                 // Default model (Steve) adjustments
@@ -57,14 +57,14 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
             }
 
             if (clientPlayer.getMainHandStack().getItem() != ModItems.DALEK_BRACELET && clientPlayer.getOffHandStack().getItem() != ModItems.DALEK_BRACELET) {
-                renderBraceletAsHeldItem(player, matrices, vertexConsumers, light, mainArm);
+                renderBraceletAsHeldItem(player, matrices, vertexConsumers, light, mainArm, isSlim);
             }
 
             matrices.pop();
         }
     }
 
-    private void renderBraceletAsHeldItem(PlayerEntity player, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Arm mainArm) {
+    private void renderBraceletAsHeldItem(PlayerEntity player, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Arm mainArm, boolean isSlim) {
         // Get bracelet item from player inventory
         ItemStack braceletStack = findBraceletInHotbar(player);
         if (!braceletStack.isEmpty()) {
@@ -79,7 +79,11 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
             } else {
                 // Left hand - rotate as if held in the left hand
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90));
-                matrices.translate(0.1275, 0.025, -0.05);  // Adjust for left hand if needed (mirrored translation)
+                if (!isSlim) {
+                    matrices.translate(0.1275, 0.025, -0.05);
+                } else {
+                    matrices.translate(0.0855, 0.025, -0.05);
+                }
             }
 
             // Render the bracelet item

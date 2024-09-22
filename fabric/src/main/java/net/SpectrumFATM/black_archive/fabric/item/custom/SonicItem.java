@@ -1,5 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.item.custom;
 
+import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
+import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
@@ -61,6 +63,13 @@ public class SonicItem extends ScrewdriverItem {
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof TrapdoorBlock) {
+                          world.setBlockState(context.getBlockPos(), state.cycle(TrapdoorBlock.OPEN), Block.NOTIFY_ALL);
+                          playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                          cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof TntBlock) {
@@ -138,6 +147,22 @@ public class SonicItem extends ScrewdriverItem {
 
                    if (state.getBlock() instanceof PowderSnowBlock) {
                        world.setBlockState(context.getBlockPos(), Blocks.SNOW_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof GravityGenBlock) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(GravityGenBlock.POWERED), Block.NOTIFY_ALL);
+
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+
+                       cooldown(player, stack);
+                   }
+
+                   if (state.getBlock() instanceof OxygenGenBlock) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(GravityGenBlock.POWERED), Block.NOTIFY_ALL);
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 

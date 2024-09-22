@@ -5,9 +5,15 @@ import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.effects.DalekNanocloudEffect;
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import whocraft.tardis_refined.registry.TRBlockRegistry;
@@ -72,7 +78,10 @@ public class LifeSupportUtil {
             if (state.getBlock() instanceof DalekGravityGenBlock) {
                 Random random = new Random();
                 if (random.nextInt(100) < 5 && entity instanceof PlayerEntity player) {
-                    BlackArchive.DALEK_NANOCLOUD.applyUpdateEffect(player, 999999);
+
+                    if (!player.getInventory().contains(new ItemStack(ModItems.DALEK_BRACELET))) {
+                        applyInfinitePotionEffect(player);
+                    }
                 }
                 return true;
             }
@@ -114,5 +123,19 @@ public class LifeSupportUtil {
 
     public static boolean isInZeroGravityDimension(World world) {
         return world.getRegistryKey().getValue().toString().equals("black_archive:space");
+    }
+
+    public static void applyInfinitePotionEffect(PlayerEntity player) {
+        StatusEffectInstance infiniteEffect = new StatusEffectInstance(
+                BlackArchive.DALEK_NANOCLOUD,
+                -1,
+                0,
+                false,
+                false,
+                true
+        );
+
+        // Apply the effect to the player
+        player.addStatusEffect(infiniteEffect);
     }
 }

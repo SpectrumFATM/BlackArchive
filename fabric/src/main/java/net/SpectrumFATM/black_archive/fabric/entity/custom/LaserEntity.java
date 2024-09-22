@@ -23,9 +23,11 @@ public class LaserEntity extends ThrownEntity {
 
     private float damage;
     private boolean shouldDamageBlocks;
+    private int lifeTime;
 
     public LaserEntity(EntityType<? extends ThrownEntity> entityType, World world) {
         super(entityType, world);
+        this.lifeTime = 200; // 10 seconds (20 ticks per second)
     }
 
     public LaserEntity(World world, double x, double y, double z) {
@@ -59,47 +61,37 @@ public class LaserEntity extends ThrownEntity {
         BlockState state = this.getWorld().getBlockState(blockHitResult.getBlockPos());
 
         if (state.getBlock() instanceof DoorBlock && BlackArchiveConfig.COMMON.shouldDalekGunStickDestroyDoors.get()) {
-            // Get the position where the block was hit
             BlockPos pos = blockHitResult.getBlockPos();
-
-            // Play explosion particle effect
-            this.getWorld().addParticle(ParticleTypes.EXPLOSION,
-                    pos.getX() + 0.5,
-                    pos.getY() + 0.5,
-                    pos.getZ() + 0.5,
-                    0.0, 0.0, 0.0);
-
+            this.getWorld().addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
             getWorld().playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, 1.2f, 1.0f);
             if (shouldDamageBlocks) {
                 getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), DoorBlock.NOTIFY_ALL);
             }
-
-            // Add smoke particles in a 3-block radius
             for (int x = -1; x <= 1; x++) {
                 for (int y = -1; y <= 1; y++) {
                     for (int z = -1; z <= 1; z++) {
                         double particleX = pos.getX() + 0.5 + x;
                         double particleY = pos.getY() + 0.5 + y;
                         double particleZ = pos.getZ() + 0.5 + z;
-
-                        // Calculate direction vector
                         double dirX = particleX - (pos.getX() + 0.5);
                         double dirY = particleY - (pos.getY() + 0.5);
                         double dirZ = particleZ - (pos.getZ() + 0.5);
-
-                        // Normalize direction vector
                         double length = Math.sqrt(dirX * dirX + dirY * dirY + dirZ * dirZ);
                         dirX /= length;
                         dirY /= length;
                         dirZ /= length;
-
-                        // Add particle with velocity
-                        this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                                particleX, particleY, particleZ,
-                                dirX * 0.1, dirY * 0.1, dirZ * 0.1);
+                        this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particleX, particleY, particleZ, dirX * 0.1, dirY * 0.1, dirZ * 0.1);
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.lifeTime-- <= 0) {
+            this.kill();
         }
     }
 
@@ -110,6 +102,5 @@ public class LaserEntity extends ThrownEntity {
     @Override
     public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
-
     }
 }

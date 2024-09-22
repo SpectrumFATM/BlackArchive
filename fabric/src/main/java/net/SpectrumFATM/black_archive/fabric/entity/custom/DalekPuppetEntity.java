@@ -1,4 +1,3 @@
-// DalekPuppetEntity.java
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;

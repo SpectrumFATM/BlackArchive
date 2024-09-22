@@ -21,6 +21,8 @@ import net.minecraft.util.Arm;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.util.Arm;
 
+import java.util.Objects;
+
 public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, PlayerEntityModel<PlayerEntity>> {
 
     public BraceletFeatureRenderer(FeatureRendererContext<PlayerEntity, PlayerEntityModel<PlayerEntity>> context) {
@@ -54,8 +56,9 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
                 matrices.translate(-0.065, 0.525, -0.1); // Default translation for regular arms
             }
 
-            // Render the bracelet as if it's being held in the right or left hand
-            renderBraceletAsHeldItem(player, matrices, vertexConsumers, light, mainArm);
+            if (clientPlayer.getMainHandStack().getItem() != ModItems.DALEK_BRACELET && clientPlayer.getOffHandStack().getItem() != ModItems.DALEK_BRACELET) {
+                renderBraceletAsHeldItem(player, matrices, vertexConsumers, light, mainArm);
+            }
 
             matrices.pop();
         }

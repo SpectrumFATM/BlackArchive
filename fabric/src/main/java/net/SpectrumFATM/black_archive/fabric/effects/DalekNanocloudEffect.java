@@ -1,6 +1,8 @@
 package net.SpectrumFATM.black_archive.fabric.effects;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
+import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekPuppetEntity;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -27,6 +29,13 @@ public class DalekNanocloudEffect extends StatusEffect {
 
             if (player.getInventory().contains(new ItemStack(ModItems.DALEK_BRACELET))) {
                 player.removeStatusEffect(BlackArchive.DALEK_NANOCLOUD);
+            }
+
+            if (player.getHealth() <= 0 && !player.isDead()) {
+                DalekPuppetEntity dalekSlave = new DalekPuppetEntity(ModEntities.DALEK_PUPPET, player.getWorld());
+                dalekSlave.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), player.bodyYaw, player.getPitch());
+                player.getWorld().spawnEntity(dalekSlave);
+                player.setHealth(0); // Ensure the player is marked as dead
             }
         }
     }

@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric.entity;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.entity.client.*;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekPuppetEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.LaserEntity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -29,9 +30,19 @@ public class ModEntities {
                     .build("laser")
     );
 
+    public static final EntityType<DalekPuppetEntity> DALEK_PUPPET = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(BlackArchive.MOD_ID, "dalek_puppet"),
+            EntityType.Builder.create(DalekPuppetEntity::new, SpawnGroup.CREATURE)
+                    .setDimensions(1f, 1.5f)
+                    .build("dalek_pupper")
+    );
+
     public static void registerRenderers() {
         EntityRendererRegistry.register(ModEntities.DALEK, DalekRenderer::new);
         EntityRendererRegistry.register(ModEntities.LASER, LaserRenderer::new);
+        EntityRendererRegistry.register(ModEntities.DALEK_PUPPET, DalekPuppetRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
     }
 

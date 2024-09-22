@@ -35,7 +35,7 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
         this.goalSelector.add(3, new LookAroundGoal(this));
         this.goalSelector.add(4, new GoToWalkTargetGoal(this, 2.0D));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false,
-                livingEntity -> !(livingEntity instanceof DalekEntity)));
+                livingEntity -> !(livingEntity instanceof DalekEntity || livingEntity instanceof DalekPuppetEntity)));
     }
 
     public static DefaultAttributeContainer.Builder createDalekAttributes() {

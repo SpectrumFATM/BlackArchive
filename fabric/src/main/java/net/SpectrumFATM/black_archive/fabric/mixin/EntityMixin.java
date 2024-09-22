@@ -43,10 +43,14 @@ public abstract class EntityMixin {
             return;
         }
 
-        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity, BlackArchiveConfig.COMMON.tardisLifeSupportRange.get());
+        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity);
 
         if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
             shouldSuffocate = false;
+            return;
+        }
+
+        if (LifeSupportUtil.tardisNearby(entity)) {
             return;
         }
 

@@ -13,19 +13,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import whocraft.tardis_refined.common.block.shell.ShellBaseBlock;
 import whocraft.tardis_refined.registry.TRBlockRegistry;
 
 import java.util.Random;
 
 public class LifeSupportUtil {
 
-    public static boolean tardisNearby(Entity entity, int radius) {
+    public static boolean tardisNearby(Entity entity) {
         BlockPos entityPos = entity.getBlockPos();
         World world = entity.getWorld();
+        int radius = BlackArchiveConfig.COMMON.tardisLifeSupportRange.get();
 
         for (BlockPos pos : BlockPos.iterate(entityPos.add(-radius, -radius, -radius), entityPos.add(radius, radius, radius))) {
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock() == TRBlockRegistry.GLOBAL_SHELL_BLOCK.get() && isSolidPlatform(world, pos.down(), radius)) {
+            if (state.getBlock() instanceof ShellBaseBlock && isSolidPlatform(world, pos, radius)) {
                 return true;
             }
         }
@@ -105,13 +107,10 @@ public class LifeSupportUtil {
     }
 
     public static boolean isSolidPlatform(World world, BlockPos pos, int radius) {
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                BlockPos checkPos = pos.add(x, 0, z);
-                BlockState state = world.getBlockState(checkPos);
-                if (!state.isSolidBlock(world, checkPos)) {
-                    return false;
-                }
+        for (BlockPos platformPos : BlockPos.iterate(pos.add(-radius, -1, -radius), pos.add(radius, -1, radius))) {
+            BlockState state = world.getBlockState(platformPos);
+            if (state.isAir() || state.isLiquid()) {
+                return false;
             }
         }
         return true;

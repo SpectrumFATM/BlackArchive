@@ -82,6 +82,10 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
                 this.dropStack(new ItemStack(Items.COPPER_BLOCK, 2));
                 this.dropStack(new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 1));
             }
+
+            if (random.nextInt(20) == 1) {
+                this.dropStack(new ItemStack(ModItems.DALEK_BRACELET, 1));
+            }
         }
     }
 }

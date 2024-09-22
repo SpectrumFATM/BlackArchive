@@ -16,22 +16,22 @@ import whocraft.tardis_refined.common.items.KeyItem;
 
 public class ModItems {
 
-    public static final Item VORTEXMANIP = registerItem("vortex_manipulator", new VortexManipulatorItem(new FabricItemSettings()));
-    public static final Item CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new FabricItemSettings()));
-    public static final Item TARDISKEYCLASSIC = registerItem("key_01", new KeyItem(new FabricItemSettings()));
-    public static final Item TARDISKEYMODERN = registerItem("key_02", new KeyItem(new FabricItemSettings()));
-    public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings()));
-    public static final Item SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings(), "item.sonic.tooltip", Formatting.BLUE));
-    public static final Item SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings(), "item.sonic15.tooltip", Formatting.BLUE));
-    public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings(), "item.sonic13.tooltip", Formatting.GOLD));
-    public static final Item DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings(), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER, ModSounds.DALEK_MALFUNCTION));
-    public static final Item DALEK_BRACELET = registerItem("dalek_bracelet", new TooltipItem(new FabricItemSettings(), "item.dalek_bracelet.tooltip"));
+    public static final Item VORTEXMANIP = registerItem("vortex_manipulator", new VortexManipulatorItem(new FabricItemSettings().maxCount(1)));
+    public static final Item CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new FabricItemSettings().maxCount(1)));
+    public static final Item TARDISKEYCLASSIC = registerItem("key_01", new KeyItem(new FabricItemSettings().maxCount(1)));
+    public static final Item TARDISKEYMODERN = registerItem("key_02", new KeyItem(new FabricItemSettings().maxCount(1)));
+    public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings().maxCount(1)));
+    public static final Item SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic.tooltip", Formatting.BLUE));
+    public static final Item SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic15.tooltip", Formatting.BLUE));
+    public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic13.tooltip", Formatting.GOLD));
+    public static final Item DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER, ModSounds.DALEK_MALFUNCTION));
+    public static final Item DALEK_BRACELET = registerItem("dalek_bracelet", new TooltipItem(new FabricItemSettings().maxCount(1), "item.dalek_bracelet.tooltip"));
 
     public static final Item DALEK_GRAV_GEN = registerItem("dalek_gravity_generator", (Item)new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN, new FabricItemSettings(), "block.dalek_gravity.tooltip"));
     public static final Item GRAVITY_GEN = registerItem("gravity_generator", (Item)new TooltipBlockItem(ModBlocks.GRAVITY_GEN, new FabricItemSettings(), "block.gravity.tooltip"));
     public static final Item OXYGEN_GEN = registerItem("oxygen_field", (Item)new TooltipBlockItem(ModBlocks.OXYGEN_GEN, new FabricItemSettings(), "block.oxygen.tooltip"));
 
-    public static final Item DALEK_EGG = registerItem("dalek_spawn_egg", (Item)new SpawnEggItem(ModEntities.DALEK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings()));
+    public static final Item DALEK_EGG = registerItem("dalek_spawn_egg", (Item)new SpawnEggItem(ModEntities.DALEK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(BlackArchive.MOD_ID, name), item);

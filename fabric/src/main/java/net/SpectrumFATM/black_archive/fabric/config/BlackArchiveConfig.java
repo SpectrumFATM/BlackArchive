@@ -21,6 +21,7 @@ public class BlackArchiveConfig {
 
     public static class CommonConfig {
         public final ForgeConfigSpec.IntValue vortexManipulatorCooldown;
+        public final ForgeConfigSpec.IntValue tardisLifeSupportRange;
         public final ForgeConfigSpec.IntValue gravityFieldRange;
         public final ForgeConfigSpec.IntValue oxygenFieldRange;
         public final ForgeConfigSpec.BooleanValue shouldDalekGunStickDestroyDoors;
@@ -31,6 +32,10 @@ public class BlackArchiveConfig {
             vortexManipulatorCooldown = builder
                     .comment("The cooldown time for the vortex manipulator in seconds.")
                     .defineInRange("vortexManipulatorCooldown", 10, 1, 60);
+
+            tardisLifeSupportRange = builder
+                    .comment("The range of the TARDIS life support in blocks.")
+                    .defineInRange("tardisLifeSupportRange", 3, 1, 100);
 
             gravityFieldRange = builder
                     .comment("The range of the gravity field in blocks.")

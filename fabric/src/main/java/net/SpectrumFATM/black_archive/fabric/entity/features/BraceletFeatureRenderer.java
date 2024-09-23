@@ -31,6 +31,10 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, PlayerEntity player, float limbAngle, float limbDistance, float tickDelta, float age, float headYaw, float headPitch) {
+        if (player == null) {
+            return;
+        }
+
         // Render bracelet only if the player is visible and is an instance of AbstractClientPlayerEntity
         if (!player.isInvisible() && player instanceof AbstractClientPlayerEntity clientPlayer) {
             matrices.push();

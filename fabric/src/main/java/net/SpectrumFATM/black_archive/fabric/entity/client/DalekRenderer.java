@@ -23,6 +23,7 @@ public class DalekRenderer extends MobEntityRenderer<DalekEntity, DalekModel<Dal
     public void render(DalekEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
         matrixStack.scale(0.65f, 0.65f, 0.65f);
+
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
         matrixStack.pop();
     }

@@ -2,6 +2,7 @@
 
 ### Added
 - Sonic Screwdrivers now power gravity and oxygen generators.
+- 10th Doctor's Sonic Screwdriver.
 
 #### Fixed
 - Fixed TARDIS gravity generator not working.

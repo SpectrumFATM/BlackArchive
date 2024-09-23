@@ -1,22 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "redstone",
-  "pattern": [
-    " B ",
-    " S ",
-    " I "
-  ],
-  "key": {
-    "B": {
-      "item": "minecraft:orange_stained_glass"
-    },
-    "S": {
-      "item": "tardis_refined:amethyst_screwdriver"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
+  "group": "minecraft:redstone",
+  "ingredients": [
+    {
+      "item": "black_archive:10thsonic"
     }
-  },
+  ],
   "result": {
     "item": "black_archive:13thsonic"
   }

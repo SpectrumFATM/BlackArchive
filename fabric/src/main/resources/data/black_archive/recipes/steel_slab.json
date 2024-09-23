@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "black_archive:cut_steel"
+    }
+  },
+  "result": {
+    "item": "black_archive:steel_slab",
+    "count": 6
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "black_archive:steel_block"
+    }
+  },
+  "result": {
+    "item": "black_archive:cut_steel",
+    "count": 4
+  }
+}

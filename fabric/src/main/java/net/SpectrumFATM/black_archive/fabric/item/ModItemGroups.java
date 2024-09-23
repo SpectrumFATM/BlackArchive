@@ -36,6 +36,19 @@ public class ModItemGroups {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {
             content.add(ModItems.DALEK_EGG);
         });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(content -> {
+            content.add(ModItems.STEEL_INGOT);
+            content.add(ModItems.RAW_STEEL);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(content -> {
+            content.add(ModItems.STEEL_BLOCK);
+            content.add(ModItems.CUT_STEEL);
+            content.add(ModItems.ETCHED_STEEL);
+            content.add(ModItems.STEEL_STAIRS);
+            content.add(ModItems.STEEL_SLAB);
+        });
     }
 
     public static void registerItemGroups() {

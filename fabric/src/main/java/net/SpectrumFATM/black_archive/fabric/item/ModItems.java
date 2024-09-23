@@ -6,6 +6,7 @@ import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.item.custom.*;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
@@ -28,9 +29,17 @@ public class ModItems {
     public static final Item DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER, ModSounds.DALEK_MALFUNCTION));
     public static final Item DALEK_BRACELET = registerItem("dalek_bracelet", new TooltipItem(new FabricItemSettings().maxCount(1), "item.dalek_bracelet.tooltip"));
 
+    public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
+    public static final Item RAW_STEEL = registerItem("raw_steel", new Item(new FabricItemSettings()));
+
     public static final Item DALEK_GRAV_GEN = registerItem("dalek_gravity_generator", (Item)new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN, new FabricItemSettings(), "block.dalek_gravity.tooltip"));
     public static final Item GRAVITY_GEN = registerItem("gravity_generator", (Item)new TooltipBlockItem(ModBlocks.GRAVITY_GEN, new FabricItemSettings(), "block.gravity.tooltip"));
     public static final Item OXYGEN_GEN = registerItem("oxygen_field", (Item)new TooltipBlockItem(ModBlocks.OXYGEN_GEN, new FabricItemSettings(), "block.oxygen.tooltip"));
+    public static final Item STEEL_BLOCK = registerItem("steel_block", new BlockItem(ModBlocks.STEEL_BLOCK, new FabricItemSettings()));
+    public static final Item CUT_STEEL = registerItem("cut_steel", new BlockItem(ModBlocks.CUT_STEEL, new FabricItemSettings()));
+    public static final Item ETCHED_STEEL = registerItem("etched_steel", new BlockItem(ModBlocks.ETCHED_STEEL, new FabricItemSettings()));
+    public static final Item STEEL_STAIRS = registerItem("steel_stairs", new BlockItem(ModBlocks.STEEL_STAIRS, new FabricItemSettings()));
+    public static final Item STEEL_SLAB = registerItem("steel_slab", new BlockItem(ModBlocks.STEEL_SLAB, new FabricItemSettings()));
 
     public static final Item DALEK_EGG = registerItem("dalek_spawn_egg", (Item)new SpawnEggItem(ModEntities.DALEK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
 

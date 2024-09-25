@@ -31,9 +31,10 @@ public class DalekNanocloudEffect extends StatusEffect {
                 player.removeStatusEffect(BlackArchive.DALEK_NANOCLOUD);
             }
 
-            if (player.getHealth() <= 0 && !player.isDead()) {
+            if (player.getHealth() <= 1f && !player.isDead()) {
                 DalekPuppetEntity dalekSlave = new DalekPuppetEntity(ModEntities.DALEK_PUPPET, player.getWorld());
                 dalekSlave.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), player.bodyYaw, player.getPitch());
+                dalekSlave.setPlayerUUID(player.getUuid());
                 player.getWorld().spawnEntity(dalekSlave);
                 player.setHealth(0); // Ensure the player is marked as dead
             }

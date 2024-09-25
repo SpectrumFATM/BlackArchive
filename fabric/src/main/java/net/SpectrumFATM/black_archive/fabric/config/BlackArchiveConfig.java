@@ -8,15 +8,23 @@ public class BlackArchiveConfig {
 
     public static final ForgeConfigSpec COMMON_SPEC;
     public static final CommonConfig COMMON;
+    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ClientConfig CLIENT;
 
     static {
-        final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-        COMMON = new CommonConfig(builder);
-        COMMON_SPEC = builder.build();
+        final ForgeConfigSpec.Builder commonBuilder = new ForgeConfigSpec.Builder();
+        final ForgeConfigSpec.Builder clientBuilder = new ForgeConfigSpec.Builder();
+
+        COMMON = new CommonConfig(commonBuilder);
+        CLIENT = new ClientConfig(clientBuilder);
+
+        COMMON_SPEC = commonBuilder.build();
+        CLIENT_SPEC = clientBuilder.build();
     }
 
     public static void register() {
         ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.COMMON, COMMON_SPEC);
+        ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.CLIENT, CLIENT_SPEC);
     }
 
     public static class CommonConfig {
@@ -48,6 +56,20 @@ public class BlackArchiveConfig {
             shouldDalekGunStickDestroyDoors = builder
                     .comment("Should the Dalek gun stick destroy doors?")
                     .define("shouldDalekGunStickDestroyDoors", true);
+
+            builder.pop();
+        }
+    }
+
+    public static class ClientConfig {
+        public final ForgeConfigSpec.BooleanValue shouldCacheSkins;
+
+        ClientConfig(ForgeConfigSpec.Builder builder) {
+            builder.push("client");
+
+            shouldCacheSkins = builder
+                    .comment("Should the client download and cache skins?")
+                    .define("shouldCacheSkins", true);
 
             builder.pop();
         }

@@ -30,6 +30,11 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
+    // Gson for JSON parsing
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Apache Commons Codec for Base64 decoding
+    implementation 'commons-codec:commons-codec:1.15'
 
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     //modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"

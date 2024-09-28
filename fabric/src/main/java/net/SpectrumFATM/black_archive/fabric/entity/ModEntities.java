@@ -35,7 +35,7 @@ public class ModEntities {
             new Identifier(BlackArchive.MOD_ID, "dalek_puppet"),
             EntityType.Builder.create(DalekPuppetEntity::new, SpawnGroup.CREATURE)
                     .setDimensions(1f, 1.5f)
-                    .build("dalek_pupper")
+                    .build("dalek_puppet")
     );
 
     public static void registerRenderers() {

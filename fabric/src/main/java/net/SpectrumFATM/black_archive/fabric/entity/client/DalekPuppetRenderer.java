@@ -14,6 +14,10 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.codec.binary.Base64;
@@ -26,6 +30,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -34,6 +39,7 @@ import java.util.concurrent.Executors;
 public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity, DalekPuppetModel<DalekPuppetEntity>> {
 
     private final Executor skinDownloadExecutor = Executors.newCachedThreadPool();
+    private UUID playerUUID;
 
     public DalekPuppetRenderer(EntityRendererFactory.Context context) {
         super(context, new DalekPuppetModel<>(context.getPart(ModModelLayers.DALEK_SLAVE)), 0.5f);
@@ -42,9 +48,16 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
 
     @Override
     public Identifier getTexture(DalekPuppetEntity entity) {
-        UUID playerUUID = entity.getPlayerUUID();
+        this.playerUUID = entity.getPlayerUUID();
 
-        if (playerUUID == null || !BlackArchiveConfig.CLIENT.shouldCacheSkins.get()) {
+        if (playerUUID == null) {
+            // UUID is not available, return fallback skin and retry later
+            BlackArchive.LOGGER.warn("playerUUID is null, returning fallback skin.");
+            return getFallbackSkin(entity);
+        }
+
+        // Proceed with normal skin retrieval if UUID is valid
+        if (!BlackArchiveConfig.CLIENT.shouldCacheSkins.get()) {
             return getFallbackSkin(entity);
         }
 
@@ -117,25 +130,6 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
             BlackArchive.LOGGER.error("Error while fetching skin data: {}", e.getMessage());
         }
         return null;
-    }
-
-    private void cacheSkin(UUID playerUUID, String skinUrl) {
-        try {
-            Path cacheDir = Paths.get("config", "black_archive", "skins");
-            if (!Files.exists(cacheDir)) {
-                Files.createDirectories(cacheDir);
-            }
-
-            Path skinPath = cacheDir.resolve(playerUUID.toString() + ".png");
-
-            URL url = new URL(skinUrl);
-            try (InputStream in = url.openStream()) {
-                Files.copy(in, skinPath);
-                BlackArchive.LOGGER.info("Cached skin for player UUID: " + playerUUID);
-            }
-        } catch (Exception e) {
-            BlackArchive.LOGGER.error("Failed to cache skin: {}", e.getMessage());
-        }
     }
 
     private Identifier getCachedSkin(UUID playerUUID) {

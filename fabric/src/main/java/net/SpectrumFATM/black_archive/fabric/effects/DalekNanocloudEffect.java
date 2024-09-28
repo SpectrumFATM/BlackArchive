@@ -10,6 +10,8 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
+import java.util.UUID;
+
 public class DalekNanocloudEffect extends StatusEffect {
     public DalekNanocloudEffect() {
         super(StatusEffectCategory.HARMFUL, 0x000000);

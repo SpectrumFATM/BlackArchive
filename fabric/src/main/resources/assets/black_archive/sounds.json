@@ -22,5 +22,11 @@
     "sounds": [
       "black_archive:dalek_move"
     ]
+  },
+  "cyberman_step": {
+    "subtitle": "sounds.black_archive.cyberman_step.subtitle",
+    "sounds": [
+      "black_archive:cyberman_step"
+    ]
   }
 }

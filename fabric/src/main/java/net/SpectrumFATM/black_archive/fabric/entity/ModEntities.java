@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.entity;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.entity.client.*;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekPuppetEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.LaserEntity;
@@ -38,12 +39,22 @@ public class ModEntities {
                     .build("dalek_puppet")
     );
 
+    public static final EntityType<CybermanEntity> CYBERMAN = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(BlackArchive.MOD_ID, "cyberman"),
+            EntityType.Builder.create(CybermanEntity::new, SpawnGroup.CREATURE)
+                    .setDimensions(1f, 1.5f)
+                    .build("cyberman")
+    );
+
     public static void registerRenderers() {
         EntityRendererRegistry.register(ModEntities.DALEK, DalekRenderer::new);
         EntityRendererRegistry.register(ModEntities.LASER, LaserRenderer::new);
         EntityRendererRegistry.register(ModEntities.DALEK_PUPPET, DalekPuppetRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CYBERMAN, CybermanRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
     }
 
     public static void registerModEntities() {

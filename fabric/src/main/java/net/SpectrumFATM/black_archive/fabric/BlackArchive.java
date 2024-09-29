@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.effects.DalekNanocloudEffect;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekPuppetEntity;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
@@ -52,5 +53,6 @@ public class BlackArchive implements ModInitializer {
 
 		FabricDefaultAttributeRegistry.register(ModEntities.DALEK, DalekEntity.createDalekAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DALEK_PUPPET, DalekPuppetEntity.createDalekSlaveAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CYBERMAN, CybermanEntity.createCyberAttributes());
 	}
 }

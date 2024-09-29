@@ -12,6 +12,7 @@ public class ModSounds {
     public static final SoundEvent DALEK_MALFUNCTION = registerSoundEvent("dalek_laser_malfunction");
     public static final SoundEvent DALEK_MOVE = registerSoundEvent("dalek_move");
     public static final SoundEvent CYBERMAN_STEP = registerSoundEvent("cyberman_step");
+    public static final SoundEvent CYBERMAN_GUN = registerSoundEvent("cyberman_gun");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(BlackArchive.MOD_ID, name);

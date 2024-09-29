@@ -28,5 +28,11 @@
     "sounds": [
       "black_archive:cyberman_step"
     ]
-  }
+  },
+    "cyberman_gun": {
+        "subtitle": "sounds.black_archive.cyberman_gun.subtitle",
+        "sounds": [
+        "black_archive:cyberman_gun"
+        ]
+    }
 }

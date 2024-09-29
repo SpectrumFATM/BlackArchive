@@ -26,7 +26,7 @@ public class CybermanRenderer extends MobEntityRenderer<CybermanEntity, Cyberman
     @Override
     public void render(CybermanEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
-        matrixStack.scale(1.05F, 1.05F, 1.05F);
+        matrixStack.scale(1.01F, 1.01F, 1.01F);
 
         CybermanModel<?> model = this.getModel();
         model.setFiring(mobEntity.isFiring());

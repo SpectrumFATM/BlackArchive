@@ -7,4 +7,5 @@ public class ModModelLayers {
     public static final EntityModelLayer DALEK = new EntityModelLayer(new Identifier("black_archive", "dalek"), "main");
     public static final EntityModelLayer DALEK_SLAVE = new EntityModelLayer(new Identifier("black_archive", "dalek_slave"), "main");
     public static final EntityModelLayer CYBERMAN = new EntityModelLayer(new Identifier("black_archive", "cyberman"), "main");
+    public static final EntityModelLayer CYBERMAT = new EntityModelLayer(new Identifier("black_archive", "cybermat"), "main");
 }

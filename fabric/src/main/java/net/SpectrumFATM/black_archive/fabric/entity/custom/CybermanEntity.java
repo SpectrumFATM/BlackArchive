@@ -1,5 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -21,6 +23,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class CybermanEntity extends HostileEntity implements RangedAttackMob {
 
@@ -46,8 +50,18 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
     public void tick() {
         super.tick();
 
+        if (firingTicks > 0) {
+            firingTicks--;
+        }
+
         // Server-side logic
         if (!this.getWorld().isClient) {
+
+            Random random = new Random();
+            if (random.nextInt(1000) == 1 && BlackArchiveConfig.COMMON.shouldCybermatSpawnAroundCybermen.get()) {
+                spawnCybermat();
+            }
+
             LivingEntity target = this.getTarget();
             if (target instanceof PlayerEntity) {
                 double distance = this.squaredDistanceTo(target);
@@ -92,7 +106,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(5, new GoToWalkTargetGoal(this, 2.0D));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false,
-                livingEntity -> !(livingEntity instanceof CybermanEntity)));
+                livingEntity -> !(livingEntity instanceof CybermanEntity || livingEntity instanceof CybermatEntity)));
     }
 
     public static DefaultAttributeContainer.Builder createCyberAttributes() {
@@ -123,7 +137,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     public void attack(LivingEntity target, float pullProgress) {
-        if (this.getTarget() instanceof PlayerEntity) {
+        if (this.getTarget() instanceof PlayerEntity && this.firingTicks <= 0) {
             double armX = this.getX() - 0.5 * Math.cos(Math.toRadians(this.bodyYaw));
             double armY = this.getY() + this.getHeight() * 0.75;
             double armZ = this.getZ() - 0.5 * Math.sin(Math.toRadians(this.bodyYaw));
@@ -139,6 +153,8 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
 
             this.getWorld().spawnEntity(laser);
             this.playSound(ModSounds.CYBERMAN_GUN, 1f, 1.0f);
+        } else if (this.firingTicks <= 0) {
+            this.playSound(ModSounds.CYBERMAN_MALFUNCTION, 1f, 1.0f);
         }
     }
 
@@ -157,11 +173,44 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
             ItemStack weapon = attacker.getMainHandStack(); // Get the weapon in the main hand
 
             // Check if the weapon is gold and apply a 1.5x damage multiplier
-            if (weapon.getItem() == Items.GOLDEN_SWORD || weapon.getItem() == Items.GOLDEN_AXE) {
+            if (weapon.getItem() == Items.GOLDEN_SWORD || weapon.getItem() == Items.GOLDEN_AXE || weapon.getItem() == Items.GOLDEN_PICKAXE || weapon.getItem() == Items.GOLDEN_SHOVEL || weapon.getItem() == Items.GOLDEN_HOE) {
                 amount *= 1.5; // Multiply damage by 1.5
             }
         }
 
         return super.damage(source, amount); // Apply the damage to the entity
+    }
+
+    public void disableFire(int ticks) {
+        this.firingTicks = ticks;
+    }
+
+    public void spawnCybermat() {
+        CybermatEntity cybermat = new CybermatEntity(ModEntities.CYBERMAT, this.getWorld());
+        World world = this.getWorld();
+
+        double x = this.getX() + this.random.nextGaussian() * 4;
+        double z = this.getZ() + this.random.nextGaussian() * 4;
+        double y = this.getY();
+
+        BlockState pos = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
+
+        while (!pos.isAir()) {
+            x = this.getX() + this.random.nextGaussian() * 4;
+            z = this.getZ() + this.random.nextGaussian() * 4;
+
+
+            for (double i = this.getY(); pos.isAir(); y--) {
+                if (!world.getBlockState(new BlockPos((int) x, (int) i, (int) z)).isAir()) {
+                    y = i + 1;
+                    break;
+                }
+            }
+
+            pos = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
+
+            cybermat.refreshPositionAndAngles(x, y, z, this.random.nextFloat() * 360.0F, 0.0F);
+            this.getWorld().spawnEntity(cybermat);
+        }
     }
 }

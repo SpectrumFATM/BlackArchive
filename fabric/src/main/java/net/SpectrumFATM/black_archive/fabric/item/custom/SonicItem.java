@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.item.custom;
 
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
@@ -188,6 +189,8 @@ public class SonicItem extends ScrewdriverItem {
                     skeleton.kill();
                 } else if (entity instanceof BlazeEntity blazeEntity && !user.isSneaking()) {
                     blazeEntity.kill();
+                } else if (entity instanceof CybermanEntity cybermanEntity && !user.isSneaking()) {
+                    cybermanEntity.disableFire(100);
                 }else {
                     String entityName = entity.getName().getString();
                     int xPos = entity.getBlockX();

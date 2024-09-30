@@ -33,6 +33,7 @@ public class BlackArchiveConfig {
         public final ForgeConfigSpec.IntValue gravityFieldRange;
         public final ForgeConfigSpec.IntValue oxygenFieldRange;
         public final ForgeConfigSpec.BooleanValue shouldDalekGunStickDestroyDoors;
+        public final ForgeConfigSpec.BooleanValue shouldCybermatSpawnAroundCybermen;
 
         CommonConfig(ForgeConfigSpec.Builder builder) {
             builder.push("common");
@@ -56,6 +57,10 @@ public class BlackArchiveConfig {
             shouldDalekGunStickDestroyDoors = builder
                     .comment("Should the Dalek gun stick destroy doors?")
                     .define("shouldDalekGunStickDestroyDoors", true);
+
+            shouldCybermatSpawnAroundCybermen = builder
+                    .comment("Should Cybermats spawn around Cybermen?")
+                    .define("shouldCybermatSpawnAroundCybermen", true);
 
             builder.pop();
         }

@@ -22,7 +22,7 @@ public class CybermatEntity extends HostileEntity {
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 1D));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 5.0F, 0.02F));
         this.goalSelector.add(4, new LookAroundGoal(this));
-        this.goalSelector.add(5, new GoToWalkTargetGoal(this, 2.0D));
+        this.goalSelector.add(5, new GoToWalkTargetGoal(this, 2.5D));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false,
                 livingEntity -> !(livingEntity instanceof CybermanEntity || livingEntity instanceof CybermatEntity)));
     }

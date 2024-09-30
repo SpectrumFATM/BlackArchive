@@ -35,6 +35,8 @@ public class ModItemGroups {
     public static void registerToVanillaItemGroups() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {
             content.add(ModItems.DALEK_EGG);
+            content.add(ModItems.CYBERMAN_EGG);
+            content.add(ModItems.CYBERMAT_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(content -> {

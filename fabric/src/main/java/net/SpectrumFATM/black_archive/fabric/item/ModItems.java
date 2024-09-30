@@ -42,6 +42,8 @@ public class ModItems {
     public static final Item STEEL_SLAB = registerItem("steel_slab", new BlockItem(ModBlocks.STEEL_SLAB, new FabricItemSettings()));
 
     public static final Item DALEK_EGG = registerItem("dalek_spawn_egg", (Item)new SpawnEggItem(ModEntities.DALEK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
+    public static final Item CYBERMAT_EGG = registerItem("cybermat_spawn_egg", (Item)new SpawnEggItem(ModEntities.CYBERMAT, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
+    public static final Item CYBERMAN_EGG = registerItem("cyberman_spawn_egg", (Item)new SpawnEggItem(ModEntities.CYBERMAN, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(BlackArchive.MOD_ID, name), item);

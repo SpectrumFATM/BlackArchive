@@ -3,8 +3,11 @@ package net.SpectrumFATM.black_archive.fabric.item.custom;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermatEntity;
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -18,6 +21,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
@@ -191,7 +195,11 @@ public class SonicItem extends ScrewdriverItem {
                     blazeEntity.kill();
                 } else if (entity instanceof CybermanEntity cybermanEntity && !user.isSneaking()) {
                     cybermanEntity.disableFire(100);
-                }else {
+                } else if (entity instanceof CybermatEntity cybermatEntity && !user.isSneaking()) {
+                    BlockPos pos = entity.getBlockPos();
+                    entity.remove(Entity.RemovalReason.KILLED);
+                    cybermatEntity.dropStack(new ItemStack(ModItems.CYBERMAT_EGG), 0.0f);
+                } else {
                     String entityName = entity.getName().getString();
                     int xPos = entity.getBlockX();
                     int yPos = entity.getBlockY();

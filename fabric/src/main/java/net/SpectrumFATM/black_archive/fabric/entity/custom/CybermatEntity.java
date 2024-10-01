@@ -1,13 +1,16 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class CybermatEntity extends HostileEntity {
@@ -35,5 +38,17 @@ public class CybermatEntity extends HostileEntity {
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 5.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0); // Increased attack damage for melee
+    }
+
+    @Override
+    public void onDeath(DamageSource source) {
+        super.onDeath(source);
+        if (!this.getWorld().isClient) {
+            if (random.nextInt(20) == 1) {
+                this.dropStack(new ItemStack(ModItems.CYBERMAT_EGG, 1));
+            } else {
+                this.dropStack(new ItemStack(ModItems.STEEL_INGOT, 1));
+            }
+        }
     }
 }

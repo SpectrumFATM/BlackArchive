@@ -5,6 +5,7 @@ import net.SpectrumFATM.black_archive.fabric.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -14,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import whocraft.tardis_refined.common.block.shell.ShellBaseBlock;
-import whocraft.tardis_refined.registry.TRBlockRegistry;
 
 import java.util.Random;
 
@@ -43,6 +43,15 @@ public class LifeSupportUtil {
         World world = entity.getWorld();
 
         boolean dalekGenFound = false;
+
+        if (entity instanceof CybermanEntity) {
+            for (BlockPos pos : BlockPos.iterate(entityPos.add(0, -5, 0), entityPos.add(0, 0, 0))) {
+                BlockState state = world.getBlockState(pos);
+                if (!state.isAir() && !state.isLiquid()) {
+                    return true;
+                }
+            }
+        }
 
         for (BlockPos generatorPos : BlockPos.iterate(entityPos.add(-searchRadius, -searchRadius, -searchRadius), entityPos.add(searchRadius, searchRadius, searchRadius))) {
             BlockState state = world.getBlockState(generatorPos);

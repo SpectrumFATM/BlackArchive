@@ -14,13 +14,6 @@ public abstract class TardisPilotingMixin {
 
     @Inject(method = "findClosestValidPosition", at = @At("HEAD"), cancellable = true, remap = false)
     public void findClosestValidPosition(TardisNavLocation location, CallbackInfoReturnable<TardisNavLocation> ci) {
-        if (location.getLevel().getRegistryKey() == ModDimensions.SPACEDIM_LEVEL_KEY) {
-            BlackArchive.LOGGER.info("Set float to true!");
-            ci.setReturnValue(location);
-            return;
-        }
-
-        // Add a return statement for other cases
-        ci.setReturnValue(location); // or any other default value as per your logic
+        ci.setReturnValue(location);
     }
 }

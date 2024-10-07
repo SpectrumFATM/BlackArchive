@@ -11,6 +11,10 @@
     {
       "structure": "black_archive:dalek_ship",
       "weight": 1
+    },
+    {
+      "structure": "black_archive:cyber_tomb",
+      "weight": 1
     }
   ],
   "placement": {

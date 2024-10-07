@@ -58,7 +58,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
         if (!this.getWorld().isClient) {
 
             Random random = new Random();
-            if (random.nextInt(1000) == 1 && BlackArchiveConfig.COMMON.shouldCybermatSpawnAroundCybermen.get()) {
+            if (random.nextInt(10000) == 1 && BlackArchiveConfig.COMMON.shouldCybermatSpawnAroundCybermen.get()) {
                 spawnCybermat();
             }
 

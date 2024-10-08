@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric.entity.custom;
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.effects.CyberConversionEffect;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -15,6 +16,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -46,11 +48,13 @@ public class CybermatEntity extends HostileEntity {
     }
 
     @Override
-    protected void attackLivingEntity(LivingEntity target) {
-        super.attackLivingEntity(target);
-        if (random.nextInt(10000) == 1 && target instanceof PlayerEntity player) {
-            applyInfinitePotionEffect(player);
+    public boolean tryAttack(Entity target) {
+
+        if (random.nextInt(1000) == 1 && target instanceof PlayerEntity player) {
+           applyInfinitePotionEffect(player);
         }
+
+        return super.tryAttack(target);
     }
 
     @Override
@@ -74,5 +78,6 @@ public class CybermatEntity extends HostileEntity {
                 false,
                 true
         );
+        player.addStatusEffect(infiniteEffect); // Apply the effect to the player
     }
 }

@@ -8,11 +8,12 @@
 - Client config added.
 - Cybermen mob.
 - Cybermat mob.
+- Cyber Ships
+- Cyber Tombs.
 
 ### Fixed
 - Fixed TARDIS gravity generator not working.
 - Added a rendering fix for compatibility with the skin shuffle mod.
 
 ### Planned
-- Cyberships.
 - Cyberconversion.

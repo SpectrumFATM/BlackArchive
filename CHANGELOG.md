@@ -10,10 +10,8 @@
 - Cybermat mob.
 - Cyber Ships
 - Cyber Tombs.
+- Cyber conversion.
 
 ### Fixed
 - Fixed TARDIS gravity generator not working.
 - Added a rendering fix for compatibility with the skin shuffle mod.
-
-### Planned
-- Cyberconversion.

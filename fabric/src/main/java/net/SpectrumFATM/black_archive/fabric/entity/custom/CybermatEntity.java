@@ -1,5 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
+import net.SpectrumFATM.black_archive.fabric.effects.CyberConversionEffect;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -7,11 +9,14 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class CybermatEntity extends HostileEntity {
     public CybermatEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -41,6 +46,14 @@ public class CybermatEntity extends HostileEntity {
     }
 
     @Override
+    protected void attackLivingEntity(LivingEntity target) {
+        super.attackLivingEntity(target);
+        if (random.nextInt(10000) == 1 && target instanceof PlayerEntity player) {
+            applyInfinitePotionEffect(player);
+        }
+    }
+
+    @Override
     public void onDeath(DamageSource source) {
         super.onDeath(source);
         if (!this.getWorld().isClient) {
@@ -50,5 +63,16 @@ public class CybermatEntity extends HostileEntity {
                 this.dropStack(new ItemStack(ModItems.STEEL_INGOT, 1));
             }
         }
+    }
+
+    public static void applyInfinitePotionEffect(PlayerEntity player) {
+        StatusEffectInstance infiniteEffect = new StatusEffectInstance(
+                BlackArchive.CYBER_CONVERSION,
+                -1,
+                0,
+                false,
+                false,
+                true
+        );
     }
 }

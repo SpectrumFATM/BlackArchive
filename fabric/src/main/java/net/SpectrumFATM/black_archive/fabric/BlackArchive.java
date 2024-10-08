@@ -29,6 +29,7 @@ public class BlackArchive implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("black_archive");
 
 	public static final StatusEffect DALEK_NANOCLOUD = new DalekNanocloudEffect();
+	public static final StatusEffect CYBER_CONVERSION = new DalekNanocloudEffect();
 
 	@Override
 	public void onInitialize() {
@@ -39,6 +40,7 @@ public class BlackArchive implements ModInitializer {
 
 		// Register the effect with the game
 		Registry.register(Registries.STATUS_EFFECT, new Identifier(BlackArchive.MOD_ID, "dalek_nanocloud"), DALEK_NANOCLOUD);
+		Registry.register(Registries.STATUS_EFFECT, new Identifier(BlackArchive.MOD_ID, "cyber_conversion"), CYBER_CONVERSION);
 
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();

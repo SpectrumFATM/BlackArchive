@@ -29,6 +29,7 @@
   "entity.black_archive.cyberman": "Cyberman",
   "entity.black_archive.cybermat": "Cybermat",
   "effect.black_archive.dalek_nanocloud": "Dalek Nanocloud",
+  "effect.black_archive.cyber_conversion": "Cyber Conversion",
   "itemgroup.black_archive": "Black Archive",
   "sounds.black_archive.vortex_teleport.subtitle": "Vortex Manipulator sparks",
   "sounds.black_archive.dalek_laser.subtitle": "Dalek laser fires",

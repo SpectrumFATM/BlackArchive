@@ -12,8 +12,11 @@ import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 @Mixin(TardisPilotingManager.class)
 public abstract class TardisPilotingMixin {
 
+
     @Inject(method = "findClosestValidPosition", at = @At("HEAD"), cancellable = true, remap = false)
     public void findClosestValidPosition(TardisNavLocation location, CallbackInfoReturnable<TardisNavLocation> ci) {
-        ci.setReturnValue(location);
+        if (location.getDimensionKey().getValue() == ModDimensions.SPACEDIM_LEVEL_KEY.getValue()) {
+            ci.setReturnValue(location);
+        }
     }
 }

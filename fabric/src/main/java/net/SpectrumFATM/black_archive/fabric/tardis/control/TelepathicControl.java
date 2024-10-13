@@ -94,7 +94,8 @@ public class TelepathicControl extends Control {
             Identifier structureId = entry.getKey().get().getValue();
             return !structureId.getPath().contains("ocean")
                     && !structureId.getPath().contains("shipwreck")
-                    && !structureId.getPath().contains("underwater");
+                    && !structureId.getPath().contains("underwater")
+                    && !structureId.getPath().contains("monument");
         };
     }
 }

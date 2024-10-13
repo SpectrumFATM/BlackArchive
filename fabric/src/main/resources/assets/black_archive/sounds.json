@@ -40,5 +40,11 @@
         "sounds": [
         "black_archive:cyberman_malfunction"
         ]
+    },
+    "tardis_groan": {
+        "subtitle": "sounds.black_archive.tardis_groan.subtitle",
+        "sounds": [
+        "black_archive:tardis_groan"
+        ]
     }
 }

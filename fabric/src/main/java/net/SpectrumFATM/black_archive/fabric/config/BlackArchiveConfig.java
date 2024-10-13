@@ -32,6 +32,7 @@ public class BlackArchiveConfig {
         public final ForgeConfigSpec.IntValue tardisLifeSupportRange;
         public final ForgeConfigSpec.IntValue gravityFieldRange;
         public final ForgeConfigSpec.IntValue oxygenFieldRange;
+        public final ForgeConfigSpec.IntValue telepathicCircuitRange;
         public final ForgeConfigSpec.BooleanValue shouldDalekGunStickDestroyDoors;
         public final ForgeConfigSpec.BooleanValue shouldCybermatSpawnAroundCybermen;
 
@@ -53,6 +54,10 @@ public class BlackArchiveConfig {
             oxygenFieldRange = builder
                     .comment("The range of the oxygen field in blocks.")
                     .defineInRange("oxygenFieldRange", 8, 1, 100);
+
+            telepathicCircuitRange = builder
+                    .comment("The range of the telepathic circuit in blocks.")
+                    .defineInRange("telepathicCircuitRange", 5000, 1, 10000);
 
             shouldDalekGunStickDestroyDoors = builder
                     .comment("Should the Dalek gun stick destroy doors?")

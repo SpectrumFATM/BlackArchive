@@ -38,6 +38,7 @@
   "sounds.black_archive.cyberman_step.subtitle": "Cyberman steps",
   "sounds.black_archive.cyberman_gun.subtitle": "Cyberman gun fires",
   "sounds.black_archive.cyberman_malfunction.subtitle": "Cyberman malfunction",
+  "sounds.black_archive.tardis_groan.subtitle": "TARDIS groans",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
   "item.remote.tooltip": "A device used to control the TARDIS remotely.",
   "item.sonic.tooltip": "Same software different case!",
@@ -50,5 +51,8 @@
   "block.gravity.tooltip": "When powered provides a gravity field.",
   "block.oxygen.tooltip": "When powered provides an oxygen field.",
   "sonic.title.scan": "Scan Results",
-  "laser.gun.outofcharge": "Error: No charge remaining."
+  "laser.gun.outofcharge": "Error: No charge remaining.",
+  "control.black_archive.telepathic": "Telepathic Interface",
+  "telepathic.black_archive.bad": "There's something wrong...",
+  "telepathic.black_archive.happy": "The TARDIS is happy!"
 }

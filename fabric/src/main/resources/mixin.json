@@ -7,7 +7,17 @@
     "EntityMixin",
     "TardisPilotingMixin",
     "RenderMixin",
-    "PlayerEntityRendererMixin"
+    "PlayerEntityRendererMixin",
+    "VictorianMixin",
+    "RefurbMixin",
+    "FactoryMixin",
+    "CrystalMixin",
+    "CopperMixin",
+    "CoralMixin",
+    "ToyotaMixin",
+    "MystMixin",
+    "NukaMixin",
+    "InitiativeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

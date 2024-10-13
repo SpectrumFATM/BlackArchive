@@ -1,15 +1,11 @@
 package net.SpectrumFATM.black_archive.fabric.effects;
 
-import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
-import net.SpectrumFATM.black_archive.fabric.entity.custom.DalekPuppetEntity;
-import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 
 public class CyberConversionEffect extends StatusEffect {
     public CyberConversionEffect() {

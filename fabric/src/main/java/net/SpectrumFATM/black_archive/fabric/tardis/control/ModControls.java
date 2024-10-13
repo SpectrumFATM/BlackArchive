@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.tardis.control;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.minecraft.util.Identifier;
 import whocraft.tardis_refined.common.tardis.control.Control;
 import whocraft.tardis_refined.registry.DeferredRegistry;
@@ -30,7 +31,7 @@ public class ModControls {
     }
 
     public static void register() {
-        // This method can be used to trigger the static block and ensure controls are registered
+        BlackArchive.LOGGER.info("Registering tardis controls for black_archive");
     }
 
     static {

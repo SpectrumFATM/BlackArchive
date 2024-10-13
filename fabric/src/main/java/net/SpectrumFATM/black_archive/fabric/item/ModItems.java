@@ -50,7 +50,7 @@ public class ModItems {
     }
 
     public static void registerModItems() {
-        BlackArchive.LOGGER.info("Registering mod items");
+        BlackArchive.LOGGER.info("Registering mod items for black_archive");
 
     }
 }

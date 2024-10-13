@@ -80,7 +80,7 @@ public class TelepathicControl extends Control {
 
         if (structurePos.isPresent()) {
             BlockPos foundPos = structurePos.get().getFirst();
-            foundPos = foundPos.add(0, 256, 0);
+            foundPos = foundPos.add(0, 250, 0);
             tardisLevelOperator.getPilotingManager().getTargetLocation().setPosition(foundPos);
             controlEntity.playSound(TRSoundRegistry.CORRIDOR_TELEPORTER_SUCCESS.get(), 1.0F, 1.0F);
             return true;

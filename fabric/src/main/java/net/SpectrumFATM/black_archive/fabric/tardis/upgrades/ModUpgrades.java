@@ -17,7 +17,7 @@ public class ModUpgrades {
         TELEPATHIC_UPGRADE= TRUpgrades.UPGRADE_DEFERRED_REGISTRY.register("telepathic_upgrade", () -> {
             Item i = Items.PLAYER_HEAD;
             Objects.requireNonNull(i);
-            return (new Upgrade(i::getDefaultStack, TRUpgrades.DIMENSION_TRAVEL, RegistryHelper.makeKey("telepathic_upgrade"), Upgrade.UpgradeType.SUB_UPGRADE)).setSkillPointsRequired(10).setPosition(7.0, 6.0);
+            return (new Upgrade(i::getDefaultStack, TRUpgrades.DIMENSION_TRAVEL, RegistryHelper.makeKey("telepathic_upgrade"), Upgrade.UpgradeType.SUB_UPGRADE)).setSkillPointsRequired(25).setPosition(7.0, 6.0);
         });
     }
 

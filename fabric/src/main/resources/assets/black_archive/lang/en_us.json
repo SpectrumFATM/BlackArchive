@@ -54,5 +54,7 @@
   "laser.gun.outofcharge": "Error: No charge remaining.",
   "control.black_archive.telepathic": "Telepathic Interface",
   "telepathic.black_archive.bad": "There's something wrong...",
-  "telepathic.black_archive.happy": "The TARDIS is happy!"
+  "telepathic.black_archive.happy": "The TARDIS is happy!",
+  "upgrade.tardis_refined.telepathic_upgrade": "Telepathic Circuits",
+  "upgrade.tardis_refined.telepathic_upgrade.description": "Allows the TARDIS to communicate telepathically with the user."
 }

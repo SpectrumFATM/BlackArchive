@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric.tardis.control;
 import com.mojang.datafixers.util.Pair;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
+import net.SpectrumFATM.black_archive.fabric.tardis.upgrades.ModUpgrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.structure.Structure;
 import whocraft.tardis_refined.common.capability.TardisLevelOperator;
+import whocraft.tardis_refined.common.capability.upgrades.UpgradeHandler;
 import whocraft.tardis_refined.common.entity.ControlEntity;
 import whocraft.tardis_refined.common.tardis.control.Control;
 import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
@@ -34,6 +36,12 @@ public class TelepathicControl extends Control {
 
     @Override
     public boolean onLeftClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, PlayerEntity playerEntity) {
+
+        UpgradeHandler upgradeHandler = tardisLevelOperator.getUpgradeHandler();
+        if (!ModUpgrades.TELEPATHIC_UPGRADE.get().isUnlocked(upgradeHandler)) {
+            return false;
+        }
+
         Random random = new Random();
 
         if (random.nextInt(20) == 1) {
@@ -46,6 +54,7 @@ public class TelepathicControl extends Control {
             world.playSoundAtBlockCenter(pos, ModSounds.TARDIS_GROAN, SoundCategory.AMBIENT, 1.0F, 1.0F, true);
         } else {
             playerEntity.sendMessage(Text.translatable("telepathic.black_archive.happy"), true);
+            controlEntity.playSound(TRSoundRegistry.CONSOLE_POWER_ON.get(), 1.0F, 1.0F);
         }
 
         return true;
@@ -53,6 +62,12 @@ public class TelepathicControl extends Control {
 
     @Override
     public boolean onRightClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, PlayerEntity playerEntity) {
+
+        UpgradeHandler upgradeHandler = tardisLevelOperator.getUpgradeHandler();
+        if (!ModUpgrades.TELEPATHIC_UPGRADE.get().isUnlocked(upgradeHandler)) {
+            return false;
+        }
+
         ServerWorld world = tardisLevelOperator.getPilotingManager().getTargetLocation().getLevel();
         BlockPos pos = tardisLevelOperator.getPilotingManager().getTargetLocation().getPosition();
         Random random = new Random();

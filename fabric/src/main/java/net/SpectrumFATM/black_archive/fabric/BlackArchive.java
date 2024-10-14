@@ -35,8 +35,6 @@ public class BlackArchive implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Hello Fabric world!");
-
 		// Initialize the configuration
 		BlackArchiveConfig.register();
 

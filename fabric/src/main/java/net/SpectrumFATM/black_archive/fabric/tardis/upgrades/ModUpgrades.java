@@ -13,10 +13,10 @@ import java.util.Objects;
 
 public class ModUpgrades {
     public static RegistrySupplier<Upgrade> TELEPATHIC_UPGRADE;
-    public static RegistrySupplier<Upgrade> REMOTE;
+    public static RegistrySupplier<Upgrade> REMOTE_UPGRADE;
 
     static {
-        REMOTE = TRUpgrades.UPGRADE_DEFERRED_REGISTRY.register("remote_upgrade", () -> {
+        REMOTE_UPGRADE = TRUpgrades.UPGRADE_DEFERRED_REGISTRY.register("remote_upgrade", () -> {
             Item i = ModItems.REMOTE;
             Objects.requireNonNull(i);
             return (new Upgrade(i::getDefaultStack, TRUpgrades.LANDING_PAD, RegistryHelper.makeKey("remote_upgrade"), Upgrade.UpgradeType.SUB_UPGRADE)).setSkillPointsRequired(15).setPosition(8.0, 3.0);

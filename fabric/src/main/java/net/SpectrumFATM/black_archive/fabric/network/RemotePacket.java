@@ -25,11 +25,9 @@ import whocraft.tardis_refined.common.items.KeyItem;
 import whocraft.tardis_refined.common.tardis.TardisNavLocation;
 import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 import whocraft.tardis_refined.common.util.DimensionUtil;
-import whocraft.tardis_refined.common.util.LevelHelper;
 import whocraft.tardis_refined.common.util.Platform;
 import whocraft.tardis_refined.common.util.PlayerUtil;
 import whocraft.tardis_refined.constants.ModMessages;
-import whocraft.tardis_refined.registry.TRUpgrades;
 
 import java.util.ArrayList;
 import java.util.Optional;

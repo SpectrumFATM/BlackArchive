@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.network;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
+import net.SpectrumFATM.black_archive.fabric.tardis.upgrades.ModUpgrades;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -14,6 +15,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,6 +25,7 @@ import whocraft.tardis_refined.common.items.KeyItem;
 import whocraft.tardis_refined.common.tardis.TardisNavLocation;
 import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 import whocraft.tardis_refined.common.util.DimensionUtil;
+import whocraft.tardis_refined.common.util.LevelHelper;
 import whocraft.tardis_refined.common.util.Platform;
 import whocraft.tardis_refined.common.util.PlayerUtil;
 import whocraft.tardis_refined.constants.ModMessages;
@@ -84,10 +87,12 @@ public class RemotePacket {
                         TardisLevelOperator operator = operatorOptional.get();
                         TardisPilotingManager pilotManager = operator.getPilotingManager();
                         UpgradeHandler upgradeHandler = operator.getUpgradeHandler();
-                        if (TRUpgrades.LANDING_PAD.get().isUnlocked(upgradeHandler) && pilotManager.beginFlight(true,null) && !pilotManager.isOnCooldown()) {
+                        if (ModUpgrades.REMOTE.get().isUnlocked(upgradeHandler) && pilotManager.beginFlight(true,null) && !pilotManager.isOnCooldown() && !pilotManager.isHandbrakeOn() && DimensionUtil.isAllowedDimension(currentDimension)) {
                             pilotManager.setTargetLocation(new TardisNavLocation(blockPos.up(), player.getHorizontalFacing().getOpposite(), player.getServerWorld()));
                             player.getServerWorld().playSound(null, blockPos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                             PlayerUtil.sendMessage(player, Text.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);
+                        } else {
+                            player.sendMessage(Text.translatable("item.remote.error").formatted(Formatting.RED), true);
                         }
                     }
                 }

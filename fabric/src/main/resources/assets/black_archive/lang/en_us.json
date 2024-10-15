@@ -41,6 +41,7 @@
   "sounds.black_archive.tardis_groan.subtitle": "TARDIS groans",
   "item.contact_lens.tooltip": "Allows you to fly the TARDIS without those bulky glasses.",
   "item.remote.tooltip": "A device used to control the TARDIS remotely.",
+  "item.remote.error": "Error: Cannot summon TARDIS.",
   "item.sonic.tooltip": "Same software different case!",
   "item.sonic10.tooltip": "Doesn't kill, doesn't wound, doesn't maim. But it is very good at opening doors.",
   "item.sonic15.tooltip": "A screwdriver needs screws...",
@@ -56,5 +57,7 @@
   "telepathic.black_archive.bad": "There's something wrong...",
   "telepathic.black_archive.happy": "The TARDIS is happy!",
   "upgrade.tardis_refined.telepathic_upgrade": "Telepathic Circuits",
-  "upgrade.tardis_refined.telepathic_upgrade.description": "Allows the TARDIS to communicate telepathically with the user."
+  "upgrade.tardis_refined.remote_upgrade": "Stattenheim Circuit",
+  "upgrade.tardis_refined.remote_upgrade.description": "Allows the TARDIS to be summoned with a Sattenheim Remote.",
+  "upgrade.tardis_refined.telepathic_upgrade.description": "Allows the player to communicate with the TARDIS telepathically."
 }

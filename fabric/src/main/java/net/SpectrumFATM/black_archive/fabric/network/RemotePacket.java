@@ -87,7 +87,7 @@ public class RemotePacket {
                         TardisLevelOperator operator = operatorOptional.get();
                         TardisPilotingManager pilotManager = operator.getPilotingManager();
                         UpgradeHandler upgradeHandler = operator.getUpgradeHandler();
-                        if (ModUpgrades.REMOTE_UPGARDE.get().isUnlocked(upgradeHandler) && pilotManager.beginFlight(true,null) && !pilotManager.isOnCooldown() && !pilotManager.isHandbrakeOn() && DimensionUtil.isAllowedDimension(currentDimension)) {
+                        if (ModUpgrades.REMOTE_UPGRADE.get().isUnlocked(upgradeHandler) && pilotManager.beginFlight(true,null) && !pilotManager.isOnCooldown() && !pilotManager.isHandbrakeOn() && DimensionUtil.isAllowedDimension(currentDimension)) {
                             pilotManager.setTargetLocation(new TardisNavLocation(blockPos.up(), player.getHorizontalFacing().getOpposite(), player.getServerWorld()));
                             player.getServerWorld().playSound(null, blockPos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                             PlayerUtil.sendMessage(player, Text.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);

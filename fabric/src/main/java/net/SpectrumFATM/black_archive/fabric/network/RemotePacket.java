@@ -89,8 +89,6 @@ public class RemotePacket {
                             pilotManager.setTargetLocation(new TardisNavLocation(blockPos.up(), player.getHorizontalFacing().getOpposite(), player.getServerWorld()));
                             player.getServerWorld().playSound(null, blockPos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                             PlayerUtil.sendMessage(player, Text.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);
-                        } else {
-                            player.sendMessage(Text.translatable("item.remote.error").formatted(Formatting.RED), true);
                         }
                     }
                 }

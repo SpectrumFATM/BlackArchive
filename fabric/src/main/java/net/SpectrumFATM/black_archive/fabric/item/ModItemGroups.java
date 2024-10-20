@@ -23,6 +23,7 @@ public class ModItemGroups {
                         entries.add(ModItems.REMOTE);
                         entries.add(ModItems.SONIC10);
                         entries.add(ModItems.SONIC11);
+                        entries.add(ModItems.SONIC12);
                         entries.add(ModItems.SONIC13);
                         entries.add(ModItems.SONIC14);
                         entries.add(ModItems.SONIC15);

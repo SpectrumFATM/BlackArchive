@@ -6,8 +6,7 @@
 - Telepathic Upgrade.
 - Sattenheim Upgrade.
 - 11th Doctor's Sonic Screwdriver.
+- 12th Doctor's Sonic Screwdriver.
 
 ### Fixed
 - Automatic Y detection in non-space dimensions.
-- Added error message if the Stattenheim Remote cannot summon TARDIS.
-

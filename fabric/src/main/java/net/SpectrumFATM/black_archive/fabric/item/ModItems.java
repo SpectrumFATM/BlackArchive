@@ -24,6 +24,7 @@ public class ModItems {
     public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings().maxCount(1)));
     public static final Item SONIC10 = registerItem("10thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic10.tooltip", Formatting.BLUE));
     public static final Item SONIC11 = registerItem("11thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic11.tooltip", Formatting.DARK_GREEN));
+    public static final Item SONIC12 = registerItem("12thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic12.tooltip", Formatting.BLUE));
     public static final Item SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic.tooltip", Formatting.BLUE));
     public static final Item SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic15.tooltip", Formatting.BLUE));
     public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic13.tooltip", Formatting.GOLD));

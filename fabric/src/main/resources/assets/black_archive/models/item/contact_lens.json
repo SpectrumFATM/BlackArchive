@@ -1,5 +1,4 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "black_archive:item/contact_lens",
 		"particle": "black_archive:item/contact_lens"
@@ -11,11 +10,11 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 9]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"east": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"east": {"uv": [0, 9, 1, 16], "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"west": {"uv": [0, 0, 1, 16], "texture": "#0"},
-				"up": {"uv": [16, 16, 0, 15], "texture": "#0"},
-				"down": {"uv": [16, 15, 0, 16], "texture": "#0"}
+				"west": {"uv": [0, 9, 1, 16], "texture": "#0"},
+				"up": {"uv": [6, 16, 0, 15], "texture": "#0"},
+				"down": {"uv": [6, 15, 0, 16], "texture": "#0"}
 			}
 		}
 	],

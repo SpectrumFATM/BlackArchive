@@ -20,7 +20,6 @@ public class ModItems {
     public static final Item VORTEXMANIP = registerItem("vortex_manipulator", new VortexManipulatorItem(new FabricItemSettings().maxCount(1)));
     public static final Item CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new FabricItemSettings().maxCount(1)));
     public static final Item TARDISKEYCLASSIC = registerItem("key_01", new KeyItem(new FabricItemSettings().maxCount(1)));
-    public static final Item TARDISKEYMODERN = registerItem("key_02", new KeyItem(new FabricItemSettings().maxCount(1)));
     public static final Item REMOTE = registerItem("remote", new RemoteItem(new FabricItemSettings().maxCount(1)));
     public static final Item SONIC10 = registerItem("10thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic10.tooltip", Formatting.BLUE));
     public static final Item SONIC11 = registerItem("11thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic11.tooltip", Formatting.DARK_GREEN));

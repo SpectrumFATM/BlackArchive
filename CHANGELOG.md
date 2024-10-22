@@ -12,6 +12,8 @@
 ### Fixed
 - Automatic Y detection in non-space dimensions.
 - Contact lens textures.
+- Key textures.
+- Spawner textures.
 
 ### Removed
 - Modern TARDIS Key.

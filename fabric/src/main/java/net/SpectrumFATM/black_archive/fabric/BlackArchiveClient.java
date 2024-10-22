@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.fabric;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.features.BraceletFeatureRenderer;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
+import net.SpectrumFATM.black_archive.fabric.renderer.TardisWarningRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -16,6 +17,7 @@ public class BlackArchiveClient implements ClientModInitializer {
     public void onInitializeClient() {
         NetworkPackets.registerClientSidePackets();
         ModEntities.registerRenderers();
+        TardisWarningRenderer.register();
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {

@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.tardis.control;
 
 import com.mojang.datafixers.util.Pair;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.network.TardisWarningPacket;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.SpectrumFATM.black_archive.fabric.tardis.upgrades.ModUpgrades;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -43,9 +45,12 @@ public class TelepathicControl extends Control {
         }
 
         Random random = new Random();
-
         if (random.nextInt(20) == 1) {
             playerEntity.sendMessage(Text.translatable("telepathic.black_archive.bad").formatted(Formatting.RED), true);
+            for (PlayerEntity player : tardisLevelOperator.getLevel().getPlayers()) {
+                TardisWarningPacket.sendToClient((ServerPlayerEntity) player);
+            }
+
             controlEntity.playSound(ModSounds.TARDIS_GROAN, 1.0F, 1.0F);
 
             BlockPos pos = tardisLevelOperator.getPilotingManager().getCurrentLocation().getPosition();
@@ -56,6 +61,7 @@ public class TelepathicControl extends Control {
             playerEntity.sendMessage(Text.translatable("telepathic.black_archive.happy"), true);
             controlEntity.playSound(TRSoundRegistry.CONSOLE_POWER_ON.get(), 1.0F, 1.0F);
         }
+
 
         return true;
     }

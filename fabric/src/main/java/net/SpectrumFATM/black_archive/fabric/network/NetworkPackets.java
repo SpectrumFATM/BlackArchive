@@ -12,5 +12,6 @@ public class NetworkPackets {
 
     public static void registerClientSidePackets() {
         AllowedDimensionsResponsePacket.registerClient();
+        TardisWarningPacket.registerClientReceiver();
     }
 }

@@ -22,6 +22,12 @@ public class ModDimensions {
     public static final RegistryKey<DimensionType> SPACE_DIM_TYPE = RegistryKey.of(RegistryKeys.DIMENSION_TYPE,
             new Identifier(BlackArchive.MOD_ID, "space_type"));
 
+    public static final RegistryKey<DimensionOptions> TIMEDIM_KEY = RegistryKey.of(RegistryKeys.DIMENSION,
+            new Identifier(BlackArchive.MOD_ID, "time_vortex"));
+    public static final RegistryKey<World> TIMEDIM_LEVEL_KEY = RegistryKey.of(RegistryKeys.WORLD,
+            new Identifier(BlackArchive.MOD_ID, "time_vortex"));
+
+
     public static void bootstrapType(Registerable<DimensionType> context) {
         context.register(SPACE_DIM_TYPE, new DimensionType(
                 OptionalLong.of(18000), // fixedTime

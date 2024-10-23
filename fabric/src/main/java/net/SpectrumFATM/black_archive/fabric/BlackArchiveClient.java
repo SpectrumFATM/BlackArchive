@@ -23,7 +23,7 @@ public class BlackArchiveClient implements ClientModInitializer {
         ModEntities.registerRenderers();
         TardisWarningRenderer.register();
 
-        DimensionRenderingRegistry.registerSkyRenderer(RegistryKey.of(RegistryKey.ofRegistry(new Identifier("minecraft", "dimension")), new Identifier("minecraft", "overworld")), new VortexSkyRenderer());
+        DimensionRenderingRegistry.registerSkyRenderer(RegistryKey.of(RegistryKey.ofRegistry(new Identifier("minecraft", "dimension")), new Identifier(BlackArchive.MOD_ID, "time_vortex")), new VortexSkyRenderer());
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {

@@ -1,0 +1,11 @@
+{
+  "type": "black_archive:space_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "black_archive:space_noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "black_archive:vortex"
+    }
+  }
+}

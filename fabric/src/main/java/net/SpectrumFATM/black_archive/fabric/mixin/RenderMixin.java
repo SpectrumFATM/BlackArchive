@@ -28,9 +28,16 @@ public abstract class RenderMixin {
 
     @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
     public void renderClouds(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, double d, double e, double f, CallbackInfo ci) {
-        if (world.getRegistryKey() == ModDimensions.SPACEDIM_LEVEL_KEY) {
+        if (world != null && (world.getRegistryKey() == ModDimensions.SPACEDIM_LEVEL_KEY || world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY)) {
             RenderSystem.setShaderTexture(0, SUN);
             RenderSystem.setShaderTexture(0, MOON_PHASES);
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true)
+    private void renderStars(CallbackInfo ci) {
+        if (world != null && world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY) {
             ci.cancel();
         }
     }

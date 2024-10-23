@@ -126,7 +126,7 @@ public class LifeSupportUtil {
     }
 
     public static boolean isInZeroGravityDimension(World world) {
-        return world.getRegistryKey().getValue().toString().equals("black_archive:space");
+        return world.getRegistryKey().getValue().toString().equals("black_archive:space") || world.getRegistryKey().getValue().toString().equals("black_archive:time_vortex");
     }
 
     public static void applyInfinitePotionEffect(PlayerEntity player) {

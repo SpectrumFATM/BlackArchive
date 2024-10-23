@@ -15,7 +15,7 @@ public abstract class TardisPilotingMixin {
 
     @Inject(method = "findClosestValidPosition", at = @At("HEAD"), cancellable = true, remap = false)
     public void findClosestValidPosition(TardisNavLocation location, CallbackInfoReturnable<TardisNavLocation> ci) {
-        if (location.getDimensionKey().getValue() == ModDimensions.SPACEDIM_LEVEL_KEY.getValue()) {
+        if (location.getDimensionKey().getValue() == ModDimensions.SPACEDIM_LEVEL_KEY.getValue() || location.getDimensionKey().getValue() == ModDimensions.TIMEDIM_LEVEL_KEY.getValue()) {
             ci.setReturnValue(location);
         }
     }

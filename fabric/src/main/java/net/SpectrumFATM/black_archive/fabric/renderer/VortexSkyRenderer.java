@@ -15,10 +15,10 @@ public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer
 
     @Override
     public void render(WorldRenderContext context) {
-        renderVortex(context.matrixStack(), 1f);
+        renderVortex(context.matrixStack());
     }
 
-    public static void renderVortex(MatrixStack matrixStack, float scale) {
+    public static void renderVortex(MatrixStack matrixStack) {
         MinecraftClient client = MinecraftClient.getInstance();
         Camera camera = client.gameRenderer.getCamera();
 
@@ -42,7 +42,7 @@ public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer
 
         // Define the vertices of the top and bottom faces of the octagon with a radius of 10 blocks
         float radius = 10.0F;
-        float height = 255.0F; // Extrude significantly more
+        float height = 500.0F; // Extrude significantly more
         float[][] topVertices = new float[8][3];
         float[][] bottomVertices = new float[8][3];
         for (int i = 0; i < 8; i++) {
@@ -55,6 +55,9 @@ public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer
             bottomVertices[i][2] = topVertices[i][2];
         }
 
+        // Get the player's position
+        double playerZ = camera.getPos().z;
+
         // Render the sides of the octagonal tube
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
@@ -65,11 +68,17 @@ public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer
             float[] nextTopVertex = topVertices[(i + 1) % topVertices.length];
             float[] nextBottomVertex = bottomVertices[(i + 1) % bottomVertices.length];
 
+            // Adjust UVs for tiling and movement
+            float u1 = (float) i / topVertices.length;
+            float u2 = (float) (i + 1) / topVertices.length;
+            float v1 = 0.0F - (float) playerZ * 0.01f;
+            float v2 = 1.0F - (float) playerZ * 0.01f;
+
             // First triangle
-            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), topVertex[0], topVertex[1], topVertex[2]).texture(0.0F, 0.0F).next();
-            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), bottomVertex[0], bottomVertex[1], bottomVertex[2]).texture(0.0F, 1.0F).next();
-            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), nextBottomVertex[0], nextBottomVertex[1], nextBottomVertex[2]).texture(1.0F, 1.0F).next();
-            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), nextTopVertex[0], nextTopVertex[1], nextTopVertex[2]).texture(1.0F, 0.0F).next();
+            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), topVertex[0], topVertex[1], topVertex[2]).texture(u1, v1).next();
+            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), bottomVertex[0], bottomVertex[1], bottomVertex[2]).texture(u1, v2).next();
+            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), nextBottomVertex[0], nextBottomVertex[1], nextBottomVertex[2]).texture(u2, v2).next();
+            bufferBuilder.vertex(matrixStack.peek().getPositionMatrix(), nextTopVertex[0], nextTopVertex[1], nextTopVertex[2]).texture(u2, v1).next();
         }
         tessellator.draw();
 

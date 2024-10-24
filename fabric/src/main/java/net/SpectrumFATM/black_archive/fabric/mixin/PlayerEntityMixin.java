@@ -5,10 +5,12 @@ import net.SpectrumFATM.black_archive.fabric.world.dimension.ModDimensions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +32,8 @@ public class PlayerEntityMixin {
         if (!entity.getWorld().isClient && entity.getY() <= 0 && entity.getWorld().getRegistryKey().getValue().toString().equals("black_archive:time_vortex")) {
             Set<RegistryKey<World>> dimensions = DimensionUtil.getAllowedDimensions(entity.getServer());
             dimensions.remove(ModDimensions.TIMEDIM_LEVEL_KEY);
+            dimensions.remove(RegistryKey.of(RegistryKeys.DIMENSION, new Identifier("the_nether")));
+            dimensions.remove(RegistryKey.of(RegistryKeys.DIMENSION, new Identifier("the_end")));
 
             Random random = new Random();
             RegistryKey<World> randomDimension = dimensions.stream()

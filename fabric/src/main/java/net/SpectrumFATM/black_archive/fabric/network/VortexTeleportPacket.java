@@ -2,6 +2,8 @@ package net.SpectrumFATM.black_archive.fabric.network;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
+import net.SpectrumFATM.black_archive.fabric.util.WorldUtil;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -16,7 +18,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 
 public class VortexTeleportPacket {
     public static final Identifier ID = new Identifier(BlackArchive.MOD_ID, "vortex_teleport");
@@ -54,41 +55,10 @@ public class VortexTeleportPacket {
                     player.getServerWorld().spawnParticles(ParticleTypes.SMOKE, player.getX(), player.getY(), player.getZ(), 10, 0.5, 0.5, 0.5, 0.0);
                     player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.25f, 1.0f);
 
-                    int newY = (int) y;
-                    boolean foundSafePosition = false;
+                    BlockPos safePos = WorldUtil.findSafeLandingPos(targetWorld, x, y, z);
 
-                    BlockPos targetPos = new BlockPos((int) x, newY, (int) z);
-
-                    // Check if the target position is in mid-air
-                    if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.down()).isAir()) {
-                        // Search downwards for the nearest ground position
-                        while (newY > 0) {
-                            if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
-                                foundSafePosition = true;
-                                newY++; // Move to the first air block above the ground
-                                break;
-                            }
-                            newY--;
-                            targetPos = targetPos.down();
-                        }
-                    } else {
-                        // Search upwards for the nearest safe position
-                        if (targetWorld.getBlockState(targetPos).isSolidBlock(targetWorld, targetPos)) {
-                            while (newY < targetWorld.getHeight()) {
-                                if (targetWorld.getBlockState(targetPos).isAir() && targetWorld.getBlockState(targetPos.up()).isAir()) {
-                                    foundSafePosition = true;
-                                    break;
-                                }
-                                newY++;
-                                targetPos = targetPos.up();
-                            }
-                        } else {
-                            foundSafePosition = true; // Current position is already safe
-                        }
-                    }
-
-                    if (foundSafePosition) {
-                        player.teleport(targetWorld, x, newY, z, player.getYaw(), player.getPitch());
+                    if (safePos != null) {
+                        player.teleport(targetWorld, safePos.getX(), safePos.getY(), safePos.getZ(), player.getYaw(), player.getPitch());
                         targetWorld.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP, SoundCategory.PLAYERS, 0.25f, 1.0f);
                         if (!player.isCreative()) {
                             player.getItemCooldownManager().set(player.getMainHandStack().getItem(), COOLDOWN_TIME);

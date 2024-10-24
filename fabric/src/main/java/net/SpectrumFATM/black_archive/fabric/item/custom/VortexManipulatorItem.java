@@ -24,10 +24,11 @@ public class VortexManipulatorItem extends Item {
         ItemStack stack = user.getStackInHand(hand);
 
         if (user.getWorld().isClient) {
-            if (!user.getWorld().getRegistryKey().getValue().toString().startsWith("tardis_refined:")) {
+            String registryKey = user.getWorld().getRegistryKey().getValue().toString();
+            if (!registryKey.startsWith("tardis_refined:") && !registryKey.equals("black_archive:time_vortex")) {
                 openVortexScreen();
             } else {
-                user.sendMessage(Text.literal("You can't use the Vortex Manipulator in the TARDIS.").formatted(Formatting.RED), true);
+                user.sendMessage(Text.literal("Error: Unable to initiate Vortex Manipulator.").formatted(Formatting.RED), true);
             }
         }
 

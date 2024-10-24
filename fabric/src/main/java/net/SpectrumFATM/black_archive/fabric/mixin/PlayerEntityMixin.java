@@ -1,16 +1,19 @@
 package net.SpectrumFATM.black_archive.fabric.mixin;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.util.WorldUtil;
 import net.SpectrumFATM.black_archive.fabric.world.dimension.ModDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,8 +35,6 @@ public class PlayerEntityMixin {
         if (!entity.getWorld().isClient && entity.getY() <= 0 && entity.getWorld().getRegistryKey().getValue().toString().equals("black_archive:time_vortex")) {
             Set<RegistryKey<World>> dimensions = DimensionUtil.getAllowedDimensions(entity.getServer());
             dimensions.remove(ModDimensions.TIMEDIM_LEVEL_KEY);
-            dimensions.remove(RegistryKey.of(RegistryKeys.DIMENSION, new Identifier("the_nether")));
-            dimensions.remove(RegistryKey.of(RegistryKeys.DIMENSION, new Identifier("the_end")));
 
             Random random = new Random();
             RegistryKey<World> randomDimension = dimensions.stream()
@@ -48,8 +49,8 @@ public class PlayerEntityMixin {
                 BlockPos safePos = WorldUtil.findSafeLandingPos(targetWorld, x, (double) targetWorld.getTopY() / 2, z);
 
                 if (safePos != null) {
-                    ((ServerPlayerEntity) entity).teleport(targetWorld, safePos.getX(), safePos.getY(), safePos.getZ(), entity.getYaw(), entity.getPitch());
                     targetWorld.spawnParticles(ParticleTypes.SMOKE, safePos.getX(), safePos.getY(), safePos.getZ(), 1, 0.5, 0.5, 0.5, 0.0);
+                    ((ServerPlayerEntity) entity).teleport(targetWorld, safePos.getX(), safePos.getY(), safePos.getZ(), entity.getYaw(), entity.getPitch());
                     entity.getWorld().playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.AMBIENT);
                 }
             }

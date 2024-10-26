@@ -1,7 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
-import net.SpectrumFATM.black_archive.fabric.effects.CyberConversionEffect;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -16,9 +15,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class CybermatEntity extends HostileEntity {
     public CybermatEntity(EntityType<? extends HostileEntity> entityType, World world) {

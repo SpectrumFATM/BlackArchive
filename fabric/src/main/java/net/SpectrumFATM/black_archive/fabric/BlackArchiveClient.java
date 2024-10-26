@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric;
 
+import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.SpectrumFATM.black_archive.fabric.entity.features.BraceletFeatureRenderer;
 import net.SpectrumFATM.black_archive.fabric.network.NetworkPackets;
@@ -23,7 +24,9 @@ public class BlackArchiveClient implements ClientModInitializer {
         ModEntities.registerRenderers();
         TardisWarningRenderer.register();
 
-        DimensionRenderingRegistry.registerSkyRenderer(RegistryKey.of(RegistryKey.ofRegistry(new Identifier("minecraft", "dimension")), new Identifier(BlackArchive.MOD_ID, "time_vortex")), new VortexSkyRenderer());
+        if (BlackArchiveConfig.CLIENT.shouldTimeVortexRender.get()) {
+            DimensionRenderingRegistry.registerSkyRenderer(RegistryKey.of(RegistryKey.ofRegistry(new Identifier("minecraft", "dimension")), new Identifier(BlackArchive.MOD_ID, "time_vortex")), new VortexSkyRenderer());
+        }
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {

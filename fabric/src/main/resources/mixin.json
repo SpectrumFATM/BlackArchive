@@ -19,7 +19,9 @@
     "NukaMixin",
     "InitiativeMixin",
     "DimensionUtilMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "ThrottleMixin",
+    "DimensionalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

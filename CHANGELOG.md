@@ -8,6 +8,9 @@
 - Sattenheim Upgrade.
 - 11th Doctor's Sonic Screwdriver.
 - 12th Doctor's Sonic Screwdriver.
+- Time Vortex.
+- Temporal Orbit controls.
+- Complex Space-Time Events.
 
 ### Fixed
 - Automatic Y detection in non-space dimensions.

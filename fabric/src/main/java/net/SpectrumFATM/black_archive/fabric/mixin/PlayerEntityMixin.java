@@ -2,7 +2,11 @@ package net.SpectrumFATM.black_archive.fabric.mixin;
 
 import net.SpectrumFATM.black_archive.fabric.util.WorldUtil;
 import net.SpectrumFATM.black_archive.fabric.world.dimension.ModDimensions;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -52,5 +56,30 @@ public class PlayerEntityMixin {
                 }
             }
         }
+    }
+
+    private static final TrackedData<Boolean> IS_COMPLEX_SPACE_TIME_EVENT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Inject(method = "initDataTracker", at = @At("RETURN"))
+    private void initDataTracker(CallbackInfo info) {
+        ((PlayerEntity) (Object) this).getDataTracker().startTracking(IS_COMPLEX_SPACE_TIME_EVENT, false);
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
+    private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo info) {
+        nbt.putBoolean("isComplexSpaceTimeEvent", ((PlayerEntity) (Object) this).getDataTracker().get(IS_COMPLEX_SPACE_TIME_EVENT));
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
+    private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo info) {
+        ((PlayerEntity) (Object) this).getDataTracker().set(IS_COMPLEX_SPACE_TIME_EVENT, nbt.getBoolean("isComplexSpaceTimeEvent"));
+    }
+
+    public void setComplexSpaceTimeEvent(boolean status) {
+        ((PlayerEntity) (Object) this).getDataTracker().set(IS_COMPLEX_SPACE_TIME_EVENT, status);
+    }
+
+    public boolean isComplexSpaceTimeEvent() {
+        return ((PlayerEntity) (Object) this).getDataTracker().get(IS_COMPLEX_SPACE_TIME_EVENT);
     }
 }

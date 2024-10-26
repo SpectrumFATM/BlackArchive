@@ -73,6 +73,7 @@ public class BlackArchiveConfig {
 
     public static class ClientConfig {
         public final ForgeConfigSpec.BooleanValue shouldCacheSkins;
+        public final ForgeConfigSpec.BooleanValue shouldTimeVortexRender;
 
         ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("client");
@@ -80,6 +81,10 @@ public class BlackArchiveConfig {
             shouldCacheSkins = builder
                     .comment("Should the client download and cache skins?")
                     .define("shouldCacheSkins", true);
+
+            shouldTimeVortexRender = builder
+                    .comment("Should the time vortex render?")
+                    .define("shouldTimeVortexRender", true);
 
             builder.pop();
         }

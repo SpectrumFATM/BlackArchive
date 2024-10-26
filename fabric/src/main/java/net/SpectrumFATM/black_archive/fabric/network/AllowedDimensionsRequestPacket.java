@@ -26,7 +26,7 @@ public class AllowedDimensionsRequestPacket {
                 ArrayList<ServerWorld> filteredDimensions = new ArrayList<>();
                 Iterable<ServerWorld> filteredLevels = server.getWorlds();
                 filteredLevels.forEach((i) -> {
-                    if (DimensionUtil.isAllowedDimension(i.getRegistryKey())) {
+                    if (DimensionUtil.isAllowedDimension(i.getRegistryKey()) && !i.getRegistryKey().getValue().toString().equals("black_archive:time_vortex")) {
                         filteredDimensions.add(i);
                     }
 

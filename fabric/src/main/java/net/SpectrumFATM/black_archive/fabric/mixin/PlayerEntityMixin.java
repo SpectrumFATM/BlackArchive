@@ -35,6 +35,8 @@ public class PlayerEntityMixin {
         if (!entity.getWorld().isClient && entity.getY() <= 0 && entity.getWorld().getRegistryKey().getValue().toString().equals("black_archive:time_vortex")) {
             Set<RegistryKey<World>> dimensions = DimensionUtil.getAllowedDimensions(entity.getServer());
             dimensions.remove(ModDimensions.TIMEDIM_LEVEL_KEY);
+            dimensions.remove(World.NETHER);
+            dimensions.remove(World.END);
 
             Random random = new Random();
             RegistryKey<World> randomDimension = dimensions.stream()

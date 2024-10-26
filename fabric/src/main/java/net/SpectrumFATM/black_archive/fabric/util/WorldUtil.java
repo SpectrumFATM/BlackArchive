@@ -14,7 +14,7 @@ public class WorldUtil {
         // Check if the target position is in mid-air
         if (world.getBlockState(targetPos).isAir() && world.getBlockState(targetPos.down()).isAir()) {
             // Search downwards for the nearest ground position
-            while (newY > 0) {
+            while (newY > -64) {
                 if (world.getBlockState(targetPos).isSolidBlock(world, targetPos)) {
                     foundSafePosition = true;
                     newY++; // Move to the first air block above the ground

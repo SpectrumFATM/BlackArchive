@@ -5,6 +5,7 @@ import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermatEntity;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
+import net.SpectrumFATM.black_archive.fabric.util.SpaceTimeEventUtil;
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -213,6 +214,14 @@ public class SonicItem extends ScrewdriverItem {
                     user.sendMessage(Text.literal("Z: " + zPos).formatted(colorFormat), false);
                     user.sendMessage(Text.literal("Health: " + Math.round(health)).formatted(colorFormat), false);
                     user.sendMessage(Text.literal("Armour: " + entity.getArmor()).formatted(colorFormat), false);
+
+                    if (entity instanceof PlayerEntity player) {
+                        String  artron = "Earth normal.";
+                        if (SpaceTimeEventUtil.isComplexSpaceTimeEvent(player)) {
+                            artron = "Background Artron radiation detected.";
+                        }
+                        user.sendMessage(Text.literal("Radiation Signatures: " + artron).formatted(colorFormat), false);
+                    }
                 }
 
                 playScrewdriverSound(serverWorld, user.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());

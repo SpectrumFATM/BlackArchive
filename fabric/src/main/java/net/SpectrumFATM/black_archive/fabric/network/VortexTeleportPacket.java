@@ -2,6 +2,8 @@ package net.SpectrumFATM.black_archive.fabric.network;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.TimeFissureEntity;
 import net.SpectrumFATM.black_archive.fabric.sound.ModSounds;
 import net.SpectrumFATM.black_archive.fabric.util.SpaceTimeEventUtil;
 import net.SpectrumFATM.black_archive.fabric.util.WorldUtil;
@@ -15,11 +17,14 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class VortexTeleportPacket {
     public static final Identifier ID = new Identifier(BlackArchive.MOD_ID, "vortex_teleport");
@@ -43,7 +48,17 @@ public class VortexTeleportPacket {
 
             server.execute(() -> {
                 SpaceTimeEventUtil.setComplexSpaceTimeEvent(player, true);
-                BlackArchive.LOGGER.info(String.valueOf(SpaceTimeEventUtil.isComplexSpaceTimeEvent(player)));
+
+                if (WorldUtil.isTardisesInRange(player.getServerWorld(), player.getBlockPos(), 10, BlackArchiveConfig.COMMON.minimumTardisesToCreateTimeFissure.get())) {
+                    Random random = new Random();
+                    TimeFissureEntity fissureEntity = new TimeFissureEntity(ModEntities.TIME_FISSURE, player.getServerWorld());
+
+                    fissureEntity.refreshPositionAndAngles(player.getX() + player.getRandom().nextInt(16) - 8, player.getY(), player.getZ() + player.getRandom().nextInt(16) - 8, random.nextFloat() * 360.0f, 0);
+                    player.getWorld().spawnEntity(fissureEntity);
+                    fissureEntity.playSound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 1.0f);
+                    player.sendMessage(Text.translatable("Error: Temporal flux escalated, anomaly detected.").formatted(Formatting.RED), true);
+                    return;
+                }
 
                 if (player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
                     player.sendMessage(Text.literal("You must wait before teleporting again.").formatted(Formatting.RED), false);

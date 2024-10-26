@@ -11,6 +11,7 @@
 - Time Vortex.
 - Temporal Orbit controls.
 - Complex Space-Time Events.
+- Temporal Anomalies.
 
 ### Fixed
 - Automatic Y detection in non-space dimensions.

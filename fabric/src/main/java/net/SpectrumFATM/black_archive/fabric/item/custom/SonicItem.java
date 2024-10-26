@@ -4,6 +4,7 @@ import net.SpectrumFATM.black_archive.fabric.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.fabric.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.fabric.entity.custom.CybermatEntity;
+import net.SpectrumFATM.black_archive.fabric.entity.custom.TimeFissureEntity;
 import net.SpectrumFATM.black_archive.fabric.item.ModItems;
 import net.SpectrumFATM.black_archive.fabric.util.SpaceTimeEventUtil;
 import net.minecraft.block.*;
@@ -22,6 +23,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -230,7 +232,6 @@ public class SonicItem extends ScrewdriverItem {
 
         return super.useOnEntity(stack, user, entity, hand);
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

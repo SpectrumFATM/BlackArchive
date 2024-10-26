@@ -52,16 +52,26 @@ public class ModEntities {
                     .build("cybermat")
     );
 
+    public static final EntityType<TimeFissureEntity> TIME_FISSURE = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(BlackArchive.MOD_ID, "time_fissure"),
+            EntityType.Builder.create(TimeFissureEntity::new, SpawnGroup.CREATURE)
+                    .setDimensions(0.5f, 0.5f)
+                    .build("time_fissure")
+    );
+
     public static void registerRenderers() {
         EntityRendererRegistry.register(ModEntities.DALEK, DalekRenderer::new);
         EntityRendererRegistry.register(ModEntities.LASER, LaserRenderer::new);
         EntityRendererRegistry.register(ModEntities.DALEK_PUPPET, DalekPuppetRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYBERMAN, CybermanRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYBERMAT, CybermatRenderer::new);
+        EntityRendererRegistry.register(ModEntities.TIME_FISSURE, TimeFissureRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
     }
 
     public static void registerModEntities() {

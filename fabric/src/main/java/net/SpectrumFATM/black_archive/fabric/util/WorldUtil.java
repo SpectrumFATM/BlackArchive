@@ -1,7 +1,14 @@
 package net.SpectrumFATM.black_archive.fabric.util;
 
+import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.world.World;
+import whocraft.tardis_refined.common.block.shell.ShellBaseBlock;
+import whocraft.tardis_refined.registry.TRBlockRegistry;
 
 public class WorldUtil {
 
@@ -40,5 +47,23 @@ public class WorldUtil {
         }
 
         return foundSafePosition ? new BlockPos((int) x, newY, (int) z) : null;
+    }
+
+    public static boolean isTardisesInRange(ServerWorld world, BlockPos pos, int radius, int maxCount) {
+
+        int count = 0;
+
+        for (BlockPos pos1 : BlockPos.iterate(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius))) {
+            BlockState state = world.getBlockState(pos1);
+            if (state.getBlock() instanceof ShellBaseBlock) {
+                count++;
+            }
+        }
+
+        if (count >= maxCount) {
+            return true;
+        }
+
+        return false;
     }
 }

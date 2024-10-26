@@ -33,6 +33,7 @@ public class BlackArchiveConfig {
         public final ForgeConfigSpec.IntValue gravityFieldRange;
         public final ForgeConfigSpec.IntValue oxygenFieldRange;
         public final ForgeConfigSpec.IntValue telepathicCircuitRange;
+        public final ForgeConfigSpec.IntValue minimumTardisesToCreateTimeFissure;
         public final ForgeConfigSpec.BooleanValue shouldDalekGunStickDestroyDoors;
         public final ForgeConfigSpec.BooleanValue shouldCybermatSpawnAroundCybermen;
 
@@ -66,6 +67,10 @@ public class BlackArchiveConfig {
             shouldCybermatSpawnAroundCybermen = builder
                     .comment("Should Cybermats spawn around Cybermen?")
                     .define("shouldCybermatSpawnAroundCybermen", true);
+
+            minimumTardisesToCreateTimeFissure = builder
+                    .comment("The minimum number of TARDISes required to create a time fissure.")
+                    .defineInRange("minimumTardisesToCreateTimeFissure", 5, 1, 100);
 
             builder.pop();
         }

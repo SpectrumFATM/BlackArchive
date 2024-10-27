@@ -51,6 +51,7 @@
   "item.sonic12.tooltip": "Makes spaceship doors go shuck-shuck.",
   "item.sonic15.tooltip": "A screwdriver needs screws...",
   "item.sonic13.tooltip": "Made with Sheffield steel.",
+  "item.sonic.temporal_escalation": "Error: Temporal field escalation!",
   "item.dalek_laser.tooltip": "A laser weapon salvaged from a Dalek's casing!",
   "item.dalek_bracelet.tooltip": "Protects you from the Dalek Nanocloud.",
   "block.dalek_gravity.tooltip": "The core computer of a Dalek ship responsible for all life support.",
@@ -67,5 +68,8 @@
   "upgrade.tardis_refined.temporal_orbit_upgrade": "Temporal Stabiliser",
   "upgrade.tardis_refined.remote_upgrade.description": "Allows the TARDIS to be summoned with a Sattenheim Remote.",
   "upgrade.tardis_refined.telepathic_upgrade.description": "Allows the player to communicate with the TARDIS telepathically.",
-  "upgrade.tardis_refined.temporal_orbit_upgrade.description": "Allows the TARDIS to orbit around a fixed point in time."
+  "upgrade.tardis_refined.temporal_orbit_upgrade.description": "Allows the TARDIS to orbit around a fixed point in time.",
+  "vortexmanipulator.black_archive.time_fissure": "Error: Temporal flux escalated, anomaly detected.",
+  "vortexmanipulator.black_archive.cooldown": "You must wait before teleporting again.",
+  "vortexmanipulator.black_archive.landing_error": "No suitable ground position."
 }

@@ -10,7 +10,6 @@ import net.SpectrumFATM.black_archive.fabric.util.WorldUtil;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
@@ -56,12 +55,12 @@ public class VortexTeleportPacket {
                     fissureEntity.refreshPositionAndAngles(player.getX() + player.getRandom().nextInt(16) - 8, player.getY(), player.getZ() + player.getRandom().nextInt(16) - 8, random.nextFloat() * 360.0f, 0);
                     player.getWorld().spawnEntity(fissureEntity);
                     fissureEntity.playSound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 1.0f);
-                    player.sendMessage(Text.translatable("Error: Temporal flux escalated, anomaly detected.").formatted(Formatting.RED), true);
+                    player.sendMessage(Text.translatable("vortex_manipulator.black_archive.time_fissure").formatted(Formatting.RED), true);
                     return;
                 }
 
                 if (player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
-                    player.sendMessage(Text.literal("You must wait before teleporting again.").formatted(Formatting.RED), false);
+                    player.sendMessage(Text.translatable("vortex_manipulator.black_archive.cooldown").formatted(Formatting.RED), true);
                     return;
                 }
 
@@ -82,7 +81,7 @@ public class VortexTeleportPacket {
                             player.getItemCooldownManager().set(player.getMainHandStack().getItem(), COOLDOWN_TIME);
                         }
                     } else {
-                        player.sendMessage(Text.literal("No suitable ground position.").formatted(Formatting.RED), false);
+                        player.sendMessage(Text.translatable("vortex_manipulator.black_archive.landing_error").formatted(Formatting.RED), true);
                     }
                 }
             });

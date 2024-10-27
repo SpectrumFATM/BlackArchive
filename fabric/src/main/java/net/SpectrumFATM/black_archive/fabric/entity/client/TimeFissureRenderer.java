@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.RotationAxis;
 
 public class TimeFissureRenderer extends EntityRenderer<TimeFissureEntity> {
     private static final Identifier TEXTURE = new Identifier("black_archive", "textures/entity/time_fissure.png");
@@ -30,6 +31,10 @@ public class TimeFissureRenderer extends EntityRenderer<TimeFissureEntity> {
         // Apply scaling or transformation if desired
         matrixStack.scale(1f, 1f, 1f);
         matrixStack.translate(0f, 0.75f, 0f);
+
+        //Always face player
+        matrixStack.multiply(this.dispatcher.getRotation());
+        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
 
         // Get the vertex consumer with the appropriate layer
         var vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE));

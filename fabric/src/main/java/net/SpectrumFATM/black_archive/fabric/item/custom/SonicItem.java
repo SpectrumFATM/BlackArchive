@@ -32,11 +32,13 @@ import whocraft.tardis_refined.common.items.ScrewdriverMode;
 import whocraft.tardis_refined.registry.TRSoundRegistry;
 
 import java.util.List;
+import java.util.Random;
 
 public class SonicItem extends ScrewdriverItem {
 
     String tooltipKey;
     Formatting colorFormat;
+    Random random = new Random();
 
     public SonicItem(Settings properties, String tooltipKey, Formatting colorFormat) {
         super(properties);
@@ -198,6 +200,13 @@ public class SonicItem extends ScrewdriverItem {
                     blazeEntity.kill();
                 } else if (entity instanceof CybermanEntity cybermanEntity && !user.isSneaking()) {
                     cybermanEntity.disableFire(100);
+                } else if (entity instanceof TimeFissureEntity timeFissureEntity && !user.isSneaking()) {
+                    if (random.nextInt(10) == 1) {
+                        timeFissureEntity.aggrovate();
+                        user.sendMessage(Text.translatable("item.sonic.temporal_escalation").formatted(Formatting.RED), true);
+                    } else {
+                        timeFissureEntity.remove(Entity.RemovalReason.KILLED);
+                    }
                 } else if (entity instanceof CybermatEntity cybermatEntity && !user.isSneaking()) {
                     BlockPos pos = entity.getBlockPos();
                     entity.remove(Entity.RemovalReason.KILLED);

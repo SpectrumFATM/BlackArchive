@@ -56,7 +56,7 @@ public class ModEntities {
             Registries.ENTITY_TYPE,
             new Identifier(BlackArchive.MOD_ID, "time_fissure"),
             EntityType.Builder.create(TimeFissureEntity::new, SpawnGroup.CREATURE)
-                    .setDimensions(0.5f, 0.5f)
+                    .setDimensions(1f, 2f)
                     .build("time_fissure")
     );
 

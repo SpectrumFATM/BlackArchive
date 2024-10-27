@@ -1,8 +1,7 @@
 ## Changelog
 
 ### Added
-- Updated 13th Doctor's Sonic Screwdriver.
-- Updated textures.
+
 - Telepathic Circuit takes the player to a point of interest.
 - Telepathic Upgrade.
 - Sattenheim Upgrade.
@@ -17,6 +16,7 @@
 ### Fixed
 - Automatic Y detection in non-space dimensions.
 - Texture updates.
+- Model updates.
 
 ### Removed
 - Modern TARDIS Key.

@@ -20,6 +20,7 @@ public class ModItemGroups {
                         entries.add(ModItems.CONTACTLENS);
                         entries.add(ModItems.TARDISKEYCLASSIC);
                         entries.add(ModItems.REMOTE);
+                        entries.add(ModItems.SUPERPHONE);
                         entries.add(ModItems.SONIC10);
                         entries.add(ModItems.SONIC11);
                         entries.add(ModItems.SONIC12);

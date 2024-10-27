@@ -1,7 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.item.custom;
 
 import net.SpectrumFATM.black_archive.fabric.BlackArchive;
-import net.SpectrumFATM.black_archive.fabric.network.TardisWarningPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -64,7 +63,6 @@ public class DistressItem extends TooltipItem {
 
                         for (PlayerEntity tardisPlayer : players) {
                             tardisPlayer.sendMessage(Text.translatable("item.superphone.distress").formatted(Formatting.RED), true);
-                            TardisWarningPacket.sendToClient((ServerPlayerEntity) tardisPlayer);
                         }
                     } else {
                         player.sendMessage(Text.translatable("item.superphone.error2").formatted(Formatting.RED), true);

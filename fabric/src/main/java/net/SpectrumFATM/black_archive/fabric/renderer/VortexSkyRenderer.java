@@ -11,7 +11,7 @@ import net.minecraft.util.math.RotationAxis;
 
 public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
 
-    private static final Identifier VORTEX_TEXTURE = new Identifier("black_archive", "textures/vortex.png");
+    private static final Identifier VORTEX_TEXTURE = new Identifier("black_archive", "textures/environment/vortex.png");
 
     @Override
     public void render(WorldRenderContext context) {

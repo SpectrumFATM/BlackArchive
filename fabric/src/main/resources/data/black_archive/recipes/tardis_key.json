@@ -4,7 +4,7 @@
   "group": "minecraft:redstone",
   "ingredients": [
     {
-      "item": "black_archive:key_02"
+      "item": "black_archive:key_01"
     }
   ],
   "result": {

@@ -12,6 +12,7 @@
 - Temporal Orbit controls.
 - Complex Space-Time Events.
 - Temporal Anomalies.
+- Superphone item.
 
 ### Fixed
 - Automatic Y detection in non-space dimensions.

@@ -29,8 +29,6 @@ public class LaserRenderer extends EntityRenderer<LaserEntity> {
         int green = entity.getGreen();
         int blue = entity.getBlue();
 
-        BlackArchive.LOGGER.info("LaserRenderer: red: " + red + ", green: " + green + ", blue: " + blue);
-
         matrixStack.push();
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(g, entity.prevYaw, entity.getYaw()) - 90.0f));
         matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, entity.prevPitch, entity.getPitch())));

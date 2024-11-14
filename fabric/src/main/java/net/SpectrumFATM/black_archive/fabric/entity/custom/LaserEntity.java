@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.entity.custom;
 
+import net.SpectrumFATM.black_archive.fabric.BlackArchive;
 import net.SpectrumFATM.black_archive.fabric.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntities;
 import net.minecraft.block.BlockState;
@@ -14,6 +15,7 @@ import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -37,16 +39,16 @@ public class LaserEntity extends ThrownEntity {
         this.lifeTime = 200; // 10 seconds (20 ticks per second)
     }
 
-    public LaserEntity(World world, double x, double y, double z, int r, int g, int b) {
+    public LaserEntity(World world, double x, double y, double z, int red, int green, int blue) {
         this(ModEntities.LASER, world);
         this.setPosition(x, y, z);
-        this.dataTracker.set(RED, r);
-        this.dataTracker.set(GREEN, g);
-        this.dataTracker.set(BLUE, b);
+        this.dataTracker.set(RED, red);
+        this.dataTracker.set(GREEN, green);
+        this.dataTracker.set(BLUE, blue);
     }
 
-    public LaserEntity(World world, LivingEntity owner, float damage, boolean shouldDamageBlocks, int r, int g, int b) {
-        this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ(), r, g, b);
+    public LaserEntity(World world, LivingEntity owner, float damage, boolean shouldDamageBlocks, int red, int green, int blue) {
+        this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ(), red, green, blue);
         this.setOwner(owner);
         this.setNoGravity(true);
         this.damage = damage;
@@ -55,8 +57,8 @@ public class LaserEntity extends ThrownEntity {
 
     @Override
     protected void initDataTracker() {
-        this.dataTracker.startTracking(RED, 255);
-        this.dataTracker.startTracking(GREEN, 255);
+        this.dataTracker.startTracking(RED, 0);
+        this.dataTracker.startTracking(GREEN, 0);
         this.dataTracker.startTracking(BLUE, 255);
     }
 
@@ -121,6 +123,30 @@ public class LaserEntity extends ThrownEntity {
         super.tick();
         if (this.lifeTime-- <= 0) {
             this.kill();
+        }
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Red", this.getDataTracker().get(RED));
+        nbt.putFloat("Green", this.getDataTracker().get(GREEN));
+        nbt.putFloat("Blue", this.getDataTracker().get(BLUE));
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        if (nbt.contains("Red")) {
+            this.getDataTracker().set(RED, nbt.getInt("Red"));
+        }
+
+        if (nbt.contains("Green")) {
+            this.getDataTracker().set(RED, nbt.getInt("Red"));
+        }
+
+        if (nbt.contains("Blue")) {
+            this.getDataTracker().set(RED, nbt.getInt("Red"));
         }
     }
 

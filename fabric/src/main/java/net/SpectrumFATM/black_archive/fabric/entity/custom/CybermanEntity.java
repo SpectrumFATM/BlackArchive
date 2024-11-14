@@ -142,7 +142,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
             double armY = this.getY() + this.getHeight() * 0.75;
             double armZ = this.getZ() - 0.5 * Math.sin(Math.toRadians(this.bodyYaw));
 
-            LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false);
+            LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false, 117, 117, 255);
             laser.setPosition(armX, armY, armZ);
 
             double d0 = target.getY() + (target.getHeight() / 2.0) - laser.getY();

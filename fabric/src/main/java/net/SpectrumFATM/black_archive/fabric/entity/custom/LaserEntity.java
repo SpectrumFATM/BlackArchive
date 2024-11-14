@@ -7,6 +7,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -21,6 +24,10 @@ import net.minecraft.world.World;
 
 public class LaserEntity extends ThrownEntity {
 
+    private static final TrackedData<Integer> RED = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> GREEN = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> BLUE = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
     private float damage;
     private boolean shouldDamageBlocks;
     private int lifeTime;
@@ -30,17 +37,39 @@ public class LaserEntity extends ThrownEntity {
         this.lifeTime = 200; // 10 seconds (20 ticks per second)
     }
 
-    public LaserEntity(World world, double x, double y, double z) {
+    public LaserEntity(World world, double x, double y, double z, int r, int g, int b) {
         this(ModEntities.LASER, world);
         this.setPosition(x, y, z);
+        this.dataTracker.set(RED, r);
+        this.dataTracker.set(GREEN, g);
+        this.dataTracker.set(BLUE, b);
     }
 
-    public LaserEntity(World world, LivingEntity owner, float damage, boolean shouldDamageBlocks) {
-        this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
+    public LaserEntity(World world, LivingEntity owner, float damage, boolean shouldDamageBlocks, int r, int g, int b) {
+        this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ(), r, g, b);
         this.setOwner(owner);
         this.setNoGravity(true);
         this.damage = damage;
         this.shouldDamageBlocks = shouldDamageBlocks;
+    }
+
+    @Override
+    protected void initDataTracker() {
+        this.dataTracker.startTracking(RED, 255);
+        this.dataTracker.startTracking(GREEN, 255);
+        this.dataTracker.startTracking(BLUE, 255);
+    }
+
+    public int getRed() {
+        return this.dataTracker.get(RED);
+    }
+
+    public int getGreen() {
+        return this.dataTracker.get(GREEN);
+    }
+
+    public int getBlue() {
+        return this.dataTracker.get(BLUE);
     }
 
     @Override
@@ -93,10 +122,6 @@ public class LaserEntity extends ThrownEntity {
         if (this.lifeTime-- <= 0) {
             this.kill();
         }
-    }
-
-    @Override
-    protected void initDataTracker() {
     }
 
     @Override

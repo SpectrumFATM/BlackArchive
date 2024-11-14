@@ -62,7 +62,7 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     public void attack(LivingEntity target, float pullProgress) {
-        LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false);
+        LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false, 0, 0, 255);
         double d0 = target.getY() + (target.getHeight() / 2.0) - laser.getY();
         double d1 = target.getX() - this.getX();
         double d2 = d0;

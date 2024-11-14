@@ -21,7 +21,8 @@
     "DimensionUtilMixin",
     "PlayerEntityMixin",
     "ThrottleMixin",
-    "DimensionalMixin"
+    "DimensionalMixin",
+    "LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

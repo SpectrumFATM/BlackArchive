@@ -30,6 +30,7 @@ public class ModItems {
     public static final Item SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic13.tooltip", Formatting.GOLD));
     public static final Item DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER, ModSounds.DALEK_MALFUNCTION));
     public static final Item DALEK_BRACELET = registerItem("dalek_bracelet", new TooltipItem(new FabricItemSettings().maxCount(1), "item.dalek_bracelet.tooltip"));
+    public static final Item TCE = registerItem("tce", new CompressorItem(new FabricItemSettings().maxCount(1), "item.tce.tooltip"));
 
     public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
     public static final Item RAW_STEEL = registerItem("raw_steel", new Item(new FabricItemSettings()));

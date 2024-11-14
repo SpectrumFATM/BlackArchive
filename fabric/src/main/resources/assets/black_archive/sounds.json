@@ -46,5 +46,11 @@
         "sounds": [
         "black_archive:tardis_groan"
         ]
+    },
+    "tce": {
+        "subtitle": "sounds.black_archive.tce.subtitle",
+        "sounds": [
+        "black_archive:tce"
+        ]
     }
 }

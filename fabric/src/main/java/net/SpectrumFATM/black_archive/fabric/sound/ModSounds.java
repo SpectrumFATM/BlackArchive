@@ -15,6 +15,7 @@ public class ModSounds {
     public static final SoundEvent CYBERMAN_GUN = registerSoundEvent("cyberman_gun");
     public static final SoundEvent CYBERMAN_MALFUNCTION = registerSoundEvent("cyberman_malfunction");
     public static final SoundEvent TARDIS_GROAN = registerSoundEvent("tardis_groan");
+    public static final SoundEvent TCE = registerSoundEvent("tce");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(BlackArchive.MOD_ID, name);

@@ -59,7 +59,7 @@ public class LaserGunItem extends Item {
             if (stack.getDamage() <= stack.getMaxDamage()) {
                 world.playSound(null, player.getBlockPos(), soundEvent, player.getSoundCategory(), 1.0F, 1.0F);
                 // Logic to fire the laser entity
-                LaserEntity laser = new LaserEntity(world, player, 2.0f, true, 166, 166 ,255);
+                LaserEntity laser = new LaserEntity(world, player, 2.0f, true, 117, 117 ,255);
                 laser.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 3.0F, 1.0F);
                 world.spawnEntity(laser);
                 discharge(stack, player);

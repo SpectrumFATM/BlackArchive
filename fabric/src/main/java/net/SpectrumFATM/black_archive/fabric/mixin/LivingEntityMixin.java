@@ -39,28 +39,25 @@ public abstract class LivingEntityMixin {
         Entity entity = (Entity) (Object) this;
         applyZeroGravity(entity);
 
-        if (entity instanceof PlayerEntity) {
-            suffocate(entity);
+        if (entity instanceof PlayerEntity player) {
+            suffocate(player);
         }
     }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     protected void initDataTracker(CallbackInfo ci) {
-        LivingEntity livingEntity = (LivingEntity) (Object) this;
-        livingEntity.getDataTracker().startTracking(ENTITY_SCALE, 1.0F);  // Set default scale value
+        ((LivingEntity) (Object) this).getDataTracker().startTracking(ENTITY_SCALE, 1.0F);
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void writeNbt(NbtCompound nbt, CallbackInfo info) {
-        LivingEntity livingEntity = (LivingEntity) (Object) this;
-        nbt.putFloat("Scale", livingEntity.getDataTracker().get(ENTITY_SCALE));
+        nbt.putFloat("Scale", ((LivingEntity) (Object) this).getDataTracker().get(ENTITY_SCALE));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
     private void readNbt(NbtCompound nbt, CallbackInfo info) {
-        LivingEntity livingEntity = (LivingEntity) (Object) this;
         if (nbt.contains("Scale")) {
-            livingEntity.getDataTracker().set(ENTITY_SCALE, nbt.getFloat("Scale"));
+            ((LivingEntity) (Object) this).getDataTracker().set(ENTITY_SCALE, nbt.getFloat("Scale"));
         }
     }
 

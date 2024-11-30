@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "black_archive:cyber_ship",
+      "weight": 1
+    },
+    {
+      "structure": "black_archive:asteroid",
+      "weight": 1
+    },
+    {
+      "structure": "black_archive:dalek_ship",
+      "weight": 1
+    },
+    {
+      "structure": "black_archive:cyber_tomb",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 734797793,
+    "spacing": 60,
+    "separation": 10
+  }
+}

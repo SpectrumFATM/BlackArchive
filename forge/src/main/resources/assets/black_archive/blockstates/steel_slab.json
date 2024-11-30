@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "black_archive:block/steel_slab"
+    },
+    "type=double": {
+      "model": "black_archive:block/cut_steel"
+    },
+    "type=top": {
+      "model": "black_archive:block/steel_slab_top"
+    }
+  }
+}

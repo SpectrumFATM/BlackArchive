@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.fabric;
 
 import net.SpectrumFATM.black_archive.fabric.datagen.ModWorldGenerator;
-import net.SpectrumFATM.black_archive.fabric.world.dimension.ModDimensions;
+import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;

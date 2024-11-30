@@ -1,0 +1,314 @@
+{
+  "type": "tardis_refined:astral_manipulator",
+  "ingredients": [
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_block"
+      },
+      "relative_pos": [
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        2,
+        0,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:green_stained_glass_pane",
+        "Properties": {
+          "east": "false",
+          "north": "false",
+          "south": "false",
+          "waterlogged": "false",
+          "west": "false"
+        }
+      },
+      "relative_pos": [
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:green_stained_glass_pane",
+        "Properties": {
+          "east": "false",
+          "north": "false",
+          "south": "false",
+          "waterlogged": "false",
+          "west": "false"
+        }
+      },
+      "relative_pos": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:redstone_block"
+      },
+      "relative_pos": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:green_stained_glass_pane",
+        "Properties": {
+          "east": "false",
+          "north": "false",
+          "south": "false",
+          "waterlogged": "false",
+          "west": "false"
+        }
+      },
+      "relative_pos": [
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:green_stained_glass_pane",
+        "Properties": {
+          "east": "false",
+          "north": "false",
+          "south": "false",
+          "waterlogged": "false",
+          "west": "false"
+        }
+      },
+      "relative_pos": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block",
+        "Properties": {
+          "inverted": "false",
+          "power": "0"
+        }
+      },
+      "relative_pos": [
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "tardis_refined:zeiton_fused_iron_block"
+      },
+      "relative_pos": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "block_state": {
+        "Name": "minecraft:iron_block"
+      },
+      "relative_pos": [
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "result": {
+    "type": "tardis_refined:item_result",
+    "itemstack": {
+      "Count": 1,
+      "id": "black_archive:gravity_generator"
+    }
+  }
+}

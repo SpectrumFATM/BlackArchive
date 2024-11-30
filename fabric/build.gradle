@@ -75,3 +75,9 @@ remapJar {
 fabricApi {
     configureDataGeneration()
 }
+
+task datagen(type: JavaExec) {
+    main = "net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--all", "--output=src/generated/resources"]
+}

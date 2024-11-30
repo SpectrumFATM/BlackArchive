@@ -23,7 +23,8 @@
     "PlayerEntityMixin",
     "ThrottleMixin",
     "DimensionalMixin",
-    "LivingEntityRendererMixin"
+    "LivingEntityRendererMixin",
+    "TardisClientLogicMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,21 +2,7 @@
 
 ### Added
 
-- Telepathic Circuit takes the player to a point of interest.
-- Telepathic Upgrade.
-- Sattenheim Upgrade.
-- 11th Doctor's Sonic Screwdriver.
-- 12th Doctor's Sonic Screwdriver.
-- Time Vortex.
-- Temporal Orbit controls.
-- Complex Space-Time Events.
-- Temporal Anomalies.
-- Superphone item.
+- Tissue Compression Eliminator
 
-### Fixed
-- Automatic Y detection in non-space dimensions.
-- Texture updates.
-- Model updates.
-
-### Removed
-- Modern TARDIS Key.
+### Improved
+- Time rotor now continues to movie when in temporal orbit.

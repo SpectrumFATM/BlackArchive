@@ -47,10 +47,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () ->new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
     public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () ->new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
 
+    /*
     public static final RegistrySupplier<Item> DALEK_EGG = registerItem("dalek_spawn_egg",() -> new BASpawnEggItem(ModEntities.DALEK::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
     public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () ->new BASpawnEggItem(ModEntities.CYBERMAT::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
     public static final RegistrySupplier<Item> CYBERMAN_EGG = registerItem("cyberman_spawn_egg", () ->new BASpawnEggItem(ModEntities.CYBERMAN::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
-
+     */
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
         BlackArchive.LOGGER.info("Registered item: " + name);
         return ITEMS.register(name, item);

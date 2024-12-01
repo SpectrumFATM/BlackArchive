@@ -58,7 +58,7 @@ public class CybermatEntity extends HostileEntity {
         super.onDeath(source);
         if (!this.getWorld().isClient) {
             if (random.nextInt(20) == 1) {
-                this.dropStack(new ItemStack(ModItems.CYBERMAT_EGG.get(), 1));
+                //this.dropStack(new ItemStack(ModItems.CYBERMAT_EGG.get(), 1));
             } else {
                 this.dropStack(new ItemStack(ModItems.STEEL_INGOT.get(), 1));
             }

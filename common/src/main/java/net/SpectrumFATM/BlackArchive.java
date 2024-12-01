@@ -25,7 +25,7 @@ public final class BlackArchive {
         ModEffects.EFFECTS.registerToModBus();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModItems.ITEMS.registerToModBus();
-        ModUpgrades.register();
+        ModUpgrades.UPGRADE_DEFERRED_REGISTRY.registerToModBus();
         BlackArchiveNetworkHandler.registerPackets();
     }
 }

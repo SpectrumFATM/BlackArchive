@@ -4,7 +4,6 @@ import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.features.BraceletFeatureRenderer;
 import net.SpectrumFATM.black_archive.fabric.renderer.FabricSkyRenderer;
 import net.SpectrumFATM.black_archive.fabric.entity.ModEntityRenderers;
-import net.SpectrumFATM.black_archive.renderer.TardisWarningRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -24,15 +23,6 @@ public class BlackArchiveClient implements ClientModInitializer {
 
         ModEntityRenderers.registerRenderers();
         ModEntityRenderers.registerModelLayers();
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            TardisWarningRenderer.onClientTick();
-        });
-
-        // Hook into Fabric's HUD render event
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-            TardisWarningRenderer.onRenderHud(drawContext, tickDelta);
-        });
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {

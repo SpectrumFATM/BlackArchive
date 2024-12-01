@@ -13,8 +13,7 @@ public class BlackArchiveClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ModEntities.registerPlatformRenderers();
-
+        //ModEntities.registerPlatformRenderers();
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {

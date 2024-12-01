@@ -9,5 +9,6 @@ public class BlackArchive implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		net.SpectrumFATM.BlackArchive.init();
 	}
 }

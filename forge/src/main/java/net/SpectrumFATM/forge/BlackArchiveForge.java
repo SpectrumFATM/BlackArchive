@@ -11,6 +11,5 @@ public final class BlackArchiveForge {
 
         // Run our common setup.
         BlackArchive.init();
-        ModItemGroupsForge.BLACK_ARCHIVE.registerToModBus();
     }
 }

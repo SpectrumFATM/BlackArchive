@@ -11,10 +11,11 @@ public class ModEntitiesForge {
         // Register renderers through Forge's event bus
         IEventBus bus = MinecraftForge.EVENT_BUS;
 
-        bus.addListener(ModEntitiesForge::registerRenderers);
-        bus.addListener(ModEntitiesForge::registerModelLayers);
+        //bus.addListener(ModEntitiesForge::registerRenderers);
+        //bus.addListener(ModEntitiesForge::registerModelLayers);
     }
 
+    /*
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.DALEK.get(), DalekRenderer::new);
         event.registerEntityRenderer(ModEntities.LASER.get(), LaserRenderer::new);
@@ -31,4 +32,6 @@ public class ModEntitiesForge {
         event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
     }
+
+     */
 }

@@ -1,5 +1,7 @@
 package net.SpectrumFATM.black_archive.item;
 
+import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
@@ -10,14 +12,13 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Formatting;
 import whocraft.tardis_refined.common.items.KeyItem;
-import whocraft.tardis_refined.registry.DeferredRegistry;
-import whocraft.tardis_refined.registry.RegistrySupplier;
 
 public class ModItems {
 
-    public static final DeferredRegistry<Item> ITEMS = DeferredRegistry.create(BlackArchive.MOD_ID, Registries.ITEM.getKey());
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BlackArchive.MOD_ID, RegistryKeys.ITEM);
 
     public static final RegistrySupplier<Item> VORTEXMANIP = registerItem("vortex_manipulator", new VortexManipulatorItem(new FabricItemSettings().maxCount(1)));
     public static final RegistrySupplier<Item> CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new FabricItemSettings().maxCount(1)));
@@ -30,7 +31,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> SONIC14 = registerItem("14thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic.tooltip", Formatting.BLUE));
     public static final RegistrySupplier<Item> SONIC15 = registerItem("15thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic15.tooltip", Formatting.BLUE));
     public static final RegistrySupplier<Item> SONIC13 = registerItem("13thsonic", new SonicItem(new FabricItemSettings().maxCount(1), "item.sonic13.tooltip", Formatting.GOLD));
-    public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get()));
+    //public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new FabricItemSettings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get()));
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", new TooltipItem(new FabricItemSettings().maxCount(1), "item.dalek_bracelet.tooltip"));
     public static final RegistrySupplier<Item> TCE = registerItem("tce", new CompressorItem(new FabricItemSettings().maxCount(1), "item.tce.tooltip"));
 
@@ -51,6 +52,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> CYBERMAN_EGG = registerItem("cyberman_spawn_egg", new SpawnEggItem(ModEntities.CYBERMAN.get(), 0xFFFFFF, 0xFFFFFF, new FabricItemSettings().maxCount(1)));
 
     private static RegistrySupplier<Item> registerItem(String name, Item item) {
+        BlackArchive.LOGGER.info("Registered item: " + name);
         return ITEMS.register(name, () -> item);
     }
 }

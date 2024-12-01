@@ -4,13 +4,12 @@ import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.effects.ModEffects;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
-import net.SpectrumFATM.black_archive.item.ModItemGroups;
 import net.SpectrumFATM.black_archive.item.ModItems;
+import net.SpectrumFATM.black_archive.network.NetworkHandler;
 import net.SpectrumFATM.black_archive.network.TardisWarningPacket;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.tardis.control.ModControls;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
-import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,15 +20,15 @@ public final class BlackArchive {
     public static void init() {
         // Write common init code here.
         BlackArchiveConfig.register();
-        ModBlocks.BLOCKS.registerToModBus();
-        ModEntities.ENTITY_TYPES.registerToModBus();
+        ModBlocks.BLOCKS.register();
+        ModEntities.ENTITY_TYPES.register();
         ModEntities.registerPlatformRenderers();
-        ModItems.ITEMS.registerToModBus();
-        ModItemGroups.registerItemGroups();
-        ModSounds.SOUNDS.registerToModBus();
-        ModEffects.EFFECTS.registerToModBus();
+        ModItems.ITEMS.register();
+        ModSounds.SOUNDS.register();
+        ModEffects.EFFECTS.register();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModUpgrades.register();
+        NetworkHandler.register();
 
         TardisWarningPacket.registerClientReceiver();
     }

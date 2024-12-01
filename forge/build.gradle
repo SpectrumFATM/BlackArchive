@@ -4,7 +4,7 @@ plugins {
 
 loom {
     forge {
-        mixinConfig "mixin.json"
+        mixinConfig "black_archive.mixins.json"
     }
 }
 
@@ -37,16 +37,6 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_forge"
-
-    // Adds a dependency on the base cardinal components module (required by every other module)
-    // Replace modImplementation with modApi if you expose components in your own API
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_version}"
-    // Adds a dependency on a specific module
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${rootProject.cardinal_version}"
-
-    // Forge Config API Port
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forge_config_api_port_version}"
-    include "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forge_config_api_port_version}"
 
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

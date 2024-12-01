@@ -77,7 +77,7 @@ public class DalekEntity extends HostileEntity implements RangedAttackMob {
         super.onDeath(source);
         if (!this.getWorld().isClient) {
             if (random.nextInt(20) == 1) {
-                this.dropStack(new ItemStack(ModItems.DALEK_LASER_GUN.get(), 1));
+                //this.dropStack(new ItemStack(ModItems.DALEK_LASER_GUN.get(), 1));
             } else {
                 this.dropStack(new ItemStack(Items.COPPER_BLOCK, 2));
                 this.dropStack(new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 1));

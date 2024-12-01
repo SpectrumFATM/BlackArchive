@@ -5,9 +5,9 @@ import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
-import net.SpectrumFATM.black_archive.network.NetworkHandler;
-import net.SpectrumFATM.black_archive.network.VMSavePacket;
-import net.SpectrumFATM.black_archive.network.VMTeleportPacket;
+import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
+import net.SpectrumFATM.black_archive.network.messages.C2SWaypointSaveMessage;
+import net.SpectrumFATM.black_archive.network.messages.C2STeleportMessage;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -151,10 +151,10 @@ public class VortexScreen extends Screen {
         double zCoord = zText.isEmpty() ? client.player.getZ() : Double.parseDouble(zText);
 
         if (!dimension.isEmpty() && !dimension.startsWith("tardis_refined:")) {
-            VMTeleportPacket packet = new VMTeleportPacket( xCoord, yCoord, zCoord, dimension);
+            C2STeleportMessage packet = new C2STeleportMessage( xCoord, yCoord, zCoord, dimension);
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             packet.toBytes(buf);
-            NetworkManager.sendToServer(NetworkHandler.VM_TELEPORT, buf);
+            packet.send();
         }
     }
 
@@ -165,10 +165,8 @@ public class VortexScreen extends Screen {
         double z = Double.parseDouble(textFieldWidgetZ.getText());
         String dimension = dimensions.get(currentDimensionIndex);
 
-        VMSavePacket packet = new VMSavePacket(name, x, y, z, dimension); // Example data: 42
-        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        packet.toBytes(buf);
-        NetworkManager.sendToServer(NetworkHandler.WAYPOINT_SAVE_ID, buf);
+        C2SWaypointSaveMessage packet = new C2SWaypointSaveMessage(name, x, y, z, dimension); // Example data: 42
+        packet.send();
     }
 
     private void deleteWaypoint() {

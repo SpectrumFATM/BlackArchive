@@ -1,17 +1,17 @@
-package net.SpectrumFATM.black_archive.network;
+package net.SpectrumFATM.black_archive.network.messages;
 
-import dev.architectury.networking.NetworkManager;
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
+import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import whocraft.tardis_refined.common.network.MessageC2S;
+import whocraft.tardis_refined.common.network.MessageContext;
+import whocraft.tardis_refined.common.network.MessageType;
 
-import java.util.function.Supplier;
-
-public class VMSavePacket {
+public class C2SWaypointSaveMessage extends MessageC2S {
 
     private final String name;
     private final double x;
@@ -19,7 +19,7 @@ public class VMSavePacket {
     private final double z;
     private final String dimension;
 
-    public VMSavePacket(String name, double x, double y, double z, String dimension) {
+    public C2SWaypointSaveMessage(String name, double x, double y, double z, String dimension) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -27,12 +27,17 @@ public class VMSavePacket {
         this.dimension = dimension;
     }
 
-    public VMSavePacket(PacketByteBuf buf) {
+    public C2SWaypointSaveMessage(PacketByteBuf buf) {
         this.name = buf.readString();
         this.x = buf.readDouble();
         this.y = buf.readDouble();
         this.z = buf.readDouble();
         this.dimension = buf.readString();
+    }
+
+    @Override
+    public MessageType getType() {
+        return BlackArchiveNetworkHandler.WAYPOINT_SAVE;
     }
 
     public void toBytes(PacketByteBuf buf) {
@@ -43,10 +48,9 @@ public class VMSavePacket {
         buf.writeString(dimension);
     }
 
-
-    public void handle(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        contextSupplier.get().queue(() -> {
-            ServerPlayerEntity player = (ServerPlayerEntity) contextSupplier.get().getPlayer();
+    @Override
+    public void handle(MessageContext messageContext) {
+            ServerPlayerEntity player = messageContext.getPlayer();
             ItemStack heldItem = player.getMainHandStack();
             if (!(heldItem.getItem() instanceof VortexManipulatorItem)) {
                 heldItem = player.getOffHandStack();
@@ -64,6 +68,6 @@ public class VMSavePacket {
 
                 player.sendMessage(Text.of("Waypoint saved: " + nbt), false);
             }
-        });
-    }
+        }
+
 }

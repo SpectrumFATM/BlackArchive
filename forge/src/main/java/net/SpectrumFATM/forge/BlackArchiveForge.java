@@ -3,12 +3,15 @@ package net.SpectrumFATM.forge;
 import net.SpectrumFATM.black_archive.renderer.TardisWarningRenderer;
 import net.SpectrumFATM.forge.entity.ModEntityRenderers;
 import net.SpectrumFATM.forge.renderer.ForgeSkyRenderer;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 
 import net.SpectrumFATM.BlackArchive;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import static net.SpectrumFATM.black_archive.config.BlackArchiveConfig.CLIENT_SPEC;
@@ -37,11 +40,11 @@ public final class BlackArchiveForge {
     }
 
 
-    private void onCommonSetup(final net.minecraftforge.eventbus.api.Event event) {
+    private void onCommonSetup(FMLCommonSetupEvent event) {
         // Common setup code here
     }
 
-    private void onClientSetup(final net.minecraftforge.eventbus.api.Event event) {
+    private void onClientSetup(FMLClientSetupEvent event) {
         TardisWarningRenderer.register();
     }
 }

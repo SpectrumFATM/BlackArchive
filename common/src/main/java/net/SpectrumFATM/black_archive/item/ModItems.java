@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.item;
 
+import net.SpectrumFATM.black_archive.sound.ModSounds;
 import whocraft.tardis_refined.registry.DeferredRegistry;
 import whocraft.tardis_refined.registry.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
@@ -31,7 +32,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> SONIC14 = registerItem("14thsonic", () ->new SonicItem(new Item.Settings().maxCount(1), "item.sonic.tooltip", Formatting.BLUE));
     public static final RegistrySupplier<Item> SONIC15 = registerItem("15thsonic", () ->new SonicItem(new Item.Settings().maxCount(1), "item.sonic15.tooltip", Formatting.BLUE));
     public static final RegistrySupplier<Item> SONIC13 = registerItem("13thsonic", () ->new SonicItem(new Item.Settings().maxCount(1), "item.sonic13.tooltip", Formatting.GOLD));
-    //public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", new LaserGunItem(new Item.Settings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get()));
+    public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", () -> new LaserGunItem(new Item.Settings().maxCount(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get()));
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", () ->new TooltipItem(new Item.Settings().maxCount(1), "item.dalek_bracelet.tooltip"));
     public static final RegistrySupplier<Item> TCE = registerItem("tce",() -> new CompressorItem(new Item.Settings().maxCount(1), "item.tce.tooltip"));
 
@@ -47,11 +48,6 @@ public class ModItems {
     public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () ->new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
     public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () ->new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
 
-    /*
-    public static final RegistrySupplier<Item> DALEK_EGG = registerItem("dalek_spawn_egg",() -> new BASpawnEggItem(ModEntities.DALEK::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
-    public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () ->new BASpawnEggItem(ModEntities.CYBERMAT::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
-    public static final RegistrySupplier<Item> CYBERMAN_EGG = registerItem("cyberman_spawn_egg", () ->new BASpawnEggItem(ModEntities.CYBERMAN::get, 0xFFFFFF, 0xFFFFFF, new Item.Settings().maxCount(1).arch$tab(ItemGroups.SPAWN_EGGS)));
-     */
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
         BlackArchive.LOGGER.info("Registered item: " + name);
         return ITEMS.register(name, item);

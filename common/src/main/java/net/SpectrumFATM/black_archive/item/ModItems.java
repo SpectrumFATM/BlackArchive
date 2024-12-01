@@ -50,11 +50,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> DALEK_GRAV_GEN = registerItem("dalek_gravity_generator",() -> new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN.get(), new Item.Settings(), "block.dalek_gravity.tooltip"));
     public static final RegistrySupplier<Item> GRAVITY_GEN = registerItem("gravity_generator", () -> new TooltipBlockItem(ModBlocks.GRAVITY_GEN.get(), new Item.Settings(), "block.gravity.tooltip"));
     public static final RegistrySupplier<Item> OXYGEN_GEN = registerItem("oxygen_field", () -> new TooltipBlockItem(ModBlocks.OXYGEN_GEN.get(), new Item.Settings(), "block.oxygen.tooltip"));
-    public static final RegistrySupplier<Item> STEEL_BLOCK = registerItem("steel_block",() -> new BlockItem(ModBlocks.STEEL_BLOCK.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
-    public static final RegistrySupplier<Item> CUT_STEEL = registerItem("cut_steel", () ->new BlockItem(ModBlocks.CUT_STEEL.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
-    public static final RegistrySupplier<Item> ETCHED_STEEL = registerItem("etched_steel", () ->new BlockItem(ModBlocks.ETCHED_STEEL.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
-    public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () ->new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
-    public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () ->new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Settings().arch$tab(ItemGroups.BUILDING_BLOCKS)));
+    public static final RegistrySupplier<Item> STEEL_BLOCK = registerItem("steel_block",() -> new BlockItem(ModBlocks.STEEL_BLOCK.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> CUT_STEEL = registerItem("cut_steel", () ->new BlockItem(ModBlocks.CUT_STEEL.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> ETCHED_STEEL = registerItem("etched_steel", () ->new BlockItem(ModBlocks.ETCHED_STEEL.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () ->new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () ->new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Settings()));
 
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
         BlackArchive.LOGGER.info("Registered item: " + name);

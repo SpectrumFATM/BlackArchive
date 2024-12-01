@@ -20,9 +20,6 @@
 		],
 		"client": [
 			"net.SpectrumFATM.black_archive.fabric.BlackArchiveClient"
-		],
-		"fabric-datagen": [
-			"net.SpectrumFATM.black_archive.fabric.BlackArchiveDataGenerator"
 		]
 	},
 	"mixins": [

@@ -17,6 +17,7 @@ public final class BlackArchive {
 
     public static void init() {
         // Write common init code here.
+        ModItems.TABS.registerToModBus();
         ModBlocks.BLOCKS.registerToModBus();
         ModEntities.ENTITY_TYPES.registerToModBus();
         ModEntities.createEntityAttributes();

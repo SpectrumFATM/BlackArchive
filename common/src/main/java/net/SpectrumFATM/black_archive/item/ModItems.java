@@ -1,16 +1,14 @@
 package net.SpectrumFATM.black_archive.item;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
+import net.minecraft.item.*;
+import whocraft.tardis_refined.TardisRefined;
 import whocraft.tardis_refined.registry.DeferredRegistry;
 import whocraft.tardis_refined.registry.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
-import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.item.custom.*;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Formatting;
 import whocraft.tardis_refined.common.items.KeyItem;
@@ -19,9 +17,12 @@ import java.util.function.Supplier;
 
 public class ModItems {
 
+    public static final DeferredRegistry<ItemGroup> TABS = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.ITEM_GROUP);
+    public static final RegistrySupplier<ItemGroup> MAIN_TAB = TABS.register("main_tab", ModItems::getCreativeTab);
+
     public static final DeferredRegistry<Item> ITEMS = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.ITEM);
 
-    public static final RegistrySupplier<Item> VORTEXMANIP = registerItem("vortex_manipulator",() -> new VortexManipulatorItem(new Item.Settings().maxCount(1)));
+    public static final RegistrySupplier<Item> VORTEXMANIP = registerItem("vortex_manipulator",() -> new VortexManipulatorItem(new Item.Settings().maxCount(1).arch$tab(MAIN_TAB.get())));
     public static final RegistrySupplier<Item> CONTACTLENS = registerItem("contact_lens",() -> new ContactLensItem(new Item.Settings().maxCount(1)));
     public static final RegistrySupplier<Item> TARDISKEYCLASSIC = registerItem("key_01",() -> new KeyItem(new Item.Settings().maxCount(1)));
     public static final RegistrySupplier<Item> SUPERPHONE = registerItem("superphone",() -> new DistressItem(new Item.Settings().maxCount(1), "item.superphone.tooltip"));
@@ -51,5 +52,10 @@ public class ModItems {
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
         BlackArchive.LOGGER.info("Registered item: " + name);
         return ITEMS.register(name, item);
+    }
+
+    @ExpectPlatform
+    public static ItemGroup getCreativeTab() {
+        throw new RuntimeException(TardisRefined.PLATFORM_ERROR);
     }
 }

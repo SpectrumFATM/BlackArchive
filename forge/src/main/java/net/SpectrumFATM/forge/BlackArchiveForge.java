@@ -1,10 +1,15 @@
 package net.SpectrumFATM.forge;
 
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.renderer.TardisWarningRenderer;
 import net.SpectrumFATM.forge.entity.ModEntityRenderers;
 import net.SpectrumFATM.forge.renderer.ForgeSkyRenderer;
+import net.minecraft.item.Item;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 
@@ -26,7 +31,6 @@ public final class BlackArchiveForge {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Run our common setup.
-
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
 

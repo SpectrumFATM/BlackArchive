@@ -22,10 +22,6 @@ public class BlackArchiveConfig {
         CLIENT_SPEC = clientBuilder.build();
     }
 
-    public static void register() {
-        ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.COMMON, COMMON_SPEC);
-        ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.CLIENT, CLIENT_SPEC);
-    }
 
     public static class CommonConfig {
         public final ForgeConfigSpec.IntValue vortexManipulatorCooldown;

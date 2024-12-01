@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.SpectrumFATM.black_archive.fabric.BlackArchive"
+          "net.SpectrumFATM.black_archive.fabric.FabricBlackArchive"
 		],
 		"client": [
 			"net.SpectrumFATM.black_archive.fabric.BlackArchiveClient"

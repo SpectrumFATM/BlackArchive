@@ -1,13 +1,10 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
 import net.SpectrumFATM.black_archive.screen.VortexScreen;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -63,7 +60,6 @@ public class VortexManipulatorItem extends Item {
         }
     }
 
-    @Environment(EnvType.CLIENT)
     private void openVortexScreen(List<String> dimensions) {
         MinecraftClient.getInstance().setScreen(new VortexScreen(dimensions));
     }

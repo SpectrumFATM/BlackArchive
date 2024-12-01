@@ -1,37 +1,30 @@
 package net.SpectrumFATM.black_archive.network;
 
 import dev.architectury.networking.NetworkManager;
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.renderer.TardisWarningRenderer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.text.Text;
+
+import java.util.function.Supplier;
 
 public class TardisWarningPacket {
-    public static final Identifier ID = new Identifier(BlackArchive.MOD_ID, "tardis_warning_flash");
-
+    // Constructor for creating the packet
     public TardisWarningPacket() {
-        // No data required for this packet
     }
 
+    // Constructor for reading data from the buffer
     public TardisWarningPacket(PacketByteBuf buf) {
-        // No data to decode
     }
 
-    public void encode(PacketByteBuf buf) {
-        // No data to encode
+    // Method to write data to the buffer
+    public void toBytes(PacketByteBuf buf) {
     }
 
-    public static void sendToClient(ServerPlayerEntity player) {
-        PacketByteBuf buf = new PacketByteBuf(io.netty.buffer.Unpooled.buffer());
-        new TardisWarningPacket().encode(buf);
-        NetworkManager.sendToPlayer(player, ID, buf);
-    }
-
-    public static void registerClientReceiver() {
-        NetworkManager.registerReceiver(NetworkManager.Side.S2C, ID, (buf, context) -> {
-            TardisWarningPacket packet = new TardisWarningPacket(buf);
-            context.queue(() -> TardisWarningRenderer.triggerRedFlash());
+    // Client-side handling of the packet
+    public void handle(Supplier<NetworkManager.PacketContext> contextSupplier) {
+        contextSupplier.get().queue(() -> {
+            TardisWarningRenderer.triggerRedFlash();
         });
     }
 }

@@ -6,7 +6,6 @@ import net.SpectrumFATM.black_archive.effects.ModEffects;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.network.NetworkHandler;
-import net.SpectrumFATM.black_archive.network.TardisWarningPacket;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.tardis.control.ModControls;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
@@ -28,8 +27,8 @@ public final class BlackArchive {
         ModEffects.EFFECTS.register();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModUpgrades.register();
-        NetworkHandler.register();
+        NetworkHandler.registerPackets();
 
-        TardisWarningPacket.registerClientReceiver();
+        dasd.registerClientReceiver();
     }
 }

@@ -1,10 +1,13 @@
 package net.SpectrumFATM.black_archive.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.architectury.networking.NetworkManager;
+import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.network.AllowedDimensionsRequestPacket;
-import net.SpectrumFATM.black_archive.network.VortexSaveWaypointPacket;
-import net.SpectrumFATM.black_archive.network.VortexTeleportPacket;
+import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
+import net.SpectrumFATM.black_archive.network.NetworkHandler;
+import net.SpectrumFATM.black_archive.network.VMSavePacket;
+import net.SpectrumFATM.black_archive.network.VMTeleportPacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -13,6 +16,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -42,13 +46,14 @@ public class VortexScreen extends Screen {
     private static ButtonWidget buttonWaypointRight;
     private static ButtonWidget buttonWaypointDelete;
 
-    private List<String> dimensions = new ArrayList<>();
+    private List<String> dimensions;
     private List<String> waypoints = new ArrayList<>();
     private int currentDimensionIndex = 0;
     private int currentWaypointIndex = 0;
 
-    public VortexScreen() {
+    public VortexScreen(List<String> dimensions) {
         super(Text.literal("Vortex Manipulator"));
+        this.dimensions = dimensions;
     }
 
     @Override
@@ -60,7 +65,6 @@ public class VortexScreen extends Screen {
         initTextFields(x, y);
         initButtons(x, y);
 
-        AllowedDimensionsRequestPacket.send();
         fetchWaypoints();
     }
 
@@ -147,7 +151,10 @@ public class VortexScreen extends Screen {
         double zCoord = zText.isEmpty() ? client.player.getZ() : Double.parseDouble(zText);
 
         if (!dimension.isEmpty() && !dimension.startsWith("tardis_refined:")) {
-            VortexTeleportPacket.send(xCoord, yCoord, zCoord, dimension);
+            VMTeleportPacket packet = new VMTeleportPacket( xCoord, yCoord, zCoord, dimension);
+            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+            packet.toBytes(buf);
+            NetworkManager.sendToServer(NetworkHandler.VM_TELEPORT, buf);
         }
     }
 
@@ -158,13 +165,16 @@ public class VortexScreen extends Screen {
         double z = Double.parseDouble(textFieldWidgetZ.getText());
         String dimension = dimensions.get(currentDimensionIndex);
 
-        VortexSaveWaypointPacket.send(name, x, y, z, dimension);
+        VMSavePacket packet = new VMSavePacket(name, x, y, z, dimension); // Example data: 42
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        packet.toBytes(buf);
+        NetworkManager.sendToServer(NetworkHandler.WAYPOINT_SAVE_ID, buf);
     }
 
     private void deleteWaypoint() {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
-            ItemStack heldItem = getHeldItem();
+            ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
             if (!heldItem.isEmpty() && heldItem.hasNbt()) {
                 NbtCompound nbt = heldItem.getNbt();
                 if (nbt != null && nbt.contains(waypointName)) {
@@ -177,45 +187,57 @@ public class VortexScreen extends Screen {
             if (currentWaypointIndex >= waypoints.size()) {
                 currentWaypointIndex = waypoints.size() - 1;
             }
-            updateWaypointFields();
+            updateWaypointFields(); // Refresh the displayed waypoint
         }
     }
 
     private void fetchWaypoints() {
-        ItemStack heldItem = getHeldItem();
+        ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
+
+        // Check if the main hand has a VortexManipulatorItem, else check the off-hand
+        if (!(heldItem.getItem() instanceof VortexManipulatorItem)) {
+            heldItem = MinecraftClient.getInstance().player.getOffHandStack();
+        }
+
         if (!heldItem.isEmpty() && heldItem.hasNbt()) {
             NbtCompound nbt = heldItem.getNbt();
             if (nbt != null) {
-                waypoints.clear();
+                waypoints.clear(); // Clear current waypoints list
+
                 for (String key : nbt.getKeys()) {
-                    if (nbt.getCompound(key).contains("x") && nbt.getCompound(key).contains("y") && nbt.getCompound(key).contains("z")) {
-                        waypoints.add(key);
+                    NbtCompound waypointData = nbt.getCompound(key);
+                    if (waypointData.contains("x") && waypointData.contains("y") && waypointData.contains("z") && waypointData.contains("dimension")) {
+                        // Extract waypoint data and log it
+                        double x = waypointData.getDouble("x");
+                        double y = waypointData.getDouble("y");
+                        double z = waypointData.getDouble("z");
+                        String dimension = waypointData.getString("dimension");
+
+                        waypoints.add(key); // Add waypoint name to the list
+
+                        BlackArchive.LOGGER.info("Waypoint: " + key + " (x=" + x + ", y=" + y + ", z=" + z + ", dimension=" + dimension + ")");
                     }
                 }
+
                 BlackArchive.LOGGER.info("Fetched waypoints: " + waypoints);
             }
+        } else {
+            BlackArchive.LOGGER.warn("No Vortex Manipulator or waypoints found in the player's inventory.");
         }
-    }
-
-    private ItemStack getHeldItem() {
-        ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
-        if (heldItem.isEmpty() || !heldItem.hasNbt()) {
-            heldItem = MinecraftClient.getInstance().player.getOffHandStack();
-        }
-        return heldItem;
     }
 
     private void cycleWaypoint(int direction) {
         if (!waypoints.isEmpty()) {
             currentWaypointIndex = (currentWaypointIndex + direction + waypoints.size()) % waypoints.size();
-            updateWaypointFields();
+            updateWaypointFields(); // Update the displayed waypoint data
         }
     }
+
 
     private void updateWaypointFields() {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
-            ItemStack heldItem = getHeldItem();
+            ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
             if (!heldItem.isEmpty() && heldItem.hasNbt()) {
                 NbtCompound nbt = heldItem.getNbt();
                 if (nbt != null && nbt.contains(waypointName)) {

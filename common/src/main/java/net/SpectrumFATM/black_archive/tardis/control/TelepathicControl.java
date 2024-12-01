@@ -1,11 +1,15 @@
 package net.SpectrumFATM.black_archive.tardis.control;
 
 import com.mojang.datafixers.util.Pair;
+import dev.architectury.networking.NetworkManager;
+import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
+import net.SpectrumFATM.black_archive.network.NetworkHandler;
 import net.SpectrumFATM.black_archive.network.TardisWarningPacket;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -48,7 +52,10 @@ public class TelepathicControl extends Control {
         if (random.nextInt(20) == 1) {
             playerEntity.sendMessage(Text.translatable("telepathic.black_archive.bad").formatted(Formatting.RED), true);
             for (PlayerEntity player : tardisLevelOperator.getLevel().getPlayers()) {
-                TardisWarningPacket.sendToClient((ServerPlayerEntity) player);
+                TardisWarningPacket packet = new TardisWarningPacket();
+                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                packet.toBytes(buf);
+                NetworkManager.sendToPlayer((ServerPlayerEntity) player, NetworkHandler.TARDIS_WARN, buf);
             }
 
             controlEntity.playSound(ModSounds.TARDIS_GROAN.get(), 1.0F, 1.0F);

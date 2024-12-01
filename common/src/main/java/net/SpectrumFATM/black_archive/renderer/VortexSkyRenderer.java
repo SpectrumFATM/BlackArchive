@@ -1,26 +1,15 @@
 package net.SpectrumFATM.black_archive.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
-public class VortexSkyRenderer implements DimensionRenderingRegistry.SkyRenderer {
-
+public class VortexSkyRenderer {
     private static final Identifier VORTEX_TEXTURE = new Identifier("black_archive", "textures/environment/vortex.png");
 
-    @Override
-    public void render(WorldRenderContext context) {
-        renderVortex(context.matrixStack());
-    }
-
-    public static void renderVortex(MatrixStack matrixStack) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        Camera camera = client.gameRenderer.getCamera();
+    public static void render(MatrixStack matrixStack, Camera camera) {
 
         // Bind the vortex texture
         RenderSystem.setShaderTexture(0, VORTEX_TEXTURE);

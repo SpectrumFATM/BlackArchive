@@ -17,27 +17,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.RotationAxis;
 
-public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, PlayerEntityModel<PlayerEntity>> {
-
-    public BraceletFeatureRenderer(FeatureRendererContext<PlayerEntity, PlayerEntityModel<PlayerEntity>> context) {
+public class BraceletFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+    public BraceletFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context) {
         super(context);
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, PlayerEntity player, float limbAngle, float limbDistance, float tickDelta, float age, float headYaw, float headPitch) {
+    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, float limbAngle, float limbDistance, float tickDelta, float age, float headYaw, float headPitch) {
         if (player == null) {
             return;
         }
 
         // Render bracelet only if the player is visible and is an instance of AbstractClientPlayerEntity
-        if (!player.isInvisible() && player instanceof AbstractClientPlayerEntity clientPlayer) {
+        if (!player.isInvisible() && player != null) {
             matrices.push();
 
             // Check if the player is left-handed or right-handed
             Arm mainArm = player.getMainArm(); // LEFT or RIGHT
 
             // Get the correct arm model based on the main arm
-            PlayerEntityModel<PlayerEntity> playerRenderer = this.getContextModel();
+            PlayerEntityModel<AbstractClientPlayerEntity> playerRenderer = this.getContextModel();
             ModelPart arm = (mainArm == Arm.RIGHT) ? playerRenderer.rightArm : playerRenderer.leftArm;
 
             // Apply the arm's transformation to the MatrixStack
@@ -54,7 +53,7 @@ public class BraceletFeatureRenderer extends FeatureRenderer<PlayerEntity, Playe
                 matrices.translate(-0.065, 0.525, -0.1); // Default translation for regular arms
             }
 
-            if (clientPlayer.getMainHandStack().getItem() != ModItems.DALEK_BRACELET.get() && clientPlayer.getOffHandStack().getItem() != ModItems.DALEK_BRACELET.get()) {
+            if (player.getMainHandStack().getItem() != ModItems.DALEK_BRACELET.get() && player.getOffHandStack().getItem() != ModItems.DALEK_BRACELET.get()) {
                 renderBraceletAsHeldItem(player, matrices, vertexConsumers, light, mainArm, isSlim);
             }
 

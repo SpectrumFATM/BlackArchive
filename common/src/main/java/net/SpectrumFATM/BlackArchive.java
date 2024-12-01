@@ -21,14 +21,12 @@ public final class BlackArchive {
         BlackArchiveConfig.register();
         ModBlocks.BLOCKS.register();
         ModEntities.ENTITY_TYPES.register();
-        ModEntities.registerPlatformRenderers();
+        ModEntities.createEntityAttributes();
         ModItems.ITEMS.register();
         ModSounds.SOUNDS.register();
         ModEffects.EFFECTS.register();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModUpgrades.register();
         NetworkHandler.registerPackets();
-
-        dasd.registerClientReceiver();
     }
 }

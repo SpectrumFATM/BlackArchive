@@ -65,8 +65,6 @@ public class C2SWaypointSaveMessage extends MessageC2S {
                 waypointData.putString("dimension", dimension);
                 nbt.put(name, waypointData);
                 heldItem.setNbt(nbt);
-
-                player.sendMessage(Text.of("Waypoint saved: " + nbt), false);
             }
         }
 

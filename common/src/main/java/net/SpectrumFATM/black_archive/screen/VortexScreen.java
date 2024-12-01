@@ -1,11 +1,9 @@
 package net.SpectrumFATM.black_archive.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
-import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.network.messages.C2SWaypointDeleteMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2SWaypointSaveMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2STeleportMessage;

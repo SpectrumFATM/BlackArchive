@@ -13,7 +13,7 @@ public class ModItemsImpl {
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(ModItems.VORTEXMANIP.get()))
-            .displayName(Text.translatable("itemGroup.black_archive"))
+            .displayName(Text.translatable("itemgroup.black_archive"))
             .build();
 
     public static ItemGroup getCreativeTab() {

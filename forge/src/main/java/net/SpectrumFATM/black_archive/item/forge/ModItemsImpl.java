@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 public class ModItemsImpl {
     public static ItemGroup getCreativeTab() {
         return ItemGroup.builder()
-                .displayName(Text.translatable("itemGroup.black_archive"))
+                .displayName(Text.translatable("itemgroup.black_archive"))
                 .icon(() -> new ItemStack(ModItems.VORTEXMANIP.get()))
                 .build();
     }

@@ -11,7 +11,7 @@ authors = "SpectrumFATM, Endertrekkie, Jeryn99"
 description = '''
 Adding a whole new world of alien technology to Minecraft!
 '''
-#logoFile = ""
+logoFile = "assets/black_archive/icon.png"
 
 [[dependencies.black_archive]]
 modId = "forge"
@@ -28,8 +28,8 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.black_archive]]
-modId = "architectury"
+modId = "tardis_refined"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[2.0.7,)"
 ordering = "AFTER"
 side = "BOTH"

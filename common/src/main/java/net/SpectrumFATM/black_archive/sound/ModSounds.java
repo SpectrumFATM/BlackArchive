@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.sound;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
+import whocraft.tardis_refined.registry.DeferredRegistry;
+import whocraft.tardis_refined.registry.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 
 public class ModSounds {
-    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BlackArchive.MOD_ID, RegistryKeys.SOUND_EVENT);
+    public static final DeferredRegistry<SoundEvent> SOUNDS = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.SOUND_EVENT);
 
     public static final RegistrySupplier<SoundEvent> VORTEX_TP = registerSoundEvent("vortex_teleport");
     public static final RegistrySupplier<SoundEvent> DALEK_LASER = registerSoundEvent("dalek_laser");

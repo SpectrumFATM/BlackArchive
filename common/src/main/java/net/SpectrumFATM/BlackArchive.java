@@ -17,12 +17,12 @@ public final class BlackArchive {
 
     public static void init() {
         // Write common init code here.
-        ModBlocks.BLOCKS.register();
-        ModEntities.ENTITY_TYPES.register();
+        ModBlocks.BLOCKS.registerToModBus();
+        ModEntities.ENTITY_TYPES.registerToModBus();
         ModEntities.createEntityAttributes();
-        ModItems.ITEMS.register();
-        ModSounds.SOUNDS.register();
-        ModEffects.EFFECTS.register();
+        ModItems.ITEMS.registerToModBus();
+        ModSounds.SOUNDS.registerToModBus();
+        ModEffects.EFFECTS.registerToModBus();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModUpgrades.register();
         BlackArchiveNetworkHandler.registerPackets();

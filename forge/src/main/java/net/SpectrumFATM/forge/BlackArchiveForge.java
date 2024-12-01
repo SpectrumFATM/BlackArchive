@@ -17,13 +17,12 @@ import static net.SpectrumFATM.black_archive.config.BlackArchiveConfig.COMMON_SP
 @Mod(BlackArchive.MOD_ID)
 public final class BlackArchiveForge {
     public BlackArchiveForge() {
+        BlackArchive.init();
 
         // Submit our event bus to let Architectury API register our content on the right time.
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Run our common setup.
-        BlackArchive.init();
-
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);

@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.item;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
+import whocraft.tardis_refined.registry.DeferredRegistry;
+import whocraft.tardis_refined.registry.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
@@ -16,7 +16,7 @@ import whocraft.tardis_refined.common.items.KeyItem;
 
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BlackArchive.MOD_ID, RegistryKeys.ITEM);
+    public static final DeferredRegistry<Item> ITEMS = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.ITEM);
 
     public static final RegistrySupplier<Item> VORTEXMANIP = registerItem("vortex_manipulator", new VortexManipulatorItem(new Item.Settings().maxCount(1)));
     public static final RegistrySupplier<Item> CONTACTLENS = registerItem("contact_lens", new ContactLensItem(new Item.Settings().maxCount(1)));

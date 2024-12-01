@@ -1,7 +1,5 @@
 package net.SpectrumFATM.black_archive.block;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
@@ -12,10 +10,12 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import whocraft.tardis_refined.registry.DeferredRegistry;
+import whocraft.tardis_refined.registry.RegistrySupplier;
 
 public class ModBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BlackArchive.MOD_ID, RegistryKeys.BLOCK);
+    public static final DeferredRegistry<Block> BLOCKS = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.BLOCK);
 
     public static final RegistrySupplier<Block> DALEK_GRAVITY_GEN = BLOCKS.register("dalek_gravity_generator", () -> new DalekGravityGenBlock(AbstractBlock.Settings.create()));
     public static final RegistrySupplier<Block> GRAVITY_GEN = BLOCKS.register("gravity_generator", () -> new GravityGenBlock(AbstractBlock.Settings.create()));

@@ -1,18 +1,18 @@
 package net.SpectrumFATM.black_archive.entity;
 
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.entity.custom.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import whocraft.tardis_refined.registry.DeferredRegistry;
+import whocraft.tardis_refined.registry.RegistrySupplier;
 
 public class ModEntities {
     // Deferred Register for entity types
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BlackArchive.MOD_ID, RegistryKeys.ENTITY_TYPE);
+    public static final DeferredRegistry<EntityType<?>> ENTITY_TYPES = DeferredRegistry.create(BlackArchive.MOD_ID, RegistryKeys.ENTITY_TYPE);
 
     // Entity registrations
     public static final RegistrySupplier<EntityType<DalekEntity>> DALEK = ENTITY_TYPES.register("dalek",

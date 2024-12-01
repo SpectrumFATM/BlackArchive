@@ -20,12 +20,11 @@ public final class BlackArchive {
         ModItems.TABS.registerToModBus();
         ModBlocks.BLOCKS.registerToModBus();
         ModEntities.ENTITY_TYPES.registerToModBus();
-        ModEntities.createEntityAttributes();
         ModSounds.SOUNDS.registerToModBus();
         ModEffects.EFFECTS.registerToModBus();
         ModControls.CONTROL_DEFERRED_REGISTRY.registerToModBus();
         ModItems.ITEMS.registerToModBus();
-        ModUpgrades.register();
+        ModUpgrades.UPGRADE_DEFERRED_REGISTRY.registerToModBus();
         BlackArchiveNetworkHandler.registerPackets();
     }
 }

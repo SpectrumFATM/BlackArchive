@@ -1,6 +1,5 @@
 package net.SpectrumFATM.black_archive.entity;
 
-import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.entity.custom.*;
 import net.minecraft.entity.EntityType;
@@ -50,13 +49,4 @@ public class ModEntities {
                     .setDimensions(1f, 2f)
                     .build(new Identifier(BlackArchive.MOD_ID, "time_fissure").toString())
     );
-
-    public static void createEntityAttributes() {
-        EntityAttributeRegistry.register(DALEK, DalekEntity::createDalekAttributes);
-        EntityAttributeRegistry.register(DALEK_PUPPET, DalekPuppetEntity::createDalekSlaveAttributes);
-        EntityAttributeRegistry.register(CYBERMAN, CybermanEntity::createCyberAttributes);
-        EntityAttributeRegistry.register(CYBERMAT, CybermatEntity::createCyberAttributes);
-        EntityAttributeRegistry.register(TIME_FISSURE, TimeFissureEntity::createTimeFissureAttributes);
-    }
-
 }

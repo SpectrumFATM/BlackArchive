@@ -1,13 +1,7 @@
 package net.SpectrumFATM.forge;
 
-import net.SpectrumFATM.black_archive.renderer.TardisWarningRenderer;
 import net.SpectrumFATM.forge.entity.ModEntityRenderers;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 
@@ -47,18 +41,5 @@ public final class BlackArchiveForge {
     }
 
     private void onClientSetup(FMLClientSetupEvent event) {
-    }
-
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            TardisWarningRenderer.onClientTick();
-        }
-    }
-
-    @SubscribeEvent
-    public void onRenderOverlay(RenderGuiOverlayEvent.Post event) {
-        DrawContext guiGraphics = event.getGuiGraphics();
-        TardisWarningRenderer.onRenderHud(guiGraphics, MinecraftClient.getInstance().getRenderTime());
     }
 }

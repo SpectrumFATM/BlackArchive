@@ -1,11 +1,10 @@
 package net.SpectrumFATM.black_archive.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
-import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
+import net.SpectrumFATM.black_archive.network.messages.C2SWaypointDeleteMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2SWaypointSaveMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2STeleportMessage;
 import net.minecraft.client.MinecraftClient;
@@ -66,6 +65,7 @@ public class VortexScreen extends Screen {
         initButtons(x, y);
 
         fetchWaypoints();
+        updateDimensionField();
     }
 
     private void initTextFields(int x, int y) {
@@ -173,14 +173,8 @@ public class VortexScreen extends Screen {
         if (!waypoints.isEmpty()) {
             String waypointName = waypoints.get(currentWaypointIndex);
             ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
-            if (!heldItem.isEmpty() && heldItem.hasNbt()) {
-                NbtCompound nbt = heldItem.getNbt();
-                if (nbt != null && nbt.contains(waypointName)) {
-                    nbt.remove(waypointName);
-                    heldItem.setNbt(nbt);
-                    BlackArchive.LOGGER.info("Deleted waypoint " + waypointName);
-                }
-            }
+            C2SWaypointDeleteMessage packet = new C2SWaypointDeleteMessage(waypointName);
+            packet.send();
             waypoints.remove(currentWaypointIndex);
             if (currentWaypointIndex >= waypoints.size()) {
                 currentWaypointIndex = waypoints.size() - 1;

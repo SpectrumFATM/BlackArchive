@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "All Rights Reserved"
 
 [[mods]]
 modId = "black_archive"
 version = "${version}"
 displayName = "Black Archive"
-authors = "Me!"
+authors = "SpectrumFATM, Endertrekkie, Jeryn99"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Adding a whole new world of alien technology to Minecraft!
 '''
 #logoFile = ""
 

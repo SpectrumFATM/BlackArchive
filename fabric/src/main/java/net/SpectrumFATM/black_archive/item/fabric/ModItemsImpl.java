@@ -7,13 +7,17 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import whocraft.tardis_refined.registry.RegistrySupplier;
-import whocraft.tardis_refined.registry.TRItemRegistry;
 
 public class ModItemsImpl {
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(ModItems.VORTEXMANIP.get()))
             .displayName(Text.translatable("itemgroup.black_archive"))
+            .entries(((displayContext, entries) -> {
+                for (RegistrySupplier<Item> tabItem : ModItems.TAB_ITEMS) {
+                    entries.add(tabItem.get());
+                }
+            }))
             .build();
 
     public static ItemGroup getCreativeTab() {

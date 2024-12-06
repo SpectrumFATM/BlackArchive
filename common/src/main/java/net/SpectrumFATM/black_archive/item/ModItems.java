@@ -5,10 +5,7 @@ import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.item.custom.*;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
+import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Formatting;
 import whocraft.tardis_refined.TardisRefined;
@@ -55,6 +52,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> ETCHED_STEEL = registerItem("etched_steel", () ->new BlockItem(ModBlocks.ETCHED_STEEL.get(), new Item.Settings()));
     public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () ->new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Settings()));
     public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () ->new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Settings()));
+
+    public static final RegistrySupplier<Item> CYBERMAN_SPAWN_EGG = registerItem("cyberman_spawn_egg", () -> new SpawnItem(new Item.Settings(), "cyberman"));
+    public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () -> new SpawnItem(new Item.Settings(), "tardis"));
+
+    public static final RegistrySupplier<Item> DALEK_SPAWN_EGG = registerItem("dalek_spawn_egg", () -> new SpawnItem(new Item.Settings(), "dalek"));
 
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
         BlackArchive.LOGGER.info("Registered item: " + name);

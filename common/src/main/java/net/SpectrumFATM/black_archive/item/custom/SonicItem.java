@@ -209,7 +209,7 @@ public class SonicItem extends ScrewdriverItem {
                 } else if (entity instanceof CybermatEntity cybermatEntity && !user.isSneaking()) {
                     BlockPos pos = entity.getBlockPos();
                     entity.remove(Entity.RemovalReason.KILLED);
-                    //cybermatEntity.dropStack(new ItemStack(ModItems.CYBERMAT_EGG.get()), 0.0f);
+                    cybermatEntity.dropStack(new ItemStack(ModItems.CYBERMAT_EGG.get()), 0.0f);
                 } else {
                     String entityName = entity.getName().getString();
                     int xPos = entity.getBlockX();

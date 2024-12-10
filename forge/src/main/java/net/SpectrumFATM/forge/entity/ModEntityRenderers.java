@@ -1,5 +1,7 @@
 package net.SpectrumFATM.forge.entity;
 
+import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorBlock;
+import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.entity.client.*;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -29,5 +31,7 @@ public class ModEntityRenderers {
         event.registerLayerDefinition(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
+        event.registerLayerDefinition(ModModelLayers.PILLAR_SHELL_LAYER, PillarShellModel::getTexturedModelData);
+        event.registerLayerDefinition(ModModelLayers.PILLAR_DOOR_LAYER, PillarDoorBlock::getTexturedModelData);
     }
 }

@@ -1,0 +1,48 @@
+{
+  "patterns": [
+    {
+      "exterior": {
+        "emissive": true,
+        "texture": "black_archive:textures/blockentity/shell/pillar/pillar_shell.png"
+      },
+      "id": "black_archive:default",
+      "interior": {
+        "emissive": true,
+        "texture": "black_archive:textures/blockentity/shell/pillar/pillar_door.png"
+      },
+      "name_component": "{\"color\":\"yellow\",\"text\":\"Doric Column\"}",
+      "sound_profile": {
+        "sounds": {
+          "tardis_refined:door_close": {
+            "pitch": 1.0,
+            "sound_event": {
+              "sound_id": "minecraft:block.iron_door.close"
+            },
+            "volume": 1.4
+          },
+          "tardis_refined:door_lock": {
+            "pitch": 1.0,
+            "sound_event": {
+              "sound_id": "minecraft:block.iron_trapdoor.close"
+            },
+            "volume": 1.4
+          },
+          "tardis_refined:door_open": {
+            "pitch": 1.0,
+            "sound_event": {
+              "sound_id": "minecraft:block.iron_door.open"
+            },
+            "volume": 1.0
+          },
+          "tardis_refined:door_unlock": {
+            "pitch": 1.0,
+            "sound_event": {
+              "sound_id": "minecraft:block.iron_trapdoor.open"
+            },
+            "volume": 1.0
+          }
+        }
+      }
+    }
+  ]
+}

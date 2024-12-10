@@ -1,6 +1,7 @@
 package net.SpectrumFATM;
 
 import net.SpectrumFATM.black_archive.block.ModBlocks;
+import net.SpectrumFATM.black_archive.blockentity.ModShells;
 import net.SpectrumFATM.black_archive.effects.ModEffects;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
@@ -26,5 +27,6 @@ public final class BlackArchive {
         ModItems.ITEMS.registerToModBus();
         ModUpgrades.UPGRADE_DEFERRED_REGISTRY.registerToModBus();
         BlackArchiveNetworkHandler.registerPackets();
+        ModShells.SHELL_THEMES.registerToModBus();
     }
 }

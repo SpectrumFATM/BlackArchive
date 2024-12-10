@@ -1,5 +1,8 @@
 package net.SpectrumFATM.forge.entity;
 
+import net.SpectrumFATM.black_archive.blockentity.ModModels;
+import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
+import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.entity.client.*;
 import net.minecraftforge.client.event.EntityRenderersEvent;

@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric;
 
+import net.SpectrumFATM.black_archive.blockentity.ModModels;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.features.BraceletFeatureRenderer;
 import net.SpectrumFATM.black_archive.fabric.renderer.FabricSkyRenderer;
@@ -17,6 +18,8 @@ public class BlackArchiveClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ModModels.init();
+
         if (BlackArchiveConfig.CLIENT.shouldTimeVortexRender.get()) {
             FabricSkyRenderer.register();
         }

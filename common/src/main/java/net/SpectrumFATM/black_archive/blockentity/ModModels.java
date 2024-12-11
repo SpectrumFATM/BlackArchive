@@ -3,7 +3,9 @@ package net.SpectrumFATM.black_archive.blockentity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
+import net.SpectrumFATM.black_archive.blockentity.door.RaniDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
+import net.SpectrumFATM.black_archive.blockentity.shell.RaniShellModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.ShellEntryRegistry;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
@@ -18,11 +20,13 @@ import java.util.function.Supplier;
 public class ModModels {
 
     public static PillarShellModel PILLAR_EXT_MODEL;
+    public static RaniShellModel RANI_EXT_MODEL;
 
     public static PillarDoorModel PILLAR_INT_MODEL;
+    public static RaniDoorModel RANI_INT_MODEL;
 
-    public static EntityModelLayer PILLAR_EXT;
-    public static EntityModelLayer PILLAR_INT;
+    public static EntityModelLayer PILLAR_EXT, RANI_EXT;
+    public static EntityModelLayer PILLAR_INT, RANI_INT;
 
     public static void init() {
         if (Platform.isClient()) {
@@ -31,11 +35,15 @@ public class ModModels {
 
         PILLAR_EXT = register(new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "pillar_ext"), "pillar_ext"), PillarShellModel::getTexturedModelData);
         PILLAR_INT = register(new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "pillar_int"), "pillar_int"), PillarDoorModel::getTexturedModelData);
+        RANI_EXT = register(new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "rani_ext"), "rani_ext"), RaniShellModel::getTexturedModelData);
+        RANI_INT = register(new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "rani_int"), "rani_int"), RaniDoorModel::getTexturedModelData);
     }
 
     public static void setupModelInstances(EntityModelLoader entityModels) {
         ModModels.PILLAR_EXT_MODEL = new PillarShellModel(entityModels.getModelPart(ModModels.PILLAR_EXT));
         ModModels.PILLAR_INT_MODEL = new PillarDoorModel(entityModels.getModelPart(ModModels.PILLAR_INT));
+        ModModels.RANI_EXT_MODEL = new RaniShellModel(entityModels.getModelPart(ModModels.RANI_EXT));
+        ModModels.RANI_INT_MODEL = new RaniDoorModel(entityModels.getModelPart(ModModels.RANI_INT));
         ShellEntryRegistry.init();
     }
 

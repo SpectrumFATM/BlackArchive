@@ -81,5 +81,7 @@
   "upgrade.tardis_refined.temporal_orbit_upgrade.description": "Allows the TARDIS to orbit around a fixed point in time.",
   "vortexmanipulator.black_archive.time_fissure": "Error: Temporal flux escalated, anomaly detected.",
   "vortexmanipulator.black_archive.cooldown": "You must wait before teleporting again.",
-  "vortexmanipulator.black_archive.landing_error": "No suitable ground position."
+  "vortexmanipulator.black_archive.landing_error": "No suitable ground position.",
+  "shell.black_archive.pillar": "Pillar",
+  "shell.black_archive.rani": "Rani"
 }

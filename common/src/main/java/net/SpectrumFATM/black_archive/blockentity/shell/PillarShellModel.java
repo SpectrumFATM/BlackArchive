@@ -10,24 +10,30 @@ import whocraft.tardis_refined.common.blockentity.shell.GlobalShellBlockEntity;
 public class PillarShellModel extends ShellModel {
 	private final ModelPart root;
 	private final ModelPart door;
+	private final ModelPart panel;
 	private final ModelPart main;
 	public PillarShellModel(ModelPart root) {
         super(root);
 		this.root = root;
         this.door = root.getChild("door");
+		this.panel = root.getChild("panel");
 		this.main = root.getChild("main");
 	}
 
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
+		ModelPartData main = modelPartData.addChild("main", ModelPartBuilder.create().uv(52, 0).cuboid(-1.0F, 29.0F, -1.0F, 16.0F, 2.0F, 16.0F, new Dilation(0.0F))
+				.uv(52, 18).cuboid(-1.0F, -17.0F, -1.0F, 16.0F, 2.0F, 16.0F, new Dilation(0.0F))
+				.uv(0, 0).cuboid(0.0F, -15.0F, 2.0F, 1.0F, 44.0F, 12.0F, new Dilation(0.0F))
+				.uv(0, 0).cuboid(13.0F, -15.0F, 2.0F, 1.0F, 44.0F, 12.0F, new Dilation(0.0F))
+				.uv(-2, 11).cuboid(1.0F, -15.0F, 13.0F, 12.0F, 44.0F, 1.0F, new Dilation(0.0F))
+				.uv(40, 70).cuboid(0.0F, -15.0F, 0.0F, 14.0F, 12.0F, 12.0F, new Dilation(0.0F))
+				.uv(0, 56).cuboid(0.0F, -15.0F, 0.0F, 14.0F, 12.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-7.0F, -7.0F, -7.0F));
+
+		ModelPartData panel = modelPartData.addChild("panel", ModelPartBuilder.create().uv(84, 36).cuboid(1.0F, -3.0F, 6.0F, 12.0F, 32.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(-7.0F, -7.0F, -7.0F));
+
 		ModelPartData door = modelPartData.addChild("door", ModelPartBuilder.create().uv(52, 36).cuboid(0.0F, -32.0F, -2.0F, 14.0F, 32.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-7.0F, 22.0F, -5.0F));
-
-		ModelPartData main = modelPartData.addChild("main", ModelPartBuilder.create().uv(52, 0).cuboid(-8.0F, 1.0F, -8.0F, 16.0F, 2.0F, 16.0F, new Dilation(0.0F))
-				.uv(52, 18).cuboid(-8.0F, -45.0F, -8.0F, 16.0F, 2.0F, 16.0F, new Dilation(0.0F))
-				.uv(0, 0).cuboid(-7.0F, -43.0F, -5.0F, 14.0F, 44.0F, 12.0F, new Dilation(0.0F))
-				.uv(0, 56).cuboid(-7.0F, -43.0F, -7.0F, 14.0F, 12.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
-
 		addMaterializationPart(modelPartData);
 		return TexturedModelData.of(modelData, 128, 128);
 	}
@@ -52,6 +58,7 @@ public class PillarShellModel extends ShellModel {
 		this.handleAllAnimations(entity, this.getPart(), isBaseModel, open, poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.door.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, this.getCurrentAlpha());
 		this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, this.getCurrentAlpha());
+		this.panel.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, this.getCurrentAlpha());
 	}
 
 	@Override
@@ -59,5 +66,6 @@ public class PillarShellModel extends ShellModel {
 		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		this.door.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		this.main.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+		this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 }

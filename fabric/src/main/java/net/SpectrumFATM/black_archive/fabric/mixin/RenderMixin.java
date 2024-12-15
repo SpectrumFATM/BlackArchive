@@ -2,7 +2,9 @@ package net.SpectrumFATM.black_archive.fabric.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.SpectrumFATM.BlackArchive;
+import net.SpectrumFATM.black_archive.renderer.StarSkyRenderer;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
@@ -13,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldRenderer.class)
 public abstract class RenderMixin {
@@ -31,13 +34,6 @@ public abstract class RenderMixin {
         if (world != null && (world.getRegistryKey() == ModDimensions.SPACEDIM_LEVEL_KEY || world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY)) {
             RenderSystem.setShaderTexture(0, SUN);
             RenderSystem.setShaderTexture(0, MOON_PHASES);
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true)
-    private void renderStars(CallbackInfo ci) {
-        if (world != null && world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY) {
             ci.cancel();
         }
     }

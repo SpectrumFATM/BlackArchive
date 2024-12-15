@@ -34,11 +34,4 @@ public abstract class RenderMixin {
             ci.cancel();
         }
     }
-
-    @Inject(method = "renderStars", at = @At("HEAD"), cancellable = true)
-    private void renderStars(CallbackInfo ci) {
-        if (world != null && world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY) {
-            ci.cancel();
-        }
-    }
 }

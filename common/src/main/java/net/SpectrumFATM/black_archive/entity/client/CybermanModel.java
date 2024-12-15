@@ -5,6 +5,8 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Arm;
+import net.minecraft.util.math.MathHelper;
 
 public class CybermanModel<T extends CybermanEntity> extends BipedEntityModel<T> {
 
@@ -77,9 +79,6 @@ public class CybermanModel<T extends CybermanEntity> extends BipedEntityModel<T>
 		if (isFiring) {
 			// Set the arm angles for the firing animation
 			this.rightArm.pitch = -1.5F;
-		} else {
-			// Set the arm angles for the idle animation
-			this.rightArm.pitch = 0.0F;
 		}
 	}
 

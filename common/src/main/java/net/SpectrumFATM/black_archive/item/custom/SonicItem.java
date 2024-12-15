@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -60,46 +61,28 @@ public class SonicItem extends ScrewdriverItem {
 
            if (!world.isClient) {
                if (world instanceof ServerWorld serverWorld) {
-                   if (state.getBlock() instanceof RedstoneLampBlock) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(RedstoneLampBlock.LIT), Block.NOTIFY_ALL);
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
+                   if (state.contains(Properties.POWERED)) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.POWERED), Block.NOTIFY_ALL);
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
                        cooldown(player, stack);
                    }
 
-                   if (state.getBlock() instanceof DoorBlock) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(DoorBlock.OPEN), Block.NOTIFY_ALL);
+                   if (state.contains(Properties.LIT)) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.LIT), Block.NOTIFY_ALL);
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
                        cooldown(player, stack);
                    }
 
-                   if (state.getBlock() instanceof TrapdoorBlock) {
-                          world.setBlockState(context.getBlockPos(), state.cycle(TrapdoorBlock.OPEN), Block.NOTIFY_ALL);
-                          playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                          cooldown(player, stack);
+                   if (state.contains(Properties.OPEN)) {
+                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.OPEN), Block.NOTIFY_ALL);
+                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof TntBlock) {
                        serverWorld.removeBlock(context.getBlockPos(), false);
                        TntBlock.primeTnt(world, context.getBlockPos());
-
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                       cooldown(player, stack);
-                   }
-
-                   if (state.getBlock() instanceof CandleBlock && player.isSneaking()) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(CandleBlock.LIT), Block.NOTIFY_ALL);
-
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                       cooldown(player, stack);
-                   }
-
-                   if (state.getBlock() instanceof CampfireBlock) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(CampfireBlock.LIT), Block.NOTIFY_ALL);
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
@@ -156,22 +139,6 @@ public class SonicItem extends ScrewdriverItem {
 
                    if (state.getBlock() instanceof PowderSnowBlock) {
                        world.setBlockState(context.getBlockPos(), Blocks.SNOW_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
-
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                       cooldown(player, stack);
-                   }
-
-                   if (state.getBlock() instanceof GravityGenBlock) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(GravityGenBlock.POWERED), Block.NOTIFY_ALL);
-
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
-
-                       cooldown(player, stack);
-                   }
-
-                   if (state.getBlock() instanceof OxygenGenBlock) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(GravityGenBlock.POWERED), Block.NOTIFY_ALL);
 
                        playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 

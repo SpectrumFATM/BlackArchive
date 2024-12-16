@@ -5,6 +5,7 @@
 - **Forge Support!!!**
 - Tissue Compression Eliminator
 - Pillar Exterior
+- Rani Exterior
 - Weeping Angels
 - Graveyards
 

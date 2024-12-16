@@ -16,6 +16,7 @@ public class ModEntityRenderers {
         EntityRendererRegistry.register(ModEntities.DALEK_PUPPET.get(), DalekPuppetRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYBERMAN.get(), CybermanRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYBERMAT.get(), CybermatRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANGEL.get(), WeepingAngelRenderer::new);
         EntityRendererRegistry.register(ModEntities.TIME_FISSURE.get(), TimeFissureRenderer::new);
     }
 
@@ -24,6 +25,7 @@ public class ModEntityRenderers {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
 
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.PILLAR_SHELL_LAYER, PillarShellModel::getTexturedModelData);

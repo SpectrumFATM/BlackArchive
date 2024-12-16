@@ -22,15 +22,16 @@ public class ModEntityRenderers {
         event.registerEntityRenderer(ModEntities.DALEK_PUPPET.get(), DalekPuppetRenderer::new);
         event.registerEntityRenderer(ModEntities.CYBERMAN.get(), CybermanRenderer::new);
         event.registerEntityRenderer(ModEntities.CYBERMAT.get(), CybermatRenderer::new);
+        event.registerEntityRenderer(ModEntities.ANGEL.get(), WeepingAngelRenderer::new);
         event.registerEntityRenderer(ModEntities.TIME_FISSURE.get(), TimeFissureRenderer::new);
     }
 
     public static void onRegisterModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        // Register model layer definitions
         event.registerLayerDefinition(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
+        event.registerLayerDefinition(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
     }
 }

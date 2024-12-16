@@ -44,6 +44,12 @@ public class ModEntities {
                     .build(new Identifier(BlackArchive.MOD_ID, "cybermat").toString())
     );
 
+    public static final RegistrySupplier<EntityType<WeepingAngelEntity>> ANGEL = ENTITY_TYPES.register("weeping_angel",
+            () -> EntityType.Builder.create(WeepingAngelEntity::new, SpawnGroup.CREATURE)
+                    .setDimensions(1f, 2f)
+                    .build(new Identifier(BlackArchive.MOD_ID, "weeping_angel").toString())
+    );
+
     public static final RegistrySupplier<EntityType<TimeFissureEntity>> TIME_FISSURE = ENTITY_TYPES.register("time_fissure",
             () -> EntityType.Builder.create(TimeFissureEntity::new, SpawnGroup.CREATURE)
                     .setDimensions(1f, 2f)

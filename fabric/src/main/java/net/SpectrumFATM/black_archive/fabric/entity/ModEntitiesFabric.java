@@ -11,6 +11,7 @@ public class ModEntitiesFabric {
         FabricDefaultAttributeRegistry.register(ModEntities.DALEK_PUPPET.get(), DalekPuppetEntity.createDalekSlaveAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CYBERMAN.get(), CybermanEntity.createCyberAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CYBERMAT.get(), CybermatEntity.createCyberAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.ANGEL.get(), WeepingAngelEntity.createAngelAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TIME_FISSURE.get(), TimeFissureEntity.createTimeFissureAttributes());
     }
 }

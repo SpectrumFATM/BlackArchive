@@ -6,6 +6,7 @@
   ],
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
+  "spawn_overrides": {},
   "start_pool": "black_archive:graveyard/start_pool",
   "size": 3,
   "start_height": {

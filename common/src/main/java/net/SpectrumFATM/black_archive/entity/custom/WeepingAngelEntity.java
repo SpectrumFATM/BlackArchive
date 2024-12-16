@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.entity.custom;
 
 import net.SpectrumFATM.BlackArchive;
+import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -11,10 +12,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import whocraft.tardis_refined.common.mixin.PlayerEntityMixin;
 
 public class WeepingAngelEntity extends HostileEntity {
 
@@ -107,12 +110,23 @@ public class WeepingAngelEntity extends HostileEntity {
     @Override
     public boolean tryAttack(Entity target) {
         // 50% chance to teleport the target to the time vortex
-        if (random.nextInt(10) == 1  && !this.getWorld().isClient) {
-            if (target instanceof ServerPlayerEntity) {
+        if (!this.getWorld().isClient) {
+            if (random.nextInt(10) == 1  && target instanceof PlayerEntity) {
                 ServerWorld targetWorld = target.getServer().getWorld(ModDimensions.TIMEDIM_LEVEL_KEY);
                 ((ServerPlayerEntity) target).teleport(targetWorld, target.getX(), target.getWorld().getTopY(), target.getZ(), target.getYaw(), target.getPitch());
 
                 this.setHealth(this.getHealth() + ((ServerPlayerEntity) target).getHealth());
+
+                NbtCompound nbt = new NbtCompound();
+                nbt = target.writeNbt(nbt);
+                boolean isComplex = nbt.getBoolean("isComplexSpaceTimeEvent");
+
+                if (random.nextInt(5) == 1  && isComplex) {
+                    TimeFissureEntity fissure = new TimeFissureEntity(ModEntities.TIME_FISSURE.get(), targetWorld);
+                    fissure.setPos(target.getX(), target.getY(), target.getZ());
+                    this.getWorld().spawnEntity(fissure);
+                    this.kill();
+                }
             }
 
             // Deal damage to the target

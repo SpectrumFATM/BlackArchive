@@ -1,6 +1,5 @@
 package net.SpectrumFATM.black_archive.entity.custom;
 
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.minecraft.entity.Entity;
@@ -17,7 +16,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import whocraft.tardis_refined.common.mixin.PlayerEntityMixin;
 
 public class WeepingAngelEntity extends HostileEntity {
 

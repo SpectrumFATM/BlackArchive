@@ -6,6 +6,7 @@
 - Tissue Compression Eliminator
 - Pillar Exterior
 - Weeping Angels
+- Graveyards
 
 ### Improved
 - Time rotor now continues to movie when in temporal orbit.

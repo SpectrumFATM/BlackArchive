@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:taiga"
+  ],
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "black_archive:weeping_angel",
+          "weight": 1,
+          "minCount": 2,
+          "maxCount": 3
+        }
+      ]
+    }
+  },
+  "start_pool": "black_archive:graveyard/start_pool",
+  "size": 1,
+  "start_height": {
+    "absolute": 0
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE",
+  "max_distance_from_center": 1,
+  "use_expansion_hack": true
+}

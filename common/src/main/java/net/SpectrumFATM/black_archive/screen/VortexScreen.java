@@ -137,7 +137,6 @@ public class VortexScreen extends Screen {
 
     private void teleportPlayer() {
         if (currentDimensionIndex < 0 || currentDimensionIndex >= dimensions.size()) {
-            BlackArchive.LOGGER.error("Invalid dimension index: " + currentDimensionIndex);
             return;
         }
 
@@ -206,15 +205,9 @@ public class VortexScreen extends Screen {
                         String dimension = waypointData.getString("dimension");
 
                         waypoints.add(key); // Add waypoint name to the list
-
-                        BlackArchive.LOGGER.info("Waypoint: " + key + " (x=" + x + ", y=" + y + ", z=" + z + ", dimension=" + dimension + ")");
                     }
                 }
-
-                BlackArchive.LOGGER.info("Fetched waypoints: " + waypoints);
             }
-        } else {
-            BlackArchive.LOGGER.warn("No Vortex Manipulator or waypoints found in the player's inventory.");
         }
     }
 
@@ -224,7 +217,6 @@ public class VortexScreen extends Screen {
             updateWaypointFields(); // Update the displayed waypoint data
         }
     }
-
 
     private void updateWaypointFields() {
         if (!waypoints.isEmpty()) {
@@ -243,18 +235,11 @@ public class VortexScreen extends Screen {
                 }
             }
             updateDimensionField();
-            BlackArchive.LOGGER.info("Dimension Index: " + currentDimensionIndex);
         }
     }
 
     public int getDimensionIndex(String namespace) {
-        int index = dimensions.indexOf(namespace);
-        if (index == -1) {
-            BlackArchive.LOGGER.warn("Dimension not found: " + namespace);
-        } else {
-            BlackArchive.LOGGER.info("Retrieved dimension index: " + index + " for namespace: " + namespace);
-        }
-        return index;
+        return dimensions.indexOf(namespace);
     }
 
     public void setWaypoints(List<String> waypoints) {

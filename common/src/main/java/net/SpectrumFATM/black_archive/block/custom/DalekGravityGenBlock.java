@@ -44,7 +44,6 @@ public class DalekGravityGenBlock extends GravityGenBlock {
             if (tool.hasEnchantments() && EnchantmentHelper.hasSilkTouch(tool)) {
                 dropStack(world, pos, new ItemStack(ModItems.DALEK_GRAV_GEN.get(), 1));
             } else if (tool.getItem() == Items.DIAMOND_PICKAXE) {
-                BlackArchive.LOGGER.info(tool.getEnchantments().toString());
                 dropStack(world, pos, new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 3));
                 dropStack(world, pos, new ItemStack(Items.COPPER_BLOCK.asItem(), 2));
             }

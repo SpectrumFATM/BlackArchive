@@ -36,8 +36,6 @@ public class DistressItem extends TooltipItem {
                 // Get the ItemStack in hand
                 ItemStack itemStack = player.getStackInHand(hand);
 
-                BlackArchive.LOGGER.info(String.valueOf(hasTardisLevelName(itemStack)));
-
                 if (!hasTardisLevelName(itemStack)) {
                     // Save the TARDIS level name to the item's NBT
                     setTardisLevelName(itemStack, levelName);

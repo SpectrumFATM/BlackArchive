@@ -15,7 +15,7 @@ public class ClientModBus {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void event(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        BlackArchive.LOGGER.info("Registering Mod Models");
+        BlackArchive.LOGGER.info("Registering mod models");
         ModModels.init();
         ModModelsImpl.register(event);
     }

@@ -52,6 +52,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> CYBERMAN_SPAWN_EGG = registerItem("cyberman_spawn_egg", () -> new SpawnItem(new Item.Settings(), "cyberman"), true);
     public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () -> new SpawnItem(new Item.Settings(), "tardis"), true);
     public static final RegistrySupplier<Item> DALEK_SPAWN_EGG = registerItem("dalek_spawn_egg", () -> new SpawnItem(new Item.Settings(), "dalek"), true);
+    public static final RegistrySupplier<Item> ANGEL_SPAWN_EGG = registerItem("weeping_angel_egg", () -> new SpawnItem(new Item.Settings(), "weeping_angel", "item.weeping_angel.tooltip"), true);
 
     public static final RegistrySupplier<Item> STEEL_INGOT = registerItem("steel_ingot", () -> new Item(new Item.Settings()), true);
     public static final RegistrySupplier<Item> RAW_STEEL = registerItem("raw_steel", () -> new Item(new Item.Settings()), true);

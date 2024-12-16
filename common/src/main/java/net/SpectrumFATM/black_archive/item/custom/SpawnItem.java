@@ -30,12 +30,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.RaycastContext.FluidHandling;
 import net.minecraft.world.event.GameEvent;
 
-public class SpawnItem extends Item {
+public class SpawnItem extends TooltipItem {
 
     private final String id;
 
+    public SpawnItem(Settings settings, String id, String tooltip) {
+        super(settings, tooltip);
+        this.id = id;
+    }
+
     public SpawnItem(Settings settings, String id) {
-        super(settings);
+        super(settings, "");
         this.id = id;
     }
 

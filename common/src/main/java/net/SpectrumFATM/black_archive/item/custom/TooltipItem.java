@@ -22,6 +22,8 @@ public class TooltipItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(Text.translatable(tooltipKey).formatted(Formatting.GOLD));
+        if (tooltipKey != "") {
+            tooltip.add(Text.translatable(tooltipKey).formatted(Formatting.GOLD));
+        }
     }
 }

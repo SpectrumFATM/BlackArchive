@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.entity.custom;
 
 import net.SpectrumFATM.black_archive.entity.ModEntities;
+import net.SpectrumFATM.black_archive.util.SpaceTimeEventUtil;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -109,17 +110,13 @@ public class WeepingAngelEntity extends HostileEntity {
     public boolean tryAttack(Entity target) {
         // 50% chance to teleport the target to the time vortex
         if (!this.getWorld().isClient) {
-            if (random.nextInt(10) == 1  && target instanceof PlayerEntity) {
+            if (random.nextInt(10) == 1  && target instanceof PlayerEntity player) {
                 ServerWorld targetWorld = target.getServer().getWorld(ModDimensions.TIMEDIM_LEVEL_KEY);
-                ((ServerPlayerEntity) target).teleport(targetWorld, target.getX(), target.getWorld().getTopY(), target.getZ(), target.getYaw(), target.getPitch());
+                ((ServerPlayerEntity) player).teleport(targetWorld, target.getX(), target.getWorld().getTopY(), target.getZ(), target.getYaw(), target.getPitch());
 
                 this.setHealth(this.getHealth() + ((ServerPlayerEntity) target).getHealth());
 
-                NbtCompound nbt = new NbtCompound();
-                nbt = target.writeNbt(nbt);
-                boolean isComplex = nbt.getBoolean("isComplexSpaceTimeEvent");
-
-                if (random.nextInt(5) == 1  && isComplex) {
+                if (random.nextInt(5) == 1  && SpaceTimeEventUtil.isComplexSpaceTimeEvent(player)) {
                     TimeFissureEntity fissure = new TimeFissureEntity(ModEntities.TIME_FISSURE.get(), targetWorld);
                     fissure.setPos(target.getX(), target.getY(), target.getZ());
                     this.getWorld().spawnEntity(fissure);

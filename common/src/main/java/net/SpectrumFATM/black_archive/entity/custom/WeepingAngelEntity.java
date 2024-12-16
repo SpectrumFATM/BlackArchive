@@ -85,9 +85,9 @@ public class WeepingAngelEntity extends HostileEntity {
 
     private boolean isBeingObserved(PlayerEntity player) {
 
-//        if (player.isCreative() || player.isSpectator()) {
-//            return false;
-//        }
+        if (player.isCreative() || player.isSpectator()) {
+            return true;
+        }
 
         // Get the vector from the player's position to the Weeping Angel's position
         Vec3d playerPos = player.getCameraPosVec(1.0F);
@@ -99,8 +99,6 @@ public class WeepingAngelEntity extends HostileEntity {
 
         // Calculate the dot product between the player's look direction and the direction to the angel
         double dotProduct = playerLookDirection.dotProduct(directionToAngel);
-
-        BlackArchive.LOGGER.info("Checking if player is observing Weeping Angel: " + Boolean.valueOf(dotProduct > 0).toString());
 
         // If the dot product is greater than a threshold, the angel is in the player's field of view
         return dotProduct > 0;
@@ -125,14 +123,15 @@ public class WeepingAngelEntity extends HostileEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-
         boolean isObserved = this.getWorld().getPlayers().stream().anyMatch(this::isBeingObserved);
 
-        if (isObserved) {
-            return false;
+        if (isObserved && source.getAttacker() instanceof PlayerEntity player && !player.isSpectator()) {
+            if (!player.isCreative()) {
+                return false;
+            }
         }
 
-        return super.damage(source, isObserved ? 0 : amount);
+        return super.damage(source, amount);
     }
 
     public String getStatuePose() {

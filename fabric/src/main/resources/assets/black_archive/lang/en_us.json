@@ -86,5 +86,6 @@
   "vortexmanipulator.black_archive.cooldown": "You must wait before teleporting again.",
   "vortexmanipulator.black_archive.landing_error": "No suitable ground position.",
   "shell.black_archive.pillar": "Doric",
-  "shell.black_archive.rani": "Cabinet"
+  "shell.black_archive.rani": "Cabinet",
+  "shell.black_archive.sidrat": "SIDRAT"
 }

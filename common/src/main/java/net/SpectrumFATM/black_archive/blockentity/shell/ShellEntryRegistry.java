@@ -9,5 +9,6 @@ public class ShellEntryRegistry {
     public static void init(){
         ShellModelCollection.registerShellEntry(ModShells.DORIC.get(), ModModels.PILLAR_EXT_MODEL, ModModels.PILLAR_INT_MODEL);
         ShellModelCollection.registerShellEntry(ModShells.RANI.get(), ModModels.RANI_EXT_MODEL, ModModels.RANI_INT_MODEL);
+        ShellModelCollection.registerShellEntry(ModShells.SIDRAT.get(), ModModels.SIDRAT_EXT_MODEL, ModModels.SIDRAT_INT_MODEL);
     }
 }

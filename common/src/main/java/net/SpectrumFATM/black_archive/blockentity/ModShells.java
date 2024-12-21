@@ -11,6 +11,7 @@ public class ModShells {
 
     public static final RegistrySupplier<ShellTheme> DORIC = registerShellTheme("pillar");
     public static final RegistrySupplier<ShellTheme> RANI = registerShellTheme("rani");
+    public static final RegistrySupplier<ShellTheme> SIDRAT = registerShellTheme("sidrat");
 
     private static RegistrySupplier<ShellTheme> registerShellTheme(String id) {
         return SHELL_THEMES.register(id, () -> new ShellTheme(new Identifier(BlackArchive.MOD_ID, id)));

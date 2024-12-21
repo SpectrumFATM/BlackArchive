@@ -2,12 +2,12 @@
   "patterns": [
     {
       "exterior": {
-        "emissive": false,
+        "emissive": true,
         "texture": "black_archive:textures/blockentity/shell/sidrat/sidrat.png"
       },
       "id": "black_archive:default",
       "interior": {
-        "emissive": false,
+        "emissive": true,
         "texture": "black_archive:textures/blockentity/shell/sidrat/sidrat_door.png"
       },
       "name_component": "{\"color\":\"yellow\",\"text\":\"SIDRAT\"}",

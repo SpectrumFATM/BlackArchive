@@ -45,7 +45,7 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
 		ModelPartData pillar = modelPartData.addChild("pillar", ModelPartBuilder.create().uv(67, 37).cuboid(-7.0F, -21.0F, -4.0F, 14.0F, 21.0F, 8.0F, new Dilation(0.0F))
-		.uv(0, 47).cuboid(6.0F, -25.0003F, -4.0F, 5.0F, 4.0F, 8.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+				.uv(0, 47).cuboid(6.0F, -25.0003F, -4.0F, 5.0F, 4.0F, 8.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 
 		ModelPartData top_r1 = pillar.addChild("top_r1", ModelPartBuilder.create().uv(0, 47).cuboid(6.0F, -25.002F, -4.0F, 5.0F, 4.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, 1.0472F, 3.1416F));
 
@@ -54,10 +54,10 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 		ModelPartData top_r3 = pillar.addChild("top_r3", ModelPartBuilder.create().uv(23, 37).cuboid(6.0F, -24.0003F, -5.0F, 2.0F, 3.0F, 10.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, 0.0F, 3.1416F));
 
 		ModelPartData top_r4 = pillar.addChild("top_r4", ModelPartBuilder.create().uv(23, 37).cuboid(6.0F, -24.002F, -5.0F, 2.0F, 3.0F, 10.0F, new Dilation(0.0F))
-		.uv(67, 37).cuboid(-7.0F, -20.999F, -4.0F, 14.0F, 21.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -1.0472F, 0.0F));
+				.uv(67, 37).cuboid(-7.0F, -20.999F, -4.0F, 14.0F, 21.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -1.0472F, 0.0F));
 
 		ModelPartData top_r5 = pillar.addChild("top_r5", ModelPartBuilder.create().uv(23, 37).cuboid(6.0F, -24.005F, -5.0F, 2.0F, 3.0F, 10.0F, new Dilation(0.0F))
-		.uv(67, 37).cuboid(-7.0F, -21.001F, -4.0F, 14.0F, 21.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 1.0472F, 0.0F));
+				.uv(67, 37).cuboid(-7.0F, -21.001F, -4.0F, 14.0F, 21.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 1.0472F, 0.0F));
 
 		ModelPartData console = modelPartData.addChild("console", ModelPartBuilder.create().uv(1, 0).cuboid(-10.0F, -1.0F, -17.0F, 20.0F, 3.0F, 34.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 8.0F, 0.0F));
 
@@ -73,7 +73,7 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 
 		ModelPartData bar3_4_r1 = panels.addChild("bar3_4_r1", ModelPartBuilder.create().uv(35, 38).cuboid(-1.0F, -1.0F, 8.0F, 2.0F, 1.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, -0.3491F, -0.5236F, 0.0F));
 
-		ModelPartData bar5_6_r1 = panels.addChild("bar5_6_r1", ModelPartBuilder.create().uv(36, 39).cuboid(-1.0F, -1.0F, -19.0F, 2.0F, 1.0F, 11.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.3491F, -1.5708F, 0.0F));
+		ModelPartData bar5_6_r1 = panels.addChild("bar5_6_r1", ModelPartBuilder.create().uv(35, 38).cuboid(-1.0F, -1.0F, -20.0F, 2.0F, 1.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.3491F, -1.5708F, 0.0F));
 
 		ModelPartData bar1_2_r1 = panels.addChild("bar1_2_r1", ModelPartBuilder.create().uv(35, 38).cuboid(-1.0F, -1.0F, -20.0F, 2.0F, 1.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.3491F, 0.5236F, 0.0F));
 
@@ -92,7 +92,7 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 		ModelPartData panel1_r1 = panels.addChild("panel1_r1", ModelPartBuilder.create().uv(63, 1).cuboid(-10.0F, 0.0F, -18.0F, 20.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.3491F, 0.0F, 0.0F));
 
 		ModelPartData twirly = modelPartData.addChild("twirly", ModelPartBuilder.create().uv(0, 16).cuboid(-4.5F, -35.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F))
-		.uv(18, 16).cuboid(-1.0F, -26.0F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 0.0509F, 0.0F));
+				.uv(18, 16).cuboid(-1.0F, -26.0F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 0.0509F, 0.0F));
 
 		ModelPartData inner3_r1 = twirly.addChild("inner3_r1", ModelPartBuilder.create().uv(0, 16).cuboid(-5.0F, -7.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-2.5F, -30.5F, 0.5F, 0.0F, -1.5708F, 1.5708F));
 

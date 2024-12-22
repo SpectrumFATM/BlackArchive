@@ -14,7 +14,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import whocraft.tardis_refined.TRConfig;
 import whocraft.tardis_refined.client.TardisClientData;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleUnit;
 import whocraft.tardis_refined.common.block.console.GlobalConsoleBlock;
@@ -26,7 +25,8 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 	private final ModelPart pillar;
 	private final ModelPart console;
 	private final ModelPart panels;
-	private final ModelPart twirly;
+	private final ModelPart twirly_inner;
+	private final ModelPart twirly_outer;
 	private final ModelPart panel1;
 	private final ModelPart panel2;
 	private final ModelPart panel3;
@@ -35,7 +35,8 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 		this.pillar = root.getChild("pillar");
 		this.console = root.getChild("console");
 		this.panels = this.console.getChild("panels");
-		this.twirly = root.getChild("twirly");
+		this.twirly_inner = root.getChild("twirly_inner");
+		this.twirly_outer = root.getChild("twirly_outer");
 		this.panel1 = root.getChild("panel1");
 		this.panel2 = root.getChild("panel2");
 		this.panel3 = root.getChild("panel3");
@@ -91,16 +92,18 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 
 		ModelPartData panel1_r1 = panels.addChild("panel1_r1", ModelPartBuilder.create().uv(63, 1).cuboid(-10.0F, 0.0F, -18.0F, 20.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.3491F, 0.0F, 0.0F));
 
-		ModelPartData twirly = modelPartData.addChild("twirly", ModelPartBuilder.create().uv(0, 16).cuboid(-4.5F, -35.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F))
-				.uv(18, 16).cuboid(-1.0F, -26.0F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 0.0509F, 0.0F));
+		ModelPartData twirly_inner = modelPartData.addChild("twirly_inner", ModelPartBuilder.create().uv(0, 16).cuboid(-4.5F, -35.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F))
+				.uv(18, 16).cuboid(-1.0F, -26.0F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 25.1583F, 0.0F, 0.0F, 0.0509F, 0.0F));
 
-		ModelPartData inner3_r1 = twirly.addChild("inner3_r1", ModelPartBuilder.create().uv(0, 16).cuboid(-5.0F, -7.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-2.5F, -30.5F, 0.5F, 0.0F, -1.5708F, 1.5708F));
+		ModelPartData inner3_r1 = twirly_inner.addChild("inner3_r1", ModelPartBuilder.create().uv(0, 16).cuboid(-5.0F, -7.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-2.5F, -30.5F, 0.5F, 0.0F, -1.5708F, 1.5708F));
 
-		ModelPartData inner2_r1 = twirly.addChild("inner2_r1", ModelPartBuilder.create().uv(0, 16).cuboid(-5.0F, -7.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -28.0F, 0.5F, 0.0F, -1.5708F, 0.0F));
+		ModelPartData inner2_r1 = twirly_inner.addChild("inner2_r1", ModelPartBuilder.create().uv(0, 16).cuboid(-5.0F, -7.0F, 0.0F, 9.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -28.0F, 0.5F, 0.0F, -1.5708F, 0.0F));
 
-		ModelPartData outer2_r1 = twirly.addChild("outer2_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-8.0F, -12.0F, -0.5F, 15.0F, 16.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -31.5F, 4.5F, 1.2217F, 0.0F, 0.0F));
+		ModelPartData twirly_outer = modelPartData.addChild("twirly_outer", ModelPartBuilder.create(), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 3.713F, 0.0F));
 
-		ModelPartData outer1_r1 = twirly.addChild("outer1_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-8.0F, -12.0F, 0.0F, 15.0F, 16.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -26.0F, -4.0F, -1.2217F, 0.0F, 0.0F));
+		ModelPartData outer1_r1 = twirly_outer.addChild("outer1_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-8.0F, -12.0F, 0.0F, 15.0F, 16.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -2.0F, -4.0F, -1.2217F, 0.0F, 0.0F));
+
+		ModelPartData outer2_r1 = twirly_outer.addChild("outer2_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-8.0F, -12.0F, -0.5F, 15.0F, 16.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -7.5F, 4.5F, 1.2217F, 0.0F, 0.0F));
 
 		ModelPartData panel1 = modelPartData.addChild("panel1", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 6.0F, 0.0F));
 
@@ -162,7 +165,8 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		pillar.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		console.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-		twirly.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+		twirly_outer.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+		twirly_inner.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		panel1.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		panel2.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		panel3.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
@@ -200,12 +204,21 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 	}
 	
 	static {
-		FLIGHT = Animation.Builder.create(2.0F).looping()
-				.addBoneAnimation("twirly", new Transformation(Transformation.Targets.ROTATE,
-						new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
-						new Keyframe(2.0F, AnimationHelper.createRotationalVector(0.0F, 360.0F, 0.0F), Transformation.Interpolations.LINEAR)
-				))
-				.build();
+		FLIGHT = Animation.Builder.create(2f).looping()
+				.addBoneAnimation("twirly_inner",
+						new Transformation(Transformation.Targets.TRANSLATE,
+								new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+										Transformation.Interpolations.CUBIC),
+								new Keyframe(1f, AnimationHelper.createTranslationalVector(0f, 2f, 0f),
+										Transformation.Interpolations.CUBIC),
+								new Keyframe(2f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+										Transformation.Interpolations.CUBIC)))
+				.addBoneAnimation("twirly_outer",
+						new Transformation(Transformation.Targets.ROTATE,
+								new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+										Transformation.Interpolations.LINEAR),
+								new Keyframe(2f, AnimationHelper.createRotationalVector(0f, 360f, 0f),
+										Transformation.Interpolations.LINEAR))).build();
 
 		TEXTURE = new Identifier(BlackArchive.MOD_ID, "textures/blockentity/console/rani/rani.png");
 	}

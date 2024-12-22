@@ -6,6 +6,8 @@
 - Tissue Compression Eliminator
 - Pillar Exterior
 - Rani Exterior
+- Rani Console
+- Rani Interior
 - SIDRAT Exterior
 - Weeping Angels
 - Graveyards

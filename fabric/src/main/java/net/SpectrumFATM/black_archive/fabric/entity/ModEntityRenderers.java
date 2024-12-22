@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.fabric.entity;
 
+import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
 import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.door.RaniDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
@@ -27,10 +28,5 @@ public class ModEntityRenderers {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
-
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.PILLAR_SHELL_LAYER, PillarShellModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.PILLAR_DOOR_LAYER, PillarDoorModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.RANI_SHELL_LAYER, RaniShellModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.RANI_DOOR_LAYER, RaniDoorModel::getTexturedModelData);
     }
 }

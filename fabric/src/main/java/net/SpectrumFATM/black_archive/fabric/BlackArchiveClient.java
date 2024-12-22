@@ -29,8 +29,6 @@ public class BlackArchiveClient implements ClientModInitializer {
         ModEntityRenderers.registerRenderers();
         ModEntityRenderers.registerModelLayers();
 
-        TardisClientEvents.SHELLENTRY_MODELS_SETUP.register(ModModelLayers::setupModels);
-
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof PlayerEntityRenderer) {
                 registrationHelper.register(new BraceletFeatureRenderer((FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>) entityRenderer));

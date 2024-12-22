@@ -1,0 +1,13 @@
+{
+  "patterns": [
+    {
+      "id": "black_archive:default",
+      "name_component": "{\"color\":\"yellow\",\"text\":\"Copper\"}",
+      "texture_definition": {
+        "emissive": false,
+        "texture": "black_archive:textures/blockentity/console/rani/rani.png"
+      }
+    }
+  ],
+  "replace": false
+}

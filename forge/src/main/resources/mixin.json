@@ -4,6 +4,7 @@
   "package": "net.SpectrumFATM.forge.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ConsoleCollectionMixin",
     "LivingEntityMixin",
     "EntityMixin",
     "TardisPilotingMixin",

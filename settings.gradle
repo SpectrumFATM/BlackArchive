@@ -10,6 +10,6 @@ pluginManagement {
 
 rootProject.name = 'black_archive'
 
-include 'common'
-include 'fabric'
-include 'forge'
+include("common")
+include("fabric")
+include("forge")

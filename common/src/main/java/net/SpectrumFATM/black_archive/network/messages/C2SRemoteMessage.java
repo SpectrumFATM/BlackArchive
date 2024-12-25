@@ -13,8 +13,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import whocraft.tardis_refined.common.capability.TardisLevelOperator;
-import whocraft.tardis_refined.common.capability.upgrades.UpgradeHandler;
+import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
+import whocraft.tardis_refined.common.capability.tardis.upgrades.UpgradeHandler;
 import whocraft.tardis_refined.common.items.KeyItem;
 import whocraft.tardis_refined.common.network.MessageC2S;
 import whocraft.tardis_refined.common.network.MessageContext;
@@ -82,7 +82,7 @@ public class C2SRemoteMessage extends MessageC2S {
 
         // Validate upgrades and piloting state
         if (!ModUpgrades.REMOTE_UPGRADE.get().isUnlocked(upgradeHandler)
-                || pilotingManager.isOnCooldown()
+                || pilotingManager.isInRecovery()
                 || pilotingManager.isHandbrakeOn()
                 || !pilotingManager.beginFlight(true, null)) {
             return;

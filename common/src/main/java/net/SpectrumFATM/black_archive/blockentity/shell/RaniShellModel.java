@@ -19,25 +19,8 @@ public class RaniShellModel extends ShellModel {
 		this.side_lights = root.getChild("side_lights");
 		this.main = root.getChild("main");
 	}
-	public static TexturedModelData getTexturedModelData() {
-		ModelData modelData = new ModelData();
-		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData side_lights = modelPartData.addChild("side_lights", ModelPartBuilder.create().uv(48, 118).cuboid(21.0F, -42.0F, 0.0F, 2.0F, 42.0F, 20.0F, new Dilation(0.0F))
-				.uv(92, 118).cuboid(-1.0F, -42.0F, 0.0F, 2.0F, 42.0F, 20.0F, new Dilation(0.0F)), ModelTransform.pivot(-11.0F, 21.0F, -9.5F));
 
-		ModelPartData door = modelPartData.addChild("door", ModelPartBuilder.create().uv(144, 44).cuboid(0.0F, -42.0F, -1.0F, 16.0F, 42.0F, 0.0F, new Dilation(0.0F))
-				.uv(136, 118).cuboid(0.0F, -42.0F, 0.0F, 16.0F, 42.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-8.0F, 21.0F, -9.5F));
 
-		ModelPartData main = modelPartData.addChild("main", ModelPartBuilder.create().uv(0, 0).cuboid(-16.0F, -3.0F, -11.5F, 32.0F, 3.0F, 24.0F, new Dilation(0.0F))
-				.uv(0, 27).cuboid(-16.0F, -48.0F, -11.5F, 32.0F, 3.0F, 24.0F, new Dilation(0.0F))
-				.uv(0, 54).cuboid(-14.0F, -45.0F, -10.5F, 2.0F, 42.0F, 22.0F, new Dilation(0.0F))
-				.uv(48, 54).cuboid(-10.0F, -45.0F, -10.5F, 2.0F, 42.0F, 22.0F, new Dilation(0.0F))
-				.uv(114, 0).cuboid(-8.0F, -45.0F, 9.5F, 16.0F, 42.0F, 2.0F, new Dilation(0.0F))
-				.uv(0, 118).cuboid(12.0F, -45.0F, -10.5F, 2.0F, 42.0F, 22.0F, new Dilation(0.0F))
-				.uv(96, 54).cuboid(8.0F, -45.0F, -10.5F, 2.0F, 42.0F, 22.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
-		addMaterializationPart(modelPartData);
-		return TexturedModelData.of(modelData, 256, 256);
-	}
 
 	@Override
 	public ModelPart getPart() {

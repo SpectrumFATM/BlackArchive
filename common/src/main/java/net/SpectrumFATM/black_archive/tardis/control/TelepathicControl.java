@@ -1,27 +1,25 @@
 package net.SpectrumFATM.black_archive.tardis.control;
 
 import com.mojang.datafixers.util.Pair;
-import io.netty.buffer.Unpooled;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.structure.Structure;
-import whocraft.tardis_refined.common.capability.TardisLevelOperator;
-import whocraft.tardis_refined.common.capability.upgrades.UpgradeHandler;
+import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
+import whocraft.tardis_refined.common.capability.tardis.upgrades.UpgradeHandler;
 import whocraft.tardis_refined.common.entity.ControlEntity;
 import whocraft.tardis_refined.common.tardis.control.Control;
 import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
@@ -29,7 +27,6 @@ import whocraft.tardis_refined.registry.TRSoundRegistry;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class TelepathicControl extends Control {
@@ -45,7 +42,7 @@ public class TelepathicControl extends Control {
             return false;
         }
 
-        Random random = new Random();
+        Random random = tardisLevelOperator.getLevel().getRandom();
         if (random.nextInt(20) == 1) {
             playerEntity.sendMessage(Text.translatable("telepathic.black_archive.bad").formatted(Formatting.RED), true);
 
@@ -74,7 +71,7 @@ public class TelepathicControl extends Control {
 
         ServerWorld world = tardisLevelOperator.getPilotingManager().getTargetLocation().getLevel();
         BlockPos pos = tardisLevelOperator.getPilotingManager().getTargetLocation().getPosition();
-        Random random = new Random();
+        Random random = tardisLevelOperator.getLevel().getRandom();
         Registry<Structure> structureRegistry = world.getRegistryManager().get(RegistryKeys.STRUCTURE);
         List<RegistryEntry.Reference<Structure>> structureEntries = structureRegistry.streamEntries()
                 .filter(isNotUnderwaterStructure())

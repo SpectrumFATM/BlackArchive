@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "black_archive:block/steel_block",
-    "side": "black_archive:block/gravity_side"
-  }
-}

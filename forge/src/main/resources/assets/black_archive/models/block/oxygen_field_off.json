@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "black_archive:block/oxygen_field_top_off",
-    "side": "black_archive:block/oxygen_field_side"
-  }
-}

@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.item;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
+import net.SpectrumFATM.black_archive.blockentity.ModModels;
 import net.SpectrumFATM.black_archive.item.custom.*;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.minecraft.item.*;
@@ -10,6 +11,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Formatting;
 import whocraft.tardis_refined.TardisRefined;
 import whocraft.tardis_refined.common.items.KeyItem;
+import whocraft.tardis_refined.common.util.PlatformWarning;
 import whocraft.tardis_refined.registry.DeferredRegistry;
 import whocraft.tardis_refined.registry.RegistrySupplier;
 
@@ -68,6 +70,6 @@ public class ModItems {
 
     @ExpectPlatform
     public static ItemGroup getCreativeTab() {
-        throw new RuntimeException(TardisRefined.PLATFORM_ERROR);
+        throw new RuntimeException(PlatformWarning.addWarning(ModItems.class));
     }
 }

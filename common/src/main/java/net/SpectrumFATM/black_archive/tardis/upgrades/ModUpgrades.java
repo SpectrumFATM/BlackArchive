@@ -4,7 +4,7 @@ import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import whocraft.tardis_refined.common.capability.upgrades.Upgrade;
+import whocraft.tardis_refined.common.capability.tardis.upgrades.Upgrade;
 import whocraft.tardis_refined.common.util.RegistryHelper;
 import whocraft.tardis_refined.registry.DeferredRegistry;
 import whocraft.tardis_refined.registry.RegistrySupplier;

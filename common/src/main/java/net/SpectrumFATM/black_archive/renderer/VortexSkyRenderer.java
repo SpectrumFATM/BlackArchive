@@ -1,17 +1,43 @@
 package net.SpectrumFATM.black_archive.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.render.*;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.RotationAxis;
+import whocraft.tardis_refined.client.renderer.vortex.VortexRenderer;
+import whocraft.tardis_refined.common.VortexRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class VortexSkyRenderer {
     private static final Identifier VORTEX_TEXTURE = new Identifier("black_archive", "textures/environment/vortex.png");
+    private static VortexRenderer instance = new VortexRenderer(VortexRegistry.CLOUDS.get());
 
     public static void render(MatrixStack matrixStack, Camera camera) {
 
-        // Bind the vortex texture
+        matrixStack.push();
+        instance.time.speed = 1;
+        instance.renderVortex(matrixStack, 0.5F, false);
+
+        if (MinecraftClient.getInstance().world.getTime() % 600 == 0) {
+            Set<Map.Entry<RegistryKey<VortexRegistry>, VortexRegistry>> vortexes = VortexRegistry.VORTEX_DEFERRED_REGISTRY.entrySet();
+
+            if (!vortexes.isEmpty()) {
+                List<Map.Entry<RegistryKey<VortexRegistry>, VortexRegistry>> vortexList = new ArrayList<>(vortexes);
+                int randomIndex = ThreadLocalRandom.current().nextInt(vortexList.size());
+                Map.Entry<RegistryKey<VortexRegistry>, VortexRegistry> randomVortex = vortexList.get(randomIndex);
+                instance.vortexType = randomVortex.getValue();
+            }
+        }
+
+
+        matrixStack.pop();
+       /* // Bind the vortex texture
         RenderSystem.setShaderTexture(0, VORTEX_TEXTURE);
 
         // Set up rendering parameters
@@ -76,6 +102,6 @@ public class VortexSkyRenderer {
         matrixStack.pop();
 
         RenderSystem.enableDepthTest();
-        RenderSystem.disableBlend();
+        RenderSystem.disableBlend();*/
     }
 }

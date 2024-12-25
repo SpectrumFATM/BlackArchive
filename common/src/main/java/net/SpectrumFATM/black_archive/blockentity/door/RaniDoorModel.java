@@ -17,7 +17,7 @@ public class RaniDoorModel extends ShellDoorModel {
 		this.root = root;
 		this.lights = root.getChild("lights");
 		this.door = root.getChild("door");
-		this.main = root.getChild("frame");
+		this.main = root.getChild("main");
 	//	this.portal = root.getChild("portal");
 	}
 

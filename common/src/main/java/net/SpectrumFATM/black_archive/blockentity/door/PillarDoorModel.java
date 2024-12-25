@@ -14,7 +14,7 @@ public class PillarDoorModel extends ShellDoorModel {
 
 	public PillarDoorModel(ModelPart root) {
 		this.root = root;
-		this.main = root.getChild("main");
+		this.main = root.getChild("frame");
 		this.door = root.getChild("door");
 	}
 

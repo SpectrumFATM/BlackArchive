@@ -17,7 +17,7 @@ import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 @Mixin(DimensionalControl.class)
 public class DimensionalMixin {
 
-    @Inject(method = "onRightClick", at = @At("TAIL"), cancellable = true, remap = false)
+    @Inject(method = "onRightClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("TAIL"), cancellable = true, remap = false)
     public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable ci) {
         if (player.isSneaking()) {
             if (ModUpgrades.TEMPORAL_ORBIT_UPGRADE.get().isUnlocked(operator.getUpgradeHandler())) {
@@ -27,7 +27,7 @@ public class DimensionalMixin {
         }
     }
 
-    @Inject(method = "onLeftClick", at = @At("TAIL"), cancellable = true, remap = false)
+    @Inject(method = "onLeftClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/entity/player/PlayerEntity;)Z", at = @At("TAIL"), cancellable = true, remap = false)
     public void onLeftClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable ci) {
         this.onRightClick(operator, theme, controlEntity, player, ci);
     }

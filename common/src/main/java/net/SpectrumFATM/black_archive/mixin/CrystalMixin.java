@@ -12,7 +12,7 @@ import whocraft.tardis_refined.common.tardis.themes.console.CrystalConsoleTheme;
 import whocraft.tardis_refined.registry.TRControlRegistry;
 
 @Mixin(CrystalConsoleTheme.class)
-public abstract class CrystalMixin {
+public class CrystalMixin {
 
     @Inject(method = "getControlSpecification", at = @At("HEAD"), cancellable = true, remap = false)
     public void getControlSpecification(CallbackInfoReturnable<ControlSpecification[]> cir) {

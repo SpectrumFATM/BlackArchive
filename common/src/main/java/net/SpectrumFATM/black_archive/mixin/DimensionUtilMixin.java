@@ -14,7 +14,7 @@ import java.util.List;
 @Mixin(DimensionUtil.class)
 public abstract class DimensionUtilMixin {
 
-    @Inject(method = "isAllowedDimension", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "isAllowedDimension(Lnet/minecraft/registry/RegistryKey;)Z", at = @At("HEAD"), cancellable = true, remap = false)
     private static void isAllowedDimension(RegistryKey<World> level, CallbackInfoReturnable callbackInfo) {
         List<? extends String> bannedDimensions = (List)TRConfig.SERVER.BANNED_DIMENSIONS.get();
         if (level.getValue().toString().equals("black_archive:time_vortex") ||

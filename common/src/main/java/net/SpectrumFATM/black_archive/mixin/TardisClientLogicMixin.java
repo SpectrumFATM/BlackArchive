@@ -17,7 +17,7 @@ import java.util.Optional;
 @Mixin(TardisClientLogic.class)
 public class TardisClientLogicMixin {
 
-    @Inject(method = "update", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "update(Lwhocraft/tardis_refined/client/TardisClientData;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private static void preventRotorStopOnLanding(TardisClientData tardisClientData, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         ServerWorld tardisWorld = MinecraftClient.getInstance().getServer().getWorld(tardisClientData.getLevelKey());

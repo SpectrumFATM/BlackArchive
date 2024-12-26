@@ -49,12 +49,12 @@ public abstract class LivingEntityMixin {
         ((LivingEntity) (Object) this).getDataTracker().startTracking(ENTITY_SCALE, 1.0F);
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
+    @Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
     private void writeNbt(NbtCompound nbt, CallbackInfo info) {
         nbt.putFloat("Scale", ((LivingEntity) (Object) this).getDataTracker().get(ENTITY_SCALE));
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
+    @Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
     private void readNbt(NbtCompound nbt, CallbackInfo info) {
         if (nbt.contains("Scale")) {
             ((LivingEntity) (Object) this).getDataTracker().set(ENTITY_SCALE, nbt.getFloat("Scale"));

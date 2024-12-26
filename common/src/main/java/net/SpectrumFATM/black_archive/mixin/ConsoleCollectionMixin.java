@@ -20,7 +20,7 @@ public class ConsoleCollectionMixin {
     public static List<ConsoleUnit> CONSOLE_MODELS;
     ConsoleUnit rani;
 
-    @Inject(method = "registerModels", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "registerModels(Lnet/minecraft/client/render/entity/model/EntityModelLoader;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private void registerModels(EntityModelLoader loader, CallbackInfo callbackInfo) {
         this.rani = new RaniConsole(loader.getModelPart(ModModels.RANI_CONSOLE));
         CONSOLE_MODELS.add(this.rani);

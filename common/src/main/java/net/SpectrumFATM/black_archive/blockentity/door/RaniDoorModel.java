@@ -11,14 +11,14 @@ public class RaniDoorModel extends ShellDoorModel {
 	private final ModelPart lights;
 	private final ModelPart door;
 	private final ModelPart main;
-//	private final ModelPart portal;
+	private final ModelPart portal;
 
 	public RaniDoorModel(ModelPart root) {
 		this.root = root;
 		this.lights = root.getChild("lights");
 		this.door = root.getChild("door");
 		this.main = root.getChild("main");
-	//	this.portal = root.getChild("portal");
+		this.portal = root.getChild("portal");
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class RaniDoorModel extends ShellDoorModel {
 
 	@Override
 	public void renderPortalMask(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-	//	this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

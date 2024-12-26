@@ -4,7 +4,6 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import whocraft.tardis_refined.client.model.blockentity.door.interior.ShellDoorModel;
-import whocraft.tardis_refined.client.model.blockentity.shell.ShellModel;
 import whocraft.tardis_refined.common.blockentity.door.GlobalDoorBlockEntity;
 
 public class PillarDoorModel extends ShellDoorModel {

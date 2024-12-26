@@ -14,6 +14,7 @@ public class SIDRATDoorModel extends ShellDoorModel {
 	private final ModelPart pillars;
 	private final ModelPart main;
 	private final ModelPart door;
+	private final ModelPart portal;
 	private final ModelPart root;
 
 	public SIDRATDoorModel(ModelPart root) {
@@ -21,6 +22,7 @@ public class SIDRATDoorModel extends ShellDoorModel {
 		this.pillars = root.getChild("pillars");
 		this.main = root.getChild("main");
 		this.door = root.getChild("door");
+		this.portal = root.getChild("portal");
 	}
 
 
@@ -41,11 +43,11 @@ public class SIDRATDoorModel extends ShellDoorModel {
 
 	@Override
 	public void renderPortalMask(GlobalDoorBlockEntity globalDoorBlockEntity, boolean b, boolean b1, MatrixStack matrixStack, VertexConsumer vertexConsumer, int i, int i1, float v, float v1, float v2, float v3) {
-
+		this.portal.render(matrixStack, vertexConsumer, i, i1, v, v1, v2, v3);
 	}
 
 	@Override
 	public void setDoorPosition(boolean open) {
-		this.door.pivotZ= open ? -12.0F : -14.0F;
+		this.door.hidden= open;
 	}
 }

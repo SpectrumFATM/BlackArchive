@@ -4,18 +4,19 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import whocraft.tardis_refined.client.model.blockentity.door.interior.ShellDoorModel;
-import whocraft.tardis_refined.client.model.blockentity.shell.ShellModel;
 import whocraft.tardis_refined.common.blockentity.door.GlobalDoorBlockEntity;
 
 public class PillarDoorModel extends ShellDoorModel {
 	private final ModelPart root;
 	private final ModelPart main;
 	private final ModelPart door;
+	private final ModelPart portal;
 
 	public PillarDoorModel(ModelPart root) {
 		this.root = root;
 		this.main = root.getChild("frame");
 		this.door = root.getChild("door");
+		this.portal = root.getChild("portal");
 	}
 
 
@@ -33,7 +34,7 @@ public class PillarDoorModel extends ShellDoorModel {
 
 	@Override
 	public void renderPortalMask(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-
+		this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

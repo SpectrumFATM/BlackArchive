@@ -1,1 +1,37 @@
-{"format_version":"1.12.0","minecraft:geometry":[{"description":{"identifier":"pillar_shell","texture_width":128,"texture_height":128},"bones":[{"name":"door","pivot":[-7.0,2.0,-5.0],"rotation":[0.0,0.0,0.0],"cubes":[{"origin":[-7.0,2.0,-7.0],"size":[14.0,32.0,2.0],"inflate":0.0,"uv":[52.0,36.0],"mirror":false}]},{"name":"main","pivot":[-7.0,31.0,-7.0],"rotation":[0.0,0.0,0.0],"cubes":[{"origin":[-8.0,-0.0,-8.0],"size":[16.0,2.0,16.0],"inflate":0.0,"uv":[52.0,0.0],"mirror":false},{"origin":[-8.0,46.0,-8.0],"size":[16.0,2.0,16.0],"inflate":0.0,"uv":[52.0,18.0],"mirror":false},{"origin":[-7.0,2.0,-5.0],"size":[1.0,44.0,12.0],"inflate":0.0,"uv":[0.0,0.0],"mirror":false},{"origin":[6.0,2.0,-5.0],"size":[1.0,44.0,12.0],"inflate":0.0,"uv":[0.0,0.0],"mirror":false},{"origin":[-6.0,2.0,6.0],"size":[12.0,44.0,1.0],"inflate":0.0,"uv":[-2.0,11.0],"mirror":false},{"origin":[-7.0,34.0,-7.0],"size":[14.0,12.0,12.0],"inflate":0.0,"uv":[40.0,70.0],"mirror":false},{"origin":[-7.0,34.0,-7.0],"size":[14.0,12.0,2.0],"inflate":0.0,"uv":[0.0,56.0],"mirror":false}]},{"name":"fade_value","pivot":[-24.0,-0.0,0.0],"rotation":[0.0,0.0,0.0],"cubes":[]}]}]}
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.unknown",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 4.5,
+        "visible_bounds_offset": [0, 1.75, 0]
+      },
+      "bones": [
+        {
+          "name": "main",
+          "pivot": [-7, 31, -7],
+          "cubes": [
+            {"origin": [-8, 0, -8], "size": [16, 2, 16], "uv": [0, 0]},
+            {"origin": [-8, 46, -8], "size": [16, 2, 16], "uv": [26, 18]},
+            {"origin": [-7, 2, -5], "size": [1, 44, 12], "uv": [0, 18]},
+            {"origin": [6, 2, -5], "size": [1, 44, 12], "uv": [0, 18]},
+            {"origin": [-6, 2, 6], "size": [12, 44, 1], "uv": [26, 60]},
+            {"origin": [-7, 34, -7], "size": [14, 12, 12], "uv": [26, 36]},
+            {"origin": [-7, 34, -7], "size": [14, 12, 2], "uv": [52, 60]}
+          ]
+        },
+        {
+          "name": "door",
+          "pivot": [-7, 2, -5],
+          "cubes": [
+            {"origin": [-7, 2, -7], "size": [14, 32, 2], "uv": [52, 36]}
+          ]
+        }
+      ]
+    }
+  ]
+}

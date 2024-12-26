@@ -10,11 +10,13 @@ public class PillarDoorModel extends ShellDoorModel {
 	private final ModelPart root;
 	private final ModelPart main;
 	private final ModelPart door;
+	private final ModelPart portal;
 
 	public PillarDoorModel(ModelPart root) {
 		this.root = root;
 		this.main = root.getChild("frame");
 		this.door = root.getChild("door");
+		this.portal = root.getChild("portal");
 	}
 
 
@@ -32,7 +34,7 @@ public class PillarDoorModel extends ShellDoorModel {
 
 	@Override
 	public void renderPortalMask(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-
+		this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

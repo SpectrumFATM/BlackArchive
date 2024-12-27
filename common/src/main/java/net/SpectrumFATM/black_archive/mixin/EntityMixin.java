@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin {
+public class EntityMixin {
 
     private Float cachedScale = null;
 
     // Inject into the readNbt method to load the scale
-    @Inject(method = "readNbt", at = @At("HEAD"))
+    @Inject(method = "readNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
     private void onReadNbt(NbtCompound nbt, CallbackInfo ci) {
         if (nbt.contains("Scale", NbtCompound.FLOAT_TYPE)) {
             float scale = nbt.getFloat("Scale");
@@ -26,7 +26,7 @@ public abstract class EntityMixin {
     }
 
     // Inject into the writeNbt method to save the scale
-    @Inject(method = "writeNbt", at = @At("HEAD"))
+    @Inject(method = "writeNbt(Lnet/minecraft/nbt/NbtCompound;)Lnet/minecraft/nbt/NbtCompound;", at = @At("HEAD"))
     private void onWriteNbt(NbtCompound nbt, CallbackInfoReturnable ci) {
         if (cachedScale != null) {
             nbt.putFloat("Scale", cachedScale);
@@ -35,7 +35,7 @@ public abstract class EntityMixin {
     }
 
     // Safely modify entity dimensions
-    @Inject(method = "getDimensions", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getDimensions(Lnet/minecraft/entity/EntityPose;)Lnet/minecraft/entity/EntityDimensions;", at = @At("RETURN"), cancellable = true)
     private void modifyEntityDimensions(CallbackInfoReturnable<EntityDimensions> cir) {
         if (cachedScale != null) {
             EntityDimensions originalDimensions = cir.getReturnValue();

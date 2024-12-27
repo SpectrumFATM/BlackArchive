@@ -26,7 +26,7 @@ public abstract class RenderMixin {
     @Shadow
     private static Identifier MOON_PHASES = new Identifier(BlackArchive.MOD_ID,"textures/environment/blank.png");
 
-    @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderClouds(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FDDD)V", at = @At("HEAD"), cancellable = true)
     public void renderClouds(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, double d, double e, double f, CallbackInfo ci) {
         if (world != null && (world.getRegistryKey() == ModDimensions.SPACEDIM_LEVEL_KEY || world.getRegistryKey() == ModDimensions.TIMEDIM_LEVEL_KEY)) {
             RenderSystem.setShaderTexture(0, SUN);

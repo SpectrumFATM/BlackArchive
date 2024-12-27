@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "black_archive",
-	"version": "${version}",
+	"version": "1.4",
 	"name": "Black Archive",
 	"description": "Adding a whole new world of alien technology to Minecraft!",
 	"authors": [

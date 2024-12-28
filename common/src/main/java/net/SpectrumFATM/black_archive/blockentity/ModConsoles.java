@@ -2,7 +2,7 @@ package net.SpectrumFATM.black_archive.blockentity;
 
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.console.themes.RaniTheme;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 import whocraft.tardis_refined.common.tardis.themes.console.ConsoleThemeDetails;
 import whocraft.tardis_refined.registry.DeferredRegistry;
@@ -15,7 +15,7 @@ public class ModConsoles {
 
     private static RegistrySupplier<ConsoleTheme> registerConsoleTheme(String id, ConsoleThemeDetails themeDetails) {
         return CONSOLE_THEMES.register(id, () -> {
-            return new ConsoleTheme(new Identifier(BlackArchive.MOD_ID, id), themeDetails);
+            return new ConsoleTheme(new ResourceLocation(BlackArchive.MOD_ID, id), themeDetails);
         });
     }
 }

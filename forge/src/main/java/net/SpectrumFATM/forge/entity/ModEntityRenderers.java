@@ -27,11 +27,11 @@ public class ModEntityRenderers {
     }
 
     public static void onRegisterModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModModelLayers.DALEK, DalekModel::getTexturedModelData);
-        event.registerLayerDefinition(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTexturedModelData);
-        event.registerLayerDefinition(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
-        event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
-        event.registerLayerDefinition(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
-        event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
+        event.registerLayerDefinition(ModModelLayers.DALEK, DalekModel::getTextureLocationdModelData);
+        event.registerLayerDefinition(ModModelLayers.DALEK_SLAVE, DalekPuppetModel::getTextureLocationdModelData);
+        event.registerLayerDefinition(ModModelLayers.CYBERMAN, CybermanModel::getTextureLocationdModelData);
+        event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTextureLocationdModelData);
+        event.registerLayerDefinition(ModModelLayers.ANGEL, WeepingAngelModel::getTextureLocationdModelData);
+        event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTextureLocationdModelData);
     }
 }

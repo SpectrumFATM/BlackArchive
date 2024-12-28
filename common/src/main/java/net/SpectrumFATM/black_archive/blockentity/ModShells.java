@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.blockentity;
 
 import net.SpectrumFATM.BlackArchive;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.common.tardis.themes.ShellTheme;
 import whocraft.tardis_refined.registry.DeferredRegistry;
 import whocraft.tardis_refined.registry.RegistrySupplier;
@@ -14,6 +14,6 @@ public class ModShells {
     public static final RegistrySupplier<ShellTheme> SIDRAT = registerShellTheme("sidrat");
 
     private static RegistrySupplier<ShellTheme> registerShellTheme(String id) {
-        return SHELL_THEMES.register(id, () -> new ShellTheme(new Identifier(BlackArchive.MOD_ID, id)));
+        return SHELL_THEMES.register(id, () -> new ShellTheme(new ResourceLocation(BlackArchive.MOD_ID, id)));
     }
 }

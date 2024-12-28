@@ -3,16 +3,16 @@ package net.SpectrumFATM.black_archive.item.custom;
 import net.SpectrumFATM.black_archive.screen.VortexScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.common.util.DimensionUtil;
 
 import java.util.ArrayList;
@@ -23,27 +23,27 @@ public class VortexManipulatorItem extends Item {
 
     private final List<String> allowedDimensions;
 
-    public VortexManipulatorItem(Settings settings) {
+    public VortexManipulatorItem(Properties settings) {
         super(settings);
         this.allowedDimensions = new ArrayList<>();
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+        ItemStack stack = user.getItemInHand(hand);
 
-        if (world.isClient) {
-            String registryKey = world.getRegistryKey().getValue().toString();
+        if (world.isClientSide) {
+            String registryKey = world.dimension().location().toString();
 
             if (!registryKey.startsWith("tardis_refined:") && !registryKey.equals("black_archive:time_vortex")) {
                 ensureAllowedDimensions();
                 openVortexScreen(allowedDimensions);
             } else {
-                user.sendMessage(Text.literal("Error: Unable to initiate Vortex Manipulator.").formatted(Formatting.RED), true);
+                user.displayClientMessage(Component.literal("Error: Unable to initiate Vortex Manipulator.").withStyle(ChatFormatting.RED), true);
             }
         }
 
-        return TypedActionResult.success(stack, world.isClient);
+        return InteractionResultHolder.sidedSuccess(stack, world.isClientSide);
     }
 
     /**
@@ -51,12 +51,12 @@ public class VortexManipulatorItem extends Item {
      */
     private void ensureAllowedDimensions() {
         if (allowedDimensions.isEmpty()) {
-            MinecraftClient client = MinecraftClient.getInstance();
-            if (client != null && client.getServer() != null) {
-                allowedDimensions.addAll(client.getServer().getWorldRegistryKeys().stream()
+            Minecraft client = Minecraft.getInstance();
+            if (client != null && client.getSingleplayerServer() != null) {
+                allowedDimensions.addAll(client.getSingleplayerServer().levelKeys().stream()
                         .filter(level -> DimensionUtil.isAllowedDimension(level) &&
-                                !level.getValue().equals(new Identifier("black_archive:time_vortex")))
-                        .map(level -> level.getValue().toString())
+                                !level.location().equals(new ResourceLocation("black_archive:time_vortex")))
+                        .map(level -> level.location().toString())
                         .collect(Collectors.toList()));
             }
         }
@@ -64,6 +64,6 @@ public class VortexManipulatorItem extends Item {
 
     @Environment(EnvType.CLIENT)
     private void openVortexScreen(List<String> dimensions) {
-        MinecraftClient.getInstance().setScreen(new VortexScreen(dimensions));
+        Minecraft.getInstance().setScreen(new VortexScreen(dimensions));
     }
 }

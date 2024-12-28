@@ -10,10 +10,10 @@ import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.RaniShellModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.SIDRATModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.ShellEntryRegistry;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.api.event.TardisClientEvents;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleUnit;
 import whocraft.tardis_refined.common.util.Platform;
@@ -33,13 +33,13 @@ public class ModModels {
 
     public static ConsoleUnit RANI_CONSOLE_MODEL;
 
-    public static EntityModelLayer PILLAR_SHELL = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "pillar_shell"), "shell");
-    public static EntityModelLayer PILLAR_DOOR = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "pillar_door"), "door");
-    public static EntityModelLayer RANI_SHELL = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "rani_shell"), "shell");
-    public static EntityModelLayer RANI_DOOR = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "rani_door"), "door");
-    public static EntityModelLayer SIDRAT_DOOR = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "sidrat_door"), "door");
-    public static EntityModelLayer SIDRAT_SHELL = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "sidrat_shell"), "shell");
-    public static EntityModelLayer RANI_CONSOLE = new EntityModelLayer(new Identifier(BlackArchive.MOD_ID, "rani_console"), "console");
+    public static ModelLayerLocation PILLAR_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "pillar_shell"), "shell");
+    public static ModelLayerLocation PILLAR_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "pillar_door"), "door");
+    public static ModelLayerLocation RANI_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_shell"), "shell");
+    public static ModelLayerLocation RANI_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_door"), "door");
+    public static ModelLayerLocation SIDRAT_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "sidrat_door"), "door");
+    public static ModelLayerLocation SIDRAT_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "sidrat_shell"), "shell");
+    public static ModelLayerLocation RANI_CONSOLE = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_console"), "console");
 
 
     public static void init() {
@@ -48,14 +48,14 @@ public class ModModels {
         }
     }
 
-    public static void setupModelInstances(EntityModelLoader entityModels) {
-        ModModels.PILLAR_SHELL_MODEL = new PillarShellModel(entityModels.getModelPart(ModModels.PILLAR_SHELL));
-        ModModels.PILLAR_DOOR_MODEL = new PillarDoorModel(entityModels.getModelPart(ModModels.PILLAR_DOOR));
-        ModModels.RANI_SHELL_MODEL = new RaniShellModel(entityModels.getModelPart(ModModels.RANI_SHELL));
-        ModModels.RANI_DOOR_MODEL = new RaniDoorModel(entityModels.getModelPart(ModModels.RANI_DOOR));
-        ModModels.SIDRAT_SHELL_MODEL = new SIDRATModel(entityModels.getModelPart(ModModels.SIDRAT_SHELL));
-        ModModels.SIDRAT_DOOR_MODEL = new SIDRATDoorModel(entityModels.getModelPart(ModModels.SIDRAT_DOOR));
-        ModModels.RANI_CONSOLE_MODEL = new RaniConsole(entityModels.getModelPart(ModModels.RANI_CONSOLE));
+    public static void setupModelInstances(EntityModelSet entityModels) {
+        ModModels.PILLAR_SHELL_MODEL = new PillarShellModel(entityModels.bakeLayer(ModModels.PILLAR_SHELL));
+        ModModels.PILLAR_DOOR_MODEL = new PillarDoorModel(entityModels.bakeLayer(ModModels.PILLAR_DOOR));
+        ModModels.RANI_SHELL_MODEL = new RaniShellModel(entityModels.bakeLayer(ModModels.RANI_SHELL));
+        ModModels.RANI_DOOR_MODEL = new RaniDoorModel(entityModels.bakeLayer(ModModels.RANI_DOOR));
+        ModModels.SIDRAT_SHELL_MODEL = new SIDRATModel(entityModels.bakeLayer(ModModels.SIDRAT_SHELL));
+        ModModels.SIDRAT_DOOR_MODEL = new SIDRATDoorModel(entityModels.bakeLayer(ModModels.SIDRAT_DOOR));
+        ModModels.RANI_CONSOLE_MODEL = new RaniConsole(entityModels.bakeLayer(ModModels.RANI_CONSOLE));
         ShellEntryRegistry.init();
     }
 
@@ -64,7 +64,7 @@ public class ModModels {
     }
 
     @ExpectPlatform
-    public static EntityModelLayer register(EntityModelLayer location, Supplier<TexturedModelData> definitionSupplier) {
+    public static ModelLayerLocation register(ModelLayerLocation location, Supplier<LayerDefinition> definitionSupplier) {
         throw new RuntimeException(PlatformWarning.addWarning(ModModels.class));
     }
 }

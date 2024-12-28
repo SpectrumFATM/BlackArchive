@@ -1,31 +1,31 @@
 package net.SpectrumFATM.black_archive.entity.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.SpectrumFATM.black_archive.entity.custom.CybermatEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
 
-public class CybermatRenderer extends MobEntityRenderer<CybermatEntity, CybermatModel<CybermatEntity>> {
-    private static final Identifier TEXTURE = new Identifier("black_archive", "textures/entity/cybermat.png");
+public class CybermatRenderer extends MobRenderer<CybermatEntity, CybermatModel<CybermatEntity>> {
+    private static final ResourceLocation TEXTURE = new ResourceLocation("black_archive", "textures/entity/cybermat.png");
 
-    public CybermatRenderer(EntityRendererFactory.Context context) {
-        super(context, new CybermatModel<>(context.getPart(ModModelLayers.CYBERMAT)), 0.4f);
+    public CybermatRenderer(EntityRendererProvider.Context context) {
+        super(context, new CybermatModel<>(context.bakeLayer(ModModelLayers.CYBERMAT)), 0.4f);
     }
 
     @Override
-    public Identifier getTexture(CybermatEntity entity) {
+    public ResourceLocation getTextureLocation(CybermatEntity entity) {
         return TEXTURE;
     }
 
 
     @Override
-    public void render(CybermatEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        matrixStack.push();
+    public void render(CybermatEntity mobEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+        matrixStack.pushPose();
         matrixStack.scale(0.75f, 0.75f, 0.75f);
 
         super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
-        matrixStack.pop();
+        matrixStack.popPose();
     }
 }

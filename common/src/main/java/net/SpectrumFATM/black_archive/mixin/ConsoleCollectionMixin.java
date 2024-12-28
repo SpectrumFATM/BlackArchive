@@ -2,7 +2,7 @@ package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.blockentity.ModModels;
 import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.client.model.geom.EntityModelSet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,9 +20,9 @@ public class ConsoleCollectionMixin {
     public static List<ConsoleUnit> CONSOLE_MODELS;
     ConsoleUnit rani;
 
-    @Inject(method = "registerModels(Lnet/minecraft/client/render/entity/model/EntityModelLoader;)V", at = @At("HEAD"), cancellable = true, remap = false)
-    private void registerModels(EntityModelLoader loader, CallbackInfo callbackInfo) {
-        this.rani = new RaniConsole(loader.getModelPart(ModModels.RANI_CONSOLE));
+    @Inject(method = "registerModels(Lnet/minecraft/client/model/geom/EntityModelSet;)V", at = @At("HEAD"), cancellable = true, remap = false)
+    private void registerModels(EntityModelSet loader, CallbackInfo callbackInfo) {
+        this.rani = new RaniConsole(loader.bakeLayer(ModModels.RANI_CONSOLE));
         CONSOLE_MODELS.add(this.rani);
     }
 }

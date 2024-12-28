@@ -3,19 +3,19 @@ package net.SpectrumFATM.black_archive.entity.client;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.custom.DalekPuppetEntity;
 import net.SpectrumFATM.black_archive.entity.features.DalekEyestalkFeatureRenderer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.NativeImageBackedTexture;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.IOException;
@@ -36,13 +36,13 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
     private final Executor skinDownloadExecutor = Executors.newCachedThreadPool();
     private UUID playerUUID;
 
-    public DalekPuppetRenderer(EntityRendererFactory.Context context) {
-        super(context, new DalekPuppetModel<>(context.getPart(ModModelLayers.DALEK_SLAVE)), 0.5f);
-        this.addFeature(new DalekEyestalkFeatureRenderer(this));
+    public DalekPuppetRenderer(EntityRendererProvider.Context context) {
+        super(context, new DalekPuppetModel<>(context.bakeLayer(ModModelLayers.DALEK_SLAVE)), 0.5f);
+        this.addLayer(new DalekEyestalkFeatureRenderer(this));
     }
 
     @Override
-    public Identifier getTexture(DalekPuppetEntity entity) {
+    public ResourceLocation getTextureLocation(DalekPuppetEntity entity) {
         this.playerUUID = entity.getPlayerUUID();
 
         if (playerUUID == null) {
@@ -56,7 +56,7 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
             return getFallbackSkin(entity);
         }
 
-        Identifier cachedSkin = getCachedSkin(playerUUID);
+        ResourceLocation cachedSkin = getCachedSkin(playerUUID);
 
         if (cachedSkin != null) {
             return cachedSkin;
@@ -83,7 +83,7 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
                 Files.copy(in, skinPath);
 
                 // After downloading, register the texture on the main thread
-                MinecraftClient.getInstance().execute(() -> loadTextureFromFile(skinPath.toString(), playerUUID));
+                Minecraft.getInstance().execute(() -> loadTextureFromFile(skinPath.toString(), playerUUID));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -127,7 +127,7 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
         return null;
     }
 
-    private Identifier getCachedSkin(UUID playerUUID) {
+    private ResourceLocation getCachedSkin(UUID playerUUID) {
         Path cacheDir = Paths.get("config", "black_archive", "skins");
         Path skinPath = cacheDir.resolve(playerUUID.toString() + ".png");
 
@@ -138,16 +138,16 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
         return null;
     }
 
-    private Identifier loadTextureFromFile(String filePath, UUID playerUUID) {
+    private ResourceLocation loadTextureFromFile(String filePath, UUID playerUUID) {
         try {
             NativeImage image = NativeImage.read(Files.newInputStream(Paths.get(filePath)));
             if (image == null) {
                 return null;
             }
 
-            NativeImageBackedTexture nativeImageBackedTexture = new NativeImageBackedTexture(image);
-            Identifier textureId = new Identifier("black_archive", "skins/" + playerUUID.toString());
-            MinecraftClient.getInstance().getTextureManager().registerTexture(textureId, nativeImageBackedTexture);
+            DynamicTexture nativeImageBackedTexture = new DynamicTexture(image);
+            ResourceLocation textureId = new ResourceLocation("black_archive", "skins/" + playerUUID.toString());
+            Minecraft.getInstance().getTextureManager().register(textureId, nativeImageBackedTexture);
 
             return textureId;
         } catch (IOException e) {
@@ -156,33 +156,33 @@ public class DalekPuppetRenderer extends LivingEntityRenderer<DalekPuppetEntity,
         return null;
     }
 
-    private Identifier getFallbackSkin(DalekPuppetEntity entity) {
+    private ResourceLocation getFallbackSkin(DalekPuppetEntity entity) {
         switch (entity.getSkinId()) {
             case 0:
-                return new Identifier("minecraft", "textures/entity/player/wide/alex.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/alex.png");
             case 1:
-                return new Identifier("minecraft", "textures/entity/player/wide/ari.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/ari.png");
             case 2:
-                return new Identifier("minecraft", "textures/entity/player/wide/efe.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/efe.png");
             case 3:
-                return new Identifier("minecraft", "textures/entity/player/wide/kai.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/kai.png");
             case 4:
-                return new Identifier("minecraft", "textures/entity/player/wide/makena.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/makena.png");
             case 5:
-                return new Identifier("minecraft", "textures/entity/player/wide/noor.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/noor.png");
             case 6:
-                return new Identifier("minecraft", "textures/entity/player/wide/sunny.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/sunny.png");
             case 7:
-                return new Identifier("minecraft", "textures/entity/player/wide/zuri.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/zuri.png");
             default:
-                return new Identifier("minecraft", "textures/entity/player/wide/steve.png");
+                return new ResourceLocation("minecraft", "textures/entity/player/wide/steve.png");
         }
     }
 
     @Override
-    protected void renderLabelIfPresent(DalekPuppetEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        if (entity.shouldRenderName()) {
-            super.renderLabelIfPresent(entity, text, matrices, vertexConsumers, light);
+    protected void renderNameTag(DalekPuppetEntity entity, Component text, PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
+        if (entity.shouldShowName()) {
+            super.renderNameTag(entity, text, matrices, vertexConsumers, light);
         }
     }
 }

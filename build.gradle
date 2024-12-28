@@ -23,9 +23,6 @@ subprojects {
         archivesName = "$rootProject.archives_name-$project.name"
     }
 
-    sourceSets.main.resources {
-        srcDir project(":common").file("src/resources").absolutePath
-    }
 
     repositories {
 
@@ -51,9 +48,18 @@ subprojects {
         }
     }
 
+    loom {
+        silentMojangMappingsLicense()
+    }
+
     dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings "net.fabricmc:yarn:$rootProject.yarn_mappings:v2"
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+
+        mappings loom.layered() {
+            officialMojangMappings()
+//            parchment("org.parchmentmc.data:parchment-${rootProject.mappings}")
+        }
+        implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
     }
 
     java {

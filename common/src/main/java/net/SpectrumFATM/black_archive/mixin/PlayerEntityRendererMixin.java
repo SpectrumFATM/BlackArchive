@@ -1,27 +1,33 @@
 package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.entity.features.DalekEyestalkFeatureRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.entity.player.PlayerEntity;
+import net.fabricmc.fabric.mixin.client.rendering.LivingEntityRendererAccessor;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<PlayerEntity, PlayerEntityModel<PlayerEntity>> {
+import java.util.Map;
 
-    public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, PlayerEntityModel<PlayerEntity> model, float shadowRadius) {
-        super(ctx, model, shadowRadius);
-    }
+@Mixin(EntityRenderDispatcher.class)
+public class PlayerEntityRendererMixin {
 
-    // Inject into the constructor of PlayerEntityRenderer
-    @Inject(method = "<init>(Lnet/minecraft/client/render/entity/EntityRendererFactory$Context;Z)V", at = @At("TAIL"))
-    private void onInit(EntityRendererFactory.Context context, boolean slim, CallbackInfo info) {
-        // Add the custom DalekEyestalkFeatureRenderer
-        this.addFeature(new DalekEyestalkFeatureRenderer(this));
+    @Shadow
+    private Map<String, EntityRenderer<? extends Player>> playerRenderers;
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Inject(at = @At("RETURN"), method = "onResourceManagerReload")
+    private void onResourceManagerReload(ResourceManager resourceManager, CallbackInfo ci) {
+        this.playerRenderers.values().forEach(renderer -> {
+            if (renderer instanceof LivingEntityRendererAccessor accessor) {
+                accessor.callAddFeature(new DalekEyestalkFeatureRenderer((RenderLayerParent) renderer));
+            }
+        });
     }
 }

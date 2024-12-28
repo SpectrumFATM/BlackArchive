@@ -1,8 +1,8 @@
 package net.SpectrumFATM.black_archive.mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,12 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public class EntityMixin {
 
-    private Float cachedScale = null;
+    // TODO Cannot do any of this, the methods are abstract!
+   /* private Float cachedScale = null;
 
     // Inject into the readNbt method to load the scale
     @Inject(method = "readNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
-    private void onReadNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (nbt.contains("Scale", NbtCompound.FLOAT_TYPE)) {
+    private void onReadNbt(CompoundTag nbt, CallbackInfo ci) {
+        if (nbt.contains("Scale", CompoundTag.TAG_FLOAT)) {
             float scale = nbt.getFloat("Scale");
             cachedScale = scale > 0 ? scale : null;
         } else {
@@ -27,7 +28,7 @@ public class EntityMixin {
 
     // Inject into the writeNbt method to save the scale
     @Inject(method = "writeNbt(Lnet/minecraft/nbt/NbtCompound;)Lnet/minecraft/nbt/NbtCompound;", at = @At("HEAD"))
-    private void onWriteNbt(NbtCompound nbt, CallbackInfoReturnable ci) {
+    private void onWriteNbt(CompoundTag nbt, CallbackInfoReturnable ci) {
         if (cachedScale != null) {
             nbt.putFloat("Scale", cachedScale);
         }
@@ -39,11 +40,11 @@ public class EntityMixin {
     private void modifyEntityDimensions(CallbackInfoReturnable<EntityDimensions> cir) {
         if (cachedScale != null) {
             EntityDimensions originalDimensions = cir.getReturnValue();
-            EntityDimensions scaledDimensions = EntityDimensions.changing(
+            EntityDimensions scaledDimensions = EntityDimensions.scalable(
                     originalDimensions.width * cachedScale,
                     originalDimensions.height * cachedScale
             );
             cir.setReturnValue(scaledDimensions);
         }
-    }
+    }*/
 }

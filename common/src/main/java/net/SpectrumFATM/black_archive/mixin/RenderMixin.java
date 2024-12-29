@@ -20,18 +20,16 @@ public class RenderMixin {
     @Shadow
     private ClientLevel level;
 
-    @Shadow
     private static ResourceLocation SUN_LOCATION = new ResourceLocation(BlackArchive.MOD_ID,"textures/environment/blank.png");
-
-    @Shadow
     private static ResourceLocation MOON_LOCATION = new ResourceLocation(BlackArchive.MOD_ID,"textures/environment/blank.png");
 
-    @Inject(method = "renderClouds(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FDDD)V", at = @At("HEAD"), cancellable = true, remap = false)
-    public void renderClouds(PoseStack matrices, Matrix4f projectionMatrix, float tickDelta, double d, double e, double f, CallbackInfo ci) {
+    @Inject(method = "renderClouds(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FDDD)V", at = @At("HEAD"), cancellable = true)
+    public void renderClouds(PoseStack poseStack, Matrix4f projectionMatrix, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
         if (level != null && (level.dimension() == ModDimensions.SPACEDIM_LEVEL_KEY || level.dimension() == ModDimensions.TIMEDIM_LEVEL_KEY)) {
             RenderSystem.setShaderTexture(0, SUN_LOCATION);
             RenderSystem.setShaderTexture(0, MOON_LOCATION);
             ci.cancel();
         }
     }
+
 }

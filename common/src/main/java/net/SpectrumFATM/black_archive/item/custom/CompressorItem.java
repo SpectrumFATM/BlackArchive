@@ -1,80 +1,79 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
 import net.SpectrumFATM.black_archive.sound.ModSounds;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import java.util.Random;
 
 public class CompressorItem extends TooltipItem {
-    public CompressorItem(Settings settings, String tooltipKey) {
+    public CompressorItem(Properties settings, String tooltipKey) {
         super(settings, tooltipKey);
     }
 
     @Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
 
         Random random = new Random();
 
-        BlockPos pos = entity.getBlockPos();
-        entity.getWorld().addParticle(
+        BlockPos pos = entity.blockPosition();
+        entity.level().addParticle(
                 ParticleTypes.CAMPFIRE_SIGNAL_SMOKE,
                 pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
                 0.0, 0.05, 0.0
         );
 
         for (int i = 0; i < 5; i++) {
-            entity.getWorld().addParticle(
+            entity.level().addParticle(
                     ParticleTypes.SMOKE,
                     pos.getX() + (random.nextInt(10) * 0.1), pos.getY() + (random.nextInt(10) * 0.1), (random.nextInt(10) * 0.1),
                     0.0, 0.075, 0.0
             );
         }
 
-        if (!entity.getWorld().isClient) {
+        if (!entity.level().isClientSide) {
 
-            NbtCompound entityNbt = new NbtCompound();
-            entity.writeNbt(entityNbt);
+            CompoundTag entityNbt = new CompoundTag();
+            entity.saveWithoutId(entityNbt);
 
             if (entityNbt.getFloat("Scale") == 1.0f) {
                 entityNbt.putFloat("Scale", 0.1f);
 
-                if (!(entity instanceof PlayerEntity)) {
+                if (!(entity instanceof Player)) {
                     entityNbt.putBoolean("NoAI", true);
                 }
 
-                entity.readCustomDataFromNbt(entityNbt);
+                entity.readAdditionalSaveData(entityNbt);
 
-                if (entity instanceof PlayerEntity) {
-                    entity.damage(entity.getDamageSources().generic(), 4.0f);
+                if (entity instanceof Player) {
+                    entity.hurt(entity.damageSources().generic(), 4.0f);
                 } else {
-                    entity.damage(entity.getDamageSources().generic(), 15.0f);
+                    entity.hurt(entity.damageSources().generic(), 15.0f);
                 }
 
-                entity.setMovementSpeed(entity.getMovementSpeed() * 0.1f);
+                entity.setSpeed(entity.getSpeed() * 0.1f);
             } else {
                 entityNbt.putFloat("Scale", 1.0f);
 
-                if (!(entity instanceof PlayerEntity)) {
+                if (!(entity instanceof Player)) {
                     entityNbt.putBoolean("NoAI", false);
                 }
 
-                entity.readCustomDataFromNbt(entityNbt);
+                entity.readAdditionalSaveData(entityNbt);
 
-                entity.setMovementSpeed(entity.getMovementSpeed() * 10.0f);
+                entity.setSpeed(entity.getSpeed() * 10.0f);
             }
 
             if (!player.isCreative()) {
-                player.getItemCooldownManager().set(this, 200);
+                player.getCooldowns().addCooldown(this, 200);
             }
         }
         player.playSound(ModSounds.TCE.get(), 1.0f, 1.0f);
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

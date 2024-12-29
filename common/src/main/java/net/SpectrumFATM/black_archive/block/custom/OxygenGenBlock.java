@@ -1,65 +1,65 @@
 package net.SpectrumFATM.black_archive.block.custom;
 
 import net.SpectrumFATM.black_archive.item.ModItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
 public class OxygenGenBlock extends Block {
-    public static final BooleanProperty POWERED = BooleanProperty.of("powered");
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    public OxygenGenBlock(Settings settings) {
-        super(settings.luminance((state) -> state.get(POWERED) ? 10 : 0).strength(3.0f, 3.0f).mapColor(MapColor.GRAY));
-        this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false));
-        settings.hardness(2.0f);
+    public OxygenGenBlock(Properties settings) {
+        super(settings.lightLevel((state) -> state.getValue(POWERED) ? 10 : 0).strength(3.0f, 3.0f).mapColor(MapColor.COLOR_GRAY));
+        this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
+        settings.destroyTime(2.0f);
     }
     @Override
     @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState)this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return (BlockState)this.defaultBlockState().setValue(POWERED, ctx.getLevel().hasNeighborSignal(ctx.getClickedPos()));
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (world.isClient) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        if (world.isClientSide) {
             return;
         }
-        boolean bl = state.get(POWERED);
-        if (bl != world.isReceivingRedstonePower(pos)) {
+        boolean bl = state.getValue(POWERED);
+        if (bl != world.hasNeighborSignal(pos)) {
             if (bl) {
-                world.scheduleBlockTick(pos, this, 4);
+                world.scheduleTick(pos, this, 4);
             } else {
-                world.setBlockState(pos, (BlockState)state.cycle(POWERED), Block.NOTIFY_LISTENERS);
+                world.setBlock(pos, (BlockState)state.cycle(POWERED), Block.UPDATE_CLIENTS);
             }
         }
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (state.get(POWERED).booleanValue() && !world.isReceivingRedstonePower(pos)) {
-            world.setBlockState(pos, (BlockState)state.cycle(POWERED), Block.NOTIFY_LISTENERS);
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (state.getValue(POWERED).booleanValue() && !world.hasNeighborSignal(pos)) {
+            world.setBlock(pos, (BlockState)state.cycle(POWERED), Block.UPDATE_CLIENTS);
         }
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(POWERED);
     }
 
     @Override
-    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
-        super.onStacksDropped(state, world, pos, tool, dropExperience);
-        if (!world.isClient) {
-            dropStack(world, pos, new ItemStack(ModItems.OXYGEN_GEN.get(), 1));
+    public void spawnAfterBreak(BlockState state, ServerLevel world, BlockPos pos, ItemStack tool, boolean dropExperience) {
+        super.spawnAfterBreak(state, world, pos, tool, dropExperience);
+        if (!world.isClientSide) {
+            popResource(world, pos, new ItemStack(ModItems.OXYGEN_GEN.get(), 1));
         }
     }
 }

@@ -3,26 +3,25 @@ package net.SpectrumFATM.black_archive.entity.custom;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.util.SpaceTimeEventUtil;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
-public class WeepingAngelEntity extends HostileEntity {
+public class WeepingAngelEntity extends Monster {
 
     public String pose = "default";
 
-    public WeepingAngelEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public WeepingAngelEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -31,23 +30,23 @@ public class WeepingAngelEntity extends HostileEntity {
         super.tick();
 
         // Check if any player is observing the entity
-        boolean isObserved = this.getWorld().getPlayers().stream().anyMatch(this::isBeingObserved);
+        boolean isObserved = this.level().players().stream().anyMatch(this::isBeingObserved);
 
         if (isObserved) {
             // Immediately stop movement and disable navigation when observed
             if (this.getTarget() != null) {
-                this.lookAtEntity(this.getTarget(), 30.0F, 30.0F);
+                this.lookAt(this.getTarget(), 30.0F, 30.0F);
             }
 
             this.getNavigation().stop();
-            if (this.getWorld().getBlockState(this.getBlockPos().down()).isSolid()) {
-                this.setVelocity(Vec3d.ZERO);
-                this.setAiDisabled(true);
+            if (this.level().getBlockState(this.blockPosition().below()).isSolid()) {
+                this.setDeltaMovement(Vec3.ZERO);
+                this.setNoAi(true);
             }
         } else {
             // Re-enable AI and only start navigation if AI was previously disabled
-            if (this.isAiDisabled()) {
-                this.setAiDisabled(false);
+            if (this.isNoAi()) {
+                this.setNoAi(false);
             }
 
             if (getTarget() != null && pose == "default" && getTarget().distanceTo(this) < 10) {
@@ -57,90 +56,90 @@ public class WeepingAngelEntity extends HostileEntity {
             }
 
             // Move towards the nearest player within a 20-block radius if not observed
-            PlayerEntity nearestPlayer = this.getWorld().getClosestPlayer(this, 20.0D);
+            Player nearestPlayer = this.level().getNearestPlayer(this, 20.0D);
             if (nearestPlayer != null) {
                 this.setTarget(nearestPlayer); // Set the target to the nearest player
-                if (!this.getNavigation().isFollowingPath()) {
-                    this.getNavigation().startMovingTo(nearestPlayer, 2.0D);
+                if (!this.getNavigation().isInProgress()) {
+                    this.getNavigation().moveTo(nearestPlayer, 2.0D);
                 }
 
                 // If the player is within melee range, attack the player
-                if (this.squaredDistanceTo(nearestPlayer) < 2.0D) {
-                    tryAttack(nearestPlayer);
+                if (this.distanceToSqr(nearestPlayer) < 2.0D) {
+                    doHurtTarget(nearestPlayer);
                 }
             }
         }
     }
 
     @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.0D, false));
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
     }
 
-    public static DefaultAttributeContainer.Builder createAngelAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20.0);
+    public static AttributeSupplier.Builder createAngelAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 50.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.ATTACK_DAMAGE, 8.0)
+                .add(Attributes.FOLLOW_RANGE, 20.0);
     }
 
-    private boolean isBeingObserved(PlayerEntity player) {
+    private boolean isBeingObserved(Player player) {
 
         if (player.isCreative() || player.isSpectator()) {
             return true;
         }
 
         // Get the vector from the player's position to the Weeping Angel's position
-        Vec3d playerPos = player.getCameraPosVec(1.0F);
-        Vec3d angelPos = this.getPos();
-        Vec3d directionToAngel = angelPos.subtract(playerPos).normalize();
+        Vec3 playerPos = player.getEyePosition(1.0F);
+        Vec3 angelPos = this.position();
+        Vec3 directionToAngel = angelPos.subtract(playerPos).normalize();
 
         // Get the player's current look direction
-        Vec3d playerLookDirection = player.getRotationVec(1.0F);
+        Vec3 playerLookDirection = player.getViewVector(1.0F);
 
         // Calculate the dot product between the player's look direction and the direction to the angel
-        double dotProduct = playerLookDirection.dotProduct(directionToAngel);
+        double dotProduct = playerLookDirection.dot(directionToAngel);
 
         // If the dot product is greater than a threshold, the angel is in the player's field of view
         return dotProduct > 0;
     }
 
     @Override
-    public boolean tryAttack(Entity target) {
+    public boolean doHurtTarget(Entity target) {
         // 50% chance to teleport the target to the time vortex
-        if (!this.getWorld().isClient) {
-            if (random.nextInt(10) == 1  && target instanceof PlayerEntity player) {
-                ServerWorld targetWorld = target.getServer().getWorld(ModDimensions.TIMEDIM_LEVEL_KEY);
-                ((ServerPlayerEntity) player).teleport(targetWorld, target.getX(), target.getWorld().getTopY(), target.getZ(), target.getYaw(), target.getPitch());
+        if (!this.level().isClientSide) {
+            if (random.nextInt(10) == 1  && target instanceof Player player) {
+                ServerLevel targetWorld = target.getServer().getLevel(ModDimensions.TIMEDIM_LEVEL_KEY);
+                ((ServerPlayer) player).teleportTo(targetWorld, target.getX(), target.level().getMaxBuildHeight(), target.getZ(), target.getYRot(), target.getXRot());
 
-                this.setHealth(this.getHealth() + ((ServerPlayerEntity) target).getHealth());
+                this.setHealth(this.getHealth() + ((ServerPlayer) target).getHealth());
 
                 if (random.nextInt(5) == 1  && SpaceTimeEventUtil.isComplexSpaceTimeEvent(player)) {
                     TimeFissureEntity fissure = new TimeFissureEntity(ModEntities.TIME_FISSURE.get(), targetWorld);
-                    fissure.setPos(target.getX(), target.getY(), target.getZ());
-                    this.getWorld().spawnEntity(fissure);
+                    fissure.setPosRaw(target.getX(), target.getY(), target.getZ());
+                    this.level().addFreshEntity(fissure);
                     this.kill();
                 }
             }
 
             // Deal damage to the target
-            target.damage(this.getDamageSources().generic(), (float) this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+            target.hurt(this.damageSources().generic(), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
         }
         return true;
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        boolean isObserved = this.getWorld().getPlayers().stream().anyMatch(this::isBeingObserved);
+    public boolean hurt(DamageSource source, float amount) {
+        boolean isObserved = this.level().players().stream().anyMatch(this::isBeingObserved);
 
-        if (isObserved && source.getAttacker() instanceof PlayerEntity player && !player.isSpectator()) {
+        if (isObserved && source.getEntity() instanceof Player player && !player.isSpectator()) {
             if (!player.isCreative()) {
                 return false;
             }
         }
 
-        return super.damage(source, amount);
+        return super.hurt(source, amount);
     }
 
     public String getStatuePose() {

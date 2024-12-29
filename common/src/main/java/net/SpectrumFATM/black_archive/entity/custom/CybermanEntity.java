@@ -3,47 +3,53 @@ package net.SpectrumFATM.black_archive.entity.custom;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import java.util.Random;
 
-public class CybermanEntity extends HostileEntity implements RangedAttackMob {
+public class CybermanEntity extends Monster implements RangedAttackMob {
 
     private int firingTicks = 0; // Counter to track firing time
     private int laserCooldown = 0; // Counter to manage laser firing cooldown
     private int firingDuration = 0; // Counter to manage the duration of isFiring
     private static final int LASER_COOLDOWN_TICKS = 40; // Laser cooldown duration
     private static final int FIRING_DURATION_TICKS = 10; // Duration for which isFiring should remain true
-    private static final TrackedData<Boolean> IS_FIRING = DataTracker.registerData(CybermanEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_FIRING = SynchedEntityData.defineId(CybermanEntity.class, EntityDataSerializers.BOOLEAN);
     private static final double MELEE_ATTACK_RANGE = 2.0; // Define melee attack range
 
-    public CybermanEntity(EntityType<CybermanEntity> type, World world) {
+    public CybermanEntity(EntityType<CybermanEntity> type, Level world) {
         super(type, world);
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(IS_FIRING, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_FIRING, false);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
         }
 
         // Server-side logic
-        if (!this.getWorld().isClient) {
+        if (!this.level().isClientSide) {
 
             Random random = new Random();
             if (random.nextInt(10000) == 1 && BlackArchiveConfig.COMMON.shouldCybermatSpawnAroundCybermen.get()) {
@@ -63,8 +69,8 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
             }
 
             LivingEntity target = this.getTarget();
-            if (target instanceof PlayerEntity) {
-                double distance = this.squaredDistanceTo(target);
+            if (target instanceof Player) {
+                double distance = this.distanceToSqr(target);
 
                 // Check if target is within melee range
                 if (distance <= MELEE_ATTACK_RANGE * MELEE_ATTACK_RANGE) {
@@ -75,7 +81,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
                     if (laserCooldown <= 0) {
                         // Set firing flag to true and shoot laser
                         setFiring(true);
-                        attack(target, 0.0F); // Attack will fire the laser
+                        performRangedAttack(target, 0.0F); // Attack will fire the laser
                         laserCooldown = LASER_COOLDOWN_TICKS; // Reset cooldown
                         firingDuration = FIRING_DURATION_TICKS; // Start the firing duration
                     } else {
@@ -97,26 +103,26 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
-    protected void initGoals() {
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.0D, true)); // Melee attack goal
-        this.goalSelector.add(2, new ProjectileAttackGoal(this, 2.0D, 40, 35.0F));  // Ranged attack goal
-        this.goalSelector.add(3, new WanderAroundFarGoal(this, 1D));
-        this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 5.0F, 0.02F));
-        this.goalSelector.add(4, new LookAroundGoal(this));
-        this.goalSelector.add(5, new GoToWalkTargetGoal(this, 2.0D));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false,
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true)); // Melee attack goal
+        this.goalSelector.addGoal(2, new RangedAttackGoal(this, 2.0D, 40, 35.0F));  // Ranged attack goal
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1D));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 5.0F, 0.02F));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 2.0D));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, true, false,
                 livingEntity -> !(livingEntity instanceof CybermanEntity || livingEntity instanceof CybermatEntity)));
     }
 
-    public static DefaultAttributeContainer.Builder createCyberAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0)
-                .add(EntityAttributes.GENERIC_ARMOR, 10.0)
-                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 5.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0); // Increased attack damage for melee
+    public static AttributeSupplier.Builder createCyberAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.2)
+                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.ARMOR, 10.0)
+                .add(Attributes.ARMOR_TOUGHNESS, 5.0)
+                .add(Attributes.FOLLOW_RANGE, 8.0)
+                .add(Attributes.ATTACK_DAMAGE, 6.0); // Increased attack damage for melee
     }
 
     @Override
@@ -127,31 +133,31 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_IRON_GOLEM_HURT;
+        return SoundEvents.IRON_GOLEM_HURT;
     }
 
     public void meleeAttack(LivingEntity target) {
         // Apply melee damage to the target player
-        target.damage(this.getDamageSources().generic(), (float) getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+        target.hurt(this.damageSources().generic(), (float) getAttributeValue(Attributes.ATTACK_DAMAGE));
     }
 
     @Override
-    public void attack(LivingEntity target, float pullProgress) {
-        if (this.getTarget() instanceof PlayerEntity && this.firingTicks <= 0) {
-            double armX = this.getX() - 0.5 * Math.cos(Math.toRadians(this.bodyYaw));
-            double armY = this.getY() + this.getHeight() * 0.75;
-            double armZ = this.getZ() - 0.5 * Math.sin(Math.toRadians(this.bodyYaw));
+    public void performRangedAttack(LivingEntity target, float pullProgress) {
+        if (this.getTarget() instanceof Player && this.firingTicks <= 0) {
+            double armX = this.getX() - 0.5 * Math.cos(Math.toRadians(this.yBodyRot));
+            double armY = this.getY() + this.getBbHeight() * 0.75;
+            double armZ = this.getZ() - 0.5 * Math.sin(Math.toRadians(this.yBodyRot));
 
-            LaserEntity laser = new LaserEntity(this.getWorld(), this, 2.0f, false, 117, 117, 255);
-            laser.setPosition(armX, armY, armZ);
+            LaserEntity laser = new LaserEntity(this.level(), this, 2.0f, false, 117, 117, 255);
+            laser.setPos(armX, armY, armZ);
 
-            double d0 = target.getY() + (target.getHeight() / 2.0) - laser.getY();
+            double d0 = target.getY() + (target.getBbHeight() / 2.0) - laser.getY();
             double d1 = target.getX() - laser.getX();
             double d2 = d0;
             double d3 = target.getZ() - laser.getZ();
-            laser.setVelocity(d1, d2, d3, 1.6f, 0.0f);
+            laser.shoot(d1, d2, d3, 1.6f, 0.0f);
 
-            this.getWorld().spawnEntity(laser);
+            this.level().addFreshEntity(laser);
             this.playSound(ModSounds.CYBERMAN_GUN.get(), 1f, 1.0f);
         } else if (this.firingTicks <= 0) {
             this.playSound(ModSounds.CYBERMAN_MALFUNCTION.get(), 1f, 1.0f);
@@ -159,18 +165,18 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
     }
 
     public boolean isFiring() {
-        return this.dataTracker.get(IS_FIRING);
+        return this.entityData.get(IS_FIRING);
     }
 
     public void setFiring(boolean firing) {
-        this.dataTracker.set(IS_FIRING, firing);
+        this.entityData.set(IS_FIRING, firing);
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (source.getAttacker() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) source.getAttacker();
-            ItemStack weapon = attacker.getMainHandStack(); // Get the weapon in the main hand
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) source.getEntity();
+            ItemStack weapon = attacker.getMainHandItem(); // Get the weapon in the main hand
 
             // Check if the weapon is gold and apply a 1.5x damage multiplier
             if (weapon.getItem() == Items.GOLDEN_SWORD || weapon.getItem() == Items.GOLDEN_AXE || weapon.getItem() == Items.GOLDEN_PICKAXE || weapon.getItem() == Items.GOLDEN_SHOVEL || weapon.getItem() == Items.GOLDEN_HOE) {
@@ -178,7 +184,7 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
             }
         }
 
-        return super.damage(source, amount); // Apply the damage to the entity
+        return super.hurt(source, amount); // Apply the damage to the entity
     }
 
     public void disableFire(int ticks) {
@@ -186,8 +192,8 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
     }
 
     public void spawnCybermat() {
-        CybermatEntity cybermat = new CybermatEntity(ModEntities.CYBERMAT.get(), this.getWorld());
-        World world = this.getWorld();
+        CybermatEntity cybermat = new CybermatEntity(ModEntities.CYBERMAT.get(), this.level());
+        Level world = this.level();
 
         double x = this.getX() + this.random.nextGaussian() * 4;
         double z = this.getZ() + this.random.nextGaussian() * 4;
@@ -209,8 +215,8 @@ public class CybermanEntity extends HostileEntity implements RangedAttackMob {
 
             pos = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
 
-            cybermat.refreshPositionAndAngles(x, y, z, this.random.nextFloat() * 360.0F, 0.0F);
-            this.getWorld().spawnEntity(cybermat);
+            cybermat.moveTo(x, y, z, this.random.nextFloat() * 360.0F, 0.0F);
+            this.level().addFreshEntity(cybermat);
         }
     }
 }

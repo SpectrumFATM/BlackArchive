@@ -1,27 +1,27 @@
 package net.SpectrumFATM.black_archive.blockentity.console;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.ModConsoles;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.client.render.entity.animation.AnimationHelper;
-import net.minecraft.client.render.entity.animation.Keyframe;
-import net.minecraft.client.render.entity.animation.Transformation;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.client.TardisClientData;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleUnit;
 import whocraft.tardis_refined.common.block.console.GlobalConsoleBlock;
 import whocraft.tardis_refined.common.blockentity.console.GlobalConsoleBlockEntity;
 
-public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
-	private static final Animation FLIGHT;
-	private static final Identifier TEXTURE;
+public class RaniConsole extends HierarchicalModel implements ConsoleUnit {
+	private static final AnimationDefinition FLIGHT;
+	private static final ResourceLocation TEXTURE;
 	private final ModelPart pillar;
 	private final ModelPart console;
 	private final ModelPart panels;
@@ -45,7 +45,7 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		pillar.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		console.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 		twirly_outer.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
@@ -56,53 +56,53 @@ public class RaniConsole extends SinglePartEntityModel implements ConsoleUnit {
 	}
 
 	@Override
-	public ModelPart getPart() {
+	public ModelPart root() {
 		return root;
 	}
 
 	@Override
-	public void setAngles(Entity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setupAnim(Entity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 
 	}
 
-	public void renderConsole(GlobalConsoleBlockEntity globalConsoleBlock, World level, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		TardisClientData reactions = TardisClientData.getInstance(level.getRegistryKey());
-		if (globalConsoleBlock != null && (Boolean)globalConsoleBlock.getCachedState().get(GlobalConsoleBlock.POWERED)) {
+	public void renderConsole(GlobalConsoleBlockEntity globalConsoleBlock, Level level, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		TardisClientData reactions = TardisClientData.getInstance(level.dimension());
+		if (globalConsoleBlock != null && (Boolean)globalConsoleBlock.getBlockState().getValue(GlobalConsoleBlock.POWERED)) {
 			if (reactions.isFlying()) {
-				this.updateAnimation(reactions.ROTOR_ANIMATION, FLIGHT, (float)MinecraftClient.getInstance().player.age);
+				this.animate(reactions.ROTOR_ANIMATION, FLIGHT, (float)Minecraft.getInstance().player.tickCount);
 			}
 		}
 		this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
-	public Identifier getDefaultTexture() {
+	public ResourceLocation getDefaultTexture() {
 		return TEXTURE;
 	}
 
 	@Override
-	public Identifier getConsoleTheme() {
+	public ResourceLocation getConsoleTheme() {
 		return ModConsoles.RANI.getId();
 	}
 	
 	static {
-		FLIGHT = Animation.Builder.create(2f).looping()
-				.addBoneAnimation("twirly_inner",
-						new Transformation(Transformation.Targets.TRANSLATE,
-								new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-										Transformation.Interpolations.CUBIC),
-								new Keyframe(1f, AnimationHelper.createTranslationalVector(0f, 2f, 0f),
-										Transformation.Interpolations.CUBIC),
-								new Keyframe(2f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
-										Transformation.Interpolations.CUBIC)))
-				.addBoneAnimation("twirly_outer",
-						new Transformation(Transformation.Targets.ROTATE,
-								new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
-										Transformation.Interpolations.LINEAR),
-								new Keyframe(2f, AnimationHelper.createRotationalVector(0f, 360f, 0f),
-										Transformation.Interpolations.LINEAR))).build();
+		FLIGHT = AnimationDefinition.Builder.withLength(2f).looping()
+				.addAnimation("twirly_inner",
+						new AnimationChannel(AnimationChannel.Targets.POSITION,
+								new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
+										AnimationChannel.Interpolations.CATMULLROM),
+								new Keyframe(1f, KeyframeAnimations.posVec(0f, 2f, 0f),
+										AnimationChannel.Interpolations.CATMULLROM),
+								new Keyframe(2f, KeyframeAnimations.posVec(0f, 0f, 0f),
+										AnimationChannel.Interpolations.CATMULLROM)))
+				.addAnimation("twirly_outer",
+						new AnimationChannel(AnimationChannel.Targets.ROTATION,
+								new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+										AnimationChannel.Interpolations.LINEAR),
+								new Keyframe(2f, KeyframeAnimations.degreeVec(0f, 360f, 0f),
+										AnimationChannel.Interpolations.LINEAR))).build();
 
-		TEXTURE = new Identifier(BlackArchive.MOD_ID, "textures/blockentity/console/rani/rani.png");
+		TEXTURE = new ResourceLocation(BlackArchive.MOD_ID, "textures/blockentity/console/rani/rani.png");
 	}
 }

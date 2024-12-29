@@ -1,9 +1,10 @@
 package net.SpectrumFATM.black_archive.blockentity.shell;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.Entity;
 import whocraft.tardis_refined.client.model.blockentity.shell.ShellModel;
 import whocraft.tardis_refined.common.blockentity.shell.GlobalShellBlockEntity;
 
@@ -20,30 +21,30 @@ public class PillarShellModel extends ShellModel {
 
 
 	@Override
-	public ModelPart getPart() {
+	public ModelPart root() {
 		return this.root;
 	}
 
 	@Override
-	public void setAngles(Entity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+	public void setupAnim(Entity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 
 	}
 
 	@Override
 	public void setDoorPosition(boolean open) {
-		this.door.yaw = open ? 1.75F : 0.0F;
+		this.door.yRot = open ? 1.75F : 0.0F;
 	}
 
 	@Override
-	public void renderShell(GlobalShellBlockEntity entity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.handleAllAnimations(entity, this.getPart(), isBaseModel, open, poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderShell(GlobalShellBlockEntity entity, boolean open, boolean isBaseModel, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		this.handleAllAnimations(entity, this.root(), isBaseModel, open, poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.door.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, this.getCurrentAlpha());
 		this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, this.getCurrentAlpha());
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		super.renderToBuffer(matrices, vertices, light, overlay, red, green, blue, alpha);
 		this.door.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		this.main.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);

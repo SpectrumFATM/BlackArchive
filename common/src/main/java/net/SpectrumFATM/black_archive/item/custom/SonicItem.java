@@ -1,31 +1,39 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
-import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
-import net.SpectrumFATM.black_archive.block.custom.OxygenGenBlock;
 import net.SpectrumFATM.black_archive.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.entity.custom.CybermatEntity;
 import net.SpectrumFATM.black_archive.entity.custom.TimeFissureEntity;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.util.SpaceTimeEventUtil;
-import net.minecraft.block.*;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.SkeletonEntity;
-import net.minecraft.entity.mob.WitherSkeletonEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.WitherSkeleton;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.IceBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.PowderSnowBlock;
+import net.minecraft.world.level.block.StainedGlassBlock;
+import net.minecraft.world.level.block.StainedGlassPaneBlock;
+import net.minecraft.world.level.block.TintedGlassBlock;
+import net.minecraft.world.level.block.TntBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.items.ScrewdriverMode;
@@ -37,110 +45,110 @@ import java.util.Random;
 public class SonicItem extends ScrewdriverItem {
 
     String tooltipKey;
-    Formatting colorFormat;
+    ChatFormatting colorFormat;
     Random random = new Random();
 
-    public SonicItem(Settings properties, String tooltipKey, Formatting colorFormat) {
+    public SonicItem(Properties properties, String tooltipKey, ChatFormatting colorFormat) {
         super(properties);
         this.tooltipKey = tooltipKey;
         this.colorFormat = colorFormat;
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
+    public InteractionResult useOn(UseOnContext context) {
 
 
-        ActionResult result = super.useOnBlock(context);
+        InteractionResult result = super.useOn(context);
 
 
-       if (!isScrewdriverMode(context.getStack(), ScrewdriverMode.DRAWING)) {
-           World world = context.getWorld();
-           BlockState state = context.getWorld().getBlockState(context.getBlockPos());
-           PlayerEntity player = context.getPlayer();
-           ItemStack stack = context.getStack();
+       if (!isScrewdriverMode(context.getItemInHand(), ScrewdriverMode.DRAWING)) {
+           Level world = context.getLevel();
+           BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+           Player player = context.getPlayer();
+           ItemStack stack = context.getItemInHand();
 
-           if (!world.isClient) {
-               if (world instanceof ServerWorld serverWorld) {
+           if (!world.isClientSide) {
+               if (world instanceof ServerLevel serverWorld) {
 
-                   if (state.contains(Properties.POWERED)) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.POWERED), Block.NOTIFY_ALL);
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                   if (state.hasProperty(BlockStateProperties.POWERED)) {
+                       world.setBlock(context.getClickedPos(), state.cycle(BlockStateProperties.POWERED), Block.UPDATE_ALL);
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
                        cooldown(player, stack);
                    }
 
-                   if (state.contains(Properties.LIT)) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.LIT), Block.NOTIFY_ALL);
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                   if (state.hasProperty(BlockStateProperties.LIT)) {
+                       world.setBlock(context.getClickedPos(), state.cycle(BlockStateProperties.LIT), Block.UPDATE_ALL);
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
                        cooldown(player, stack);
                    }
 
-                   if (state.contains(Properties.OPEN)) {
-                       world.setBlockState(context.getBlockPos(), state.cycle(Properties.OPEN), Block.NOTIFY_ALL);
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                   if (state.hasProperty(BlockStateProperties.OPEN)) {
+                       world.setBlock(context.getClickedPos(), state.cycle(BlockStateProperties.OPEN), Block.UPDATE_ALL);
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof TntBlock) {
-                       serverWorld.removeBlock(context.getBlockPos(), false);
-                       TntBlock.primeTnt(world, context.getBlockPos());
+                       serverWorld.removeBlock(context.getClickedPos(), false);
+                       TntBlock.explode(world, context.getClickedPos());
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
-                   if (state.getBlock() instanceof PaneBlock) {
-                       world.breakBlock(context.getBlockPos(), true);
+                   if (state.getBlock() instanceof IronBarsBlock) {
+                       world.destroyBlock(context.getClickedPos(), true);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof GlassBlock) {
-                       world.breakBlock(context.getBlockPos(), true);
+                       world.destroyBlock(context.getClickedPos(), true);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof StainedGlassPaneBlock) {
-                       world.breakBlock(context.getBlockPos(), true);
+                       world.destroyBlock(context.getClickedPos(), true);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof StainedGlassBlock) {
-                       world.breakBlock(context.getBlockPos(), true);
+                       world.destroyBlock(context.getClickedPos(), true);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof TintedGlassBlock) {
-                       world.breakBlock(context.getBlockPos(), true);
+                       world.destroyBlock(context.getClickedPos(), true);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof IceBlock) {
-                       world.setBlockState(context.getBlockPos(), Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                       world.setBlock(context.getClickedPos(), Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
 
                    if (state.getBlock() instanceof PowderSnowBlock) {
-                       world.setBlockState(context.getBlockPos(), Blocks.SNOW_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
+                       world.setBlock(context.getClickedPos(), Blocks.SNOW_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
 
-                       playScrewdriverSound(serverWorld, context.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                       playScrewdriverSound(serverWorld, context.getClickedPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
 
                        cooldown(player, stack);
                    }
@@ -151,32 +159,32 @@ public class SonicItem extends ScrewdriverItem {
     }
 
     @Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player user, LivingEntity entity, InteractionHand hand) {
 
-        if (user.getWorld() instanceof ServerWorld serverWorld) {
-            if (!user.getWorld().isClient) {
-                if (entity instanceof CreeperEntity creeper && !user.isSneaking()) {
-                    creeper.setFuseSpeed(0);
+        if (user.level() instanceof ServerLevel serverWorld) {
+            if (!user.level().isClientSide) {
+                if (entity instanceof Creeper creeper && !user.isShiftKeyDown()) {
+                    creeper.setSwellDir(0);
                     creeper.ignite();
-                } else if (entity instanceof SkeletonEntity skeleton && !user.isSneaking()) {
+                } else if (entity instanceof Skeleton skeleton && !user.isShiftKeyDown()) {
                     skeleton.kill();
-                } else if (entity instanceof WitherSkeletonEntity skeleton && !user.isSneaking()) {
+                } else if (entity instanceof WitherSkeleton skeleton && !user.isShiftKeyDown()) {
                     skeleton.kill();
-                } else if (entity instanceof BlazeEntity blazeEntity && !user.isSneaking()) {
+                } else if (entity instanceof Blaze blazeEntity && !user.isShiftKeyDown()) {
                     blazeEntity.kill();
-                } else if (entity instanceof CybermanEntity cybermanEntity && !user.isSneaking()) {
+                } else if (entity instanceof CybermanEntity cybermanEntity && !user.isShiftKeyDown()) {
                     cybermanEntity.disableFire(100);
-                } else if (entity instanceof TimeFissureEntity timeFissureEntity && !user.isSneaking()) {
+                } else if (entity instanceof TimeFissureEntity timeFissureEntity && !user.isShiftKeyDown()) {
                     if (random.nextInt(10) == 1) {
                         timeFissureEntity.aggrovate();
-                        user.sendMessage(Text.translatable("item.sonic.temporal_escalation").formatted(Formatting.RED), true);
+                        user.displayClientMessage(Component.translatable("item.sonic.temporal_escalation").withStyle(ChatFormatting.RED), true);
                     } else {
                         timeFissureEntity.remove(Entity.RemovalReason.KILLED);
                     }
-                } else if (entity instanceof CybermatEntity cybermatEntity && !user.isSneaking()) {
-                    BlockPos pos = entity.getBlockPos();
+                } else if (entity instanceof CybermatEntity cybermatEntity && !user.isShiftKeyDown()) {
+                    BlockPos pos = entity.blockPosition();
                     entity.remove(Entity.RemovalReason.KILLED);
-                    cybermatEntity.dropStack(new ItemStack(ModItems.CYBERMAT_EGG.get()), 0.0f);
+                    cybermatEntity.spawnAtLocation(new ItemStack(ModItems.CYBERMAT_EGG.get()), 0.0f);
                 } else {
                     String entityName = entity.getName().getString();
                     int xPos = entity.getBlockX();
@@ -184,40 +192,40 @@ public class SonicItem extends ScrewdriverItem {
                     int zPos = entity.getBlockZ();
                     double health = entity.getHealth();
 
-                    user.sendMessage(Text.translatable("sonic.title.scan").formatted(colorFormat).formatted(Formatting.BOLD).formatted(Formatting.UNDERLINE), false);
-                    user.sendMessage(Text.literal("Name: " + entityName).formatted(colorFormat), false);
-                    user.sendMessage(Text.literal("X: " + xPos).formatted(colorFormat), false);
-                    user.sendMessage(Text.literal("Y: " + yPos).formatted(colorFormat), false);
-                    user.sendMessage(Text.literal("Z: " + zPos).formatted(colorFormat), false);
-                    user.sendMessage(Text.literal("Health: " + Math.round(health)).formatted(colorFormat), false);
-                    user.sendMessage(Text.literal("Armour: " + entity.getArmor()).formatted(colorFormat), false);
+                    user.displayClientMessage(Component.translatable("sonic.title.scan").withStyle(colorFormat).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.UNDERLINE), false);
+                    user.displayClientMessage(Component.literal("Name: " + entityName).withStyle(colorFormat), false);
+                    user.displayClientMessage(Component.literal("X: " + xPos).withStyle(colorFormat), false);
+                    user.displayClientMessage(Component.literal("Y: " + yPos).withStyle(colorFormat), false);
+                    user.displayClientMessage(Component.literal("Z: " + zPos).withStyle(colorFormat), false);
+                    user.displayClientMessage(Component.literal("Health: " + Math.round(health)).withStyle(colorFormat), false);
+                    user.displayClientMessage(Component.literal("Armour: " + entity.getArmorValue()).withStyle(colorFormat), false);
 
-                    if (entity instanceof PlayerEntity player) {
+                    if (entity instanceof Player player) {
                         String  artron = "Earth normal.";
                         if (SpaceTimeEventUtil.isComplexSpaceTimeEvent(player)) {
                             artron = "Background Artron radiation detected.";
                         }
-                        user.sendMessage(Text.literal("Radiation Signatures: " + artron).formatted(colorFormat), false);
+                        user.displayClientMessage(Component.literal("Radiation Signatures: " + artron).withStyle(colorFormat), false);
                     }
                 }
 
-                playScrewdriverSound(serverWorld, user.getBlockPos(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
+                playScrewdriverSound(serverWorld, user.blockPosition(), TRSoundRegistry.SCREWDRIVER_SHORT.get());
             }
         }
 
-        return super.useOnEntity(stack, user, entity, hand);
+        return super.interactLivingEntity(stack, user, entity, hand);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
+        super.appendHoverText(stack, world, tooltip, context);
         tooltip.remove(1);
-        tooltip.add(Text.translatable(tooltipKey).formatted(Formatting.GOLD));
+        tooltip.add(Component.translatable(tooltipKey).withStyle(ChatFormatting.GOLD));
     }
 
-    public static void cooldown(PlayerEntity player, ItemStack stack) {
+    public static void cooldown(Player player, ItemStack stack) {
         if (!player.isCreative()) {
-            player.getItemCooldownManager().set(stack.getItem(), 40);
+            player.getCooldowns().addCooldown(stack.getItem(), 40);
         }
     }
 }

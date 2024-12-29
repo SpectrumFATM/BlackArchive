@@ -1,0 +1,53 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.rani_door",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
+			},
+			"bones": [
+				{
+					"name": "door",
+					"pivot": [8, 3, 4.5],
+					"cubes": [
+						{"origin": [-8, 3, 3.5], "size": [16, 42, 0], "uv": [36, 60]},
+						{"origin": [-8, 3, 4.5], "size": [16, 42, 2], "uv": [0, 18]}
+					]
+				},
+				{
+					"name": "main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-16, 0, 2.5], "size": [32, 3, 6], "uv": [0, 0]},
+						{"origin": [-16, 45, 2.5], "size": [32, 3, 6], "uv": [0, 9]},
+						{"origin": [-14, 3, 3.5], "size": [2, 42, 4], "uv": [0, 62]},
+						{"origin": [-10, 3, 3.5], "size": [2, 42, 4], "uv": [12, 62]},
+						{"origin": [-8, 3, 7.5], "size": [16, 42, 0], "uv": [36, 18]},
+						{"origin": [12, 3, 3.5], "size": [2, 42, 4], "uv": [68, 18]},
+						{"origin": [8, 3, 3.5], "size": [2, 42, 4], "uv": [24, 62]}
+					]
+				},
+				{
+					"name": "lights",
+					"pivot": [-11, 3, -9.5],
+					"cubes": [
+						{"origin": [10, 3, 4.5], "size": [2, 42, 3], "uv": [68, 64]},
+						{"origin": [-12, 3, 4.5], "size": [2, 42, 3], "uv": [78, 64]}
+					]
+				},
+				{
+					"name": "portal",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 3, 7.5], "size": [16, 42, 0], "uv": [2, 20]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,19 +1,19 @@
 package net.SpectrumFATM.black_archive.entity.client;
 
-import net.minecraft.client.model.Dilation;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.world.entity.LivingEntity;
 
-public class DalekPuppetModel<T extends LivingEntity> extends BipedEntityModel<T> {
+public class DalekPuppetModel<T extends LivingEntity> extends HumanoidModel<T> {
 
-    private final ModelPart eyestalk = EyestalkModel.getTexturedModelData().createModel();
+    private final ModelPart eyestalk = EyestalkModel.getTexturedModelData().bakeRoot();
 
     // Outer layer parts
     private final ModelPart ear;
@@ -30,7 +30,7 @@ public class DalekPuppetModel<T extends LivingEntity> extends BipedEntityModel<T
         // Initialize outer layer parts from the PlayerEntityModel
         this.ear = root.getChild("ear");
         this.cloak = root.getChild("cloak");
-        this.jacket = root.getChild(EntityModelPartNames.JACKET);
+        this.jacket = root.getChild(PartNames.JACKET);
         this.leftSleeve = root.getChild("left_sleeve");
         this.rightSleeve = root.getChild("right_sleeve");
         this.leftPants = root.getChild("left_pants");
@@ -38,25 +38,25 @@ public class DalekPuppetModel<T extends LivingEntity> extends BipedEntityModel<T
     }
 
     @Override
-    public void setAngles(T entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
-        super.setAngles(entity, limbAngle, limbDistance, customAngle, headYaw, headPitch);
+    public void setupAnim(T entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
+        super.setupAnim(entity, limbAngle, limbDistance, customAngle, headYaw, headPitch);
 
         // Apply transformations to sleeves and pants if needed
-        this.ear.copyTransform(this.head);
-        this.cloak.copyTransform(this.body);
-        this.jacket.copyTransform(this.body);
-        this.leftSleeve.copyTransform(this.leftArm);
-        this.rightSleeve.copyTransform(this.rightArm);
-        this.leftPants.copyTransform(this.leftLeg);
-        this.rightPants.copyTransform(this.rightLeg);
+        this.ear.copyFrom(this.head);
+        this.cloak.copyFrom(this.body);
+        this.jacket.copyFrom(this.body);
+        this.leftSleeve.copyFrom(this.leftArm);
+        this.rightSleeve.copyFrom(this.rightArm);
+        this.leftPants.copyFrom(this.leftLeg);
+        this.rightPants.copyFrom(this.rightLeg);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-        super.render(matrixStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+        super.renderToBuffer(matrixStack, vertexConsumer, light, overlay, red, green, blue, alpha);
 
         // Render the eyestalk with its custom positioning
-        this.eyestalk.copyTransform(this.head); // Attach to the head
+        this.eyestalk.copyFrom(this.head); // Attach to the head
         this.eyestalk.render(matrixStack, vertexConsumer, light, overlay);
 
         // Render the sleeves, pants, and jacket
@@ -67,8 +67,8 @@ public class DalekPuppetModel<T extends LivingEntity> extends BipedEntityModel<T
         this.jacket.render(matrixStack, vertexConsumer, light, overlay); // Render the jacket
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData data = PlayerEntityModel.getTexturedModelData(Dilation.NONE, false);
-        return TexturedModelData.of(data, 64, 64);
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition data = PlayerModel.createMesh(CubeDeformation.NONE, false);
+        return LayerDefinition.create(data, 64, 64);
     }
 }

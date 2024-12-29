@@ -3,10 +3,9 @@ package net.SpectrumFATM.black_archive.network.messages;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.custom.VortexManipulatorItem;
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import whocraft.tardis_refined.common.network.MessageC2S;
 import whocraft.tardis_refined.common.network.MessageContext;
 import whocraft.tardis_refined.common.network.MessageType;
@@ -19,8 +18,8 @@ public class C2SWaypointDeleteMessage extends MessageC2S {
         this.name = name;
     }
 
-    public C2SWaypointDeleteMessage(PacketByteBuf buf) {
-        this.name = buf.readString();
+    public C2SWaypointDeleteMessage(FriendlyByteBuf buf) {
+        this.name = buf.readUtf();
     }
 
     @Override
@@ -28,19 +27,19 @@ public class C2SWaypointDeleteMessage extends MessageC2S {
         return BlackArchiveNetworkHandler.WAYPOINT_DELETE;
     }
 
-    public void toBytes(PacketByteBuf buf) {
-        buf.writeString(name);
+    public void toBytes(FriendlyByteBuf buf) {
+        buf.writeUtf(name);
     }
 
     @Override
     public void handle(MessageContext messageContext) {
-        ItemStack heldItem = messageContext.getPlayer().getMainHandStack();
+        ItemStack heldItem = messageContext.getPlayer().getMainHandItem();
 
-        if (!heldItem.isEmpty() && heldItem.hasNbt()) {
-            NbtCompound nbt = heldItem.getNbt();
+        if (!heldItem.isEmpty() && heldItem.hasTag()) {
+            CompoundTag nbt = heldItem.getTag();
             if (nbt != null && nbt.contains(name)) {
                 nbt.remove(name);
-                heldItem.setNbt(nbt);
+                heldItem.setTag(nbt);
             }
         }
     }

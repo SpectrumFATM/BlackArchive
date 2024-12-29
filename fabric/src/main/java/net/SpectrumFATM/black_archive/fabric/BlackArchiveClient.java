@@ -10,10 +10,10 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import whocraft.tardis_refined.api.event.TardisClientEvents;
 
 public class BlackArchiveClient implements ClientModInitializer {
@@ -30,8 +30,8 @@ public class BlackArchiveClient implements ClientModInitializer {
         ModEntityRenderers.registerModelLayers();
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
-            if (entityRenderer instanceof PlayerEntityRenderer) {
-                registrationHelper.register(new BraceletFeatureRenderer((FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>) entityRenderer));
+            if (entityRenderer instanceof PlayerRenderer) {
+                registrationHelper.register(new BraceletFeatureRenderer((RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>) entityRenderer));
             }
         });
     }

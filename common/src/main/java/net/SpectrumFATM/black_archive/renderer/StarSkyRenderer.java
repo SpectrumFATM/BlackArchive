@@ -1,20 +1,23 @@
 package net.SpectrumFATM.black_archive.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.SpectrumFATM.BlackArchive;
-import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.render.Camera;
-import net.minecraft.util.math.random.Random;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.RandomSource;
 
 public class StarSkyRenderer {
     private static VertexBuffer starsBuffer = null;
 
     // Initialize and generate the star buffer
     public static void initStars() {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
+        Tesselator tessellator = Tesselator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuilder();
 
         // Close the existing buffer if it exists
         if (starsBuffer != null) {
@@ -23,16 +26,16 @@ public class StarSkyRenderer {
 
         // Create a new VertexBuffer for the stars
         starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
-        BufferBuilder.BuiltBuffer builtBuffer = generateStars(bufferBuilder);
+        BufferBuilder.RenderedBuffer builtBuffer = generateStars(bufferBuilder);
         starsBuffer.bind();
         starsBuffer.upload(builtBuffer);
         VertexBuffer.unbind();
     }
 
     // Generate the star vertices
-    public static BufferBuilder.BuiltBuffer generateStars(BufferBuilder buffer) {
-        Random random = Random.create(10842L);
-        buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+    public static BufferBuilder.RenderedBuffer generateStars(BufferBuilder buffer) {
+        RandomSource random = RandomSource.create(10842L);
+        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
         for(int i = 0; i < 2000; ++i) {
             double d = (double) (random.nextFloat() * 2.0F - 1.0F);
@@ -71,7 +74,7 @@ public class StarSkyRenderer {
                     double af = ae * n - ac * o;
                     double ag = ad;
                     double ah = ac * n + ae * o;
-                    buffer.vertex(j + af, k + ag, l + ah).next();
+                    buffer.vertex(j + af, k + ag, l + ah).endVertex();
                 }
             }
         }
@@ -79,7 +82,7 @@ public class StarSkyRenderer {
     }
 
     // Render the stars using the generated buffer
-    public static void render(MatrixStack matrixStack, Camera camera) {
+    public static void render(PoseStack matrixStack, Camera camera) {
         // Initialize the stars buffer if it hasn't been initialized
         if (starsBuffer == null) {
             initStars();
@@ -91,21 +94,21 @@ public class StarSkyRenderer {
         RenderSystem.disableDepthTest();
 
         // Set the shader to use for rendering
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
         // Save the current matrix state
-        matrixStack.push();
+        matrixStack.pushPose();
         // Align the stars to the camera's rotation
 
         // Bind the stars buffer and draw the stars
         starsBuffer.bind();
-        starsBuffer.draw(matrixStack.peek().getPositionMatrix(), RenderSystem.getProjectionMatrix(), GameRenderer.getPositionProgram());
+        starsBuffer.drawWithShader(matrixStack.last().pose(), RenderSystem.getProjectionMatrix(), GameRenderer.getPositionShader());
         VertexBuffer.unbind();
 
-        matrixStack.translate(camera.getBlockPos().getX(), camera.getBlockPos().getY(), camera.getBlockPos().getZ());
+        matrixStack.translate(camera.getBlockPosition().getX(), camera.getBlockPosition().getY(), camera.getBlockPosition().getZ());
 
         // Restore the previous matrix state
-        matrixStack.pop();
+        matrixStack.popPose();
 
         // Re-enable depth testing and disable blending
         RenderSystem.enableDepthTest();

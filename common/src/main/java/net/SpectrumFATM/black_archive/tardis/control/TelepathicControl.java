@@ -4,20 +4,20 @@ import com.mojang.datafixers.util.Pair;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.structure.Structure;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
 import whocraft.tardis_refined.common.capability.tardis.upgrades.UpgradeHandler;
 import whocraft.tardis_refined.common.entity.ControlEntity;
@@ -30,30 +30,30 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class TelepathicControl extends Control {
-    protected TelepathicControl(Identifier id, String langId, boolean isCriticalForTardisOperation) {
+    protected TelepathicControl(ResourceLocation id, String langId, boolean isCriticalForTardisOperation) {
         super(id, langId, isCriticalForTardisOperation);
     }
 
     @Override
-    public boolean onLeftClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, PlayerEntity playerEntity) {
+    public boolean onLeftClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, Player playerEntity) {
 
         UpgradeHandler upgradeHandler = tardisLevelOperator.getUpgradeHandler();
         if (!ModUpgrades.TELEPATHIC_UPGRADE.get().isUnlocked(upgradeHandler)) {
             return false;
         }
 
-        Random random = tardisLevelOperator.getLevel().getRandom();
+        RandomSource random = tardisLevelOperator.getLevel().getRandom();
         if (random.nextInt(20) == 1) {
-            playerEntity.sendMessage(Text.translatable("telepathic.black_archive.bad").formatted(Formatting.RED), true);
+            playerEntity.displayClientMessage(Component.translatable("telepathic.black_archive.bad").withStyle(ChatFormatting.RED), true);
 
             controlEntity.playSound(ModSounds.TARDIS_GROAN.get(), 1.0F, 1.0F);
 
             BlockPos pos = tardisLevelOperator.getPilotingManager().getCurrentLocation().getPosition();
-            ServerWorld world = tardisLevelOperator.getPilotingManager().getCurrentLocation().getLevel();
+            ServerLevel world = tardisLevelOperator.getPilotingManager().getCurrentLocation().getLevel();
 
-            world.playSoundAtBlockCenter(pos, ModSounds.TARDIS_GROAN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F, true);
+            world.playLocalSound(pos, ModSounds.TARDIS_GROAN.get(), SoundSource.AMBIENT, 1.0F, 1.0F, true);
         } else {
-            playerEntity.sendMessage(Text.translatable("telepathic.black_archive.happy"), true);
+            playerEntity.displayClientMessage(Component.translatable("telepathic.black_archive.happy"), true);
             controlEntity.playSound(TRSoundRegistry.CONSOLE_POWER_ON.get(), 1.0F, 1.0F);
         }
 
@@ -62,18 +62,18 @@ public class TelepathicControl extends Control {
     }
 
     @Override
-    public boolean onRightClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, PlayerEntity playerEntity) {
+    public boolean onRightClick(TardisLevelOperator tardisLevelOperator, ConsoleTheme consoleTheme, ControlEntity controlEntity, Player playerEntity) {
 
         UpgradeHandler upgradeHandler = tardisLevelOperator.getUpgradeHandler();
         if (!ModUpgrades.TELEPATHIC_UPGRADE.get().isUnlocked(upgradeHandler)) {
             return false;
         }
 
-        ServerWorld world = tardisLevelOperator.getPilotingManager().getTargetLocation().getLevel();
+        ServerLevel world = tardisLevelOperator.getPilotingManager().getTargetLocation().getLevel();
         BlockPos pos = tardisLevelOperator.getPilotingManager().getTargetLocation().getPosition();
-        Random random = tardisLevelOperator.getLevel().getRandom();
-        Registry<Structure> structureRegistry = world.getRegistryManager().get(RegistryKeys.STRUCTURE);
-        List<RegistryEntry.Reference<Structure>> structureEntries = structureRegistry.streamEntries()
+        RandomSource random = tardisLevelOperator.getLevel().getRandom();
+        Registry<Structure> structureRegistry = world.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        List<Holder.Reference<Structure>> structureEntries = structureRegistry.holders()
                 .filter(isNotUnderwaterStructure())
                 .toList();
 
@@ -81,11 +81,11 @@ public class TelepathicControl extends Control {
             return false;
         }
 
-        RegistryEntry<Structure> selectedStructure = structureEntries.get(random.nextInt(structureEntries.size()));
-        RegistryEntryList<Structure> structureList = RegistryEntryList.of(selectedStructure);
-        ChunkGenerator chunkGenerator = world.getChunkManager().getChunkGenerator();
-        Optional<Pair<BlockPos, RegistryEntry<Structure>>> structurePos = Optional.ofNullable(
-                chunkGenerator.locateStructure(
+        Holder<Structure> selectedStructure = structureEntries.get(random.nextInt(structureEntries.size()));
+        HolderSet<Structure> structureList = HolderSet.direct(selectedStructure);
+        ChunkGenerator chunkGenerator = world.getChunkSource().getGenerator();
+        Optional<Pair<BlockPos, Holder<Structure>>> structurePos = Optional.ofNullable(
+                chunkGenerator.findNearestMapStructure(
                         world,
                         structureList,
                         pos,
@@ -96,7 +96,7 @@ public class TelepathicControl extends Control {
 
         if (structurePos.isPresent()) {
             BlockPos foundPos = structurePos.get().getFirst();
-            foundPos = foundPos.add(0, 250, 0);
+            foundPos = foundPos.offset(0, 250, 0);
             tardisLevelOperator.getPilotingManager().getTargetLocation().setPosition(foundPos);
             controlEntity.playSound(TRSoundRegistry.CORRIDOR_TELEPORTER_SUCCESS.get(), 1.0F, 1.0F);
             return true;
@@ -105,9 +105,9 @@ public class TelepathicControl extends Control {
         }
     }
 
-    private static Predicate<RegistryEntry<Structure>> isNotUnderwaterStructure() {
+    private static Predicate<Holder<Structure>> isNotUnderwaterStructure() {
         return entry -> {
-            Identifier structureId = entry.getKey().get().getValue();
+            ResourceLocation structureId = entry.unwrapKey().get().location();
             return !structureId.getPath().contains("ocean")
                     && !structureId.getPath().contains("shipwreck")
                     && !structureId.getPath().contains("underwater")

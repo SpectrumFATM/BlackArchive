@@ -7,19 +7,19 @@ import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
 import net.SpectrumFATM.black_archive.util.SpaceTimeEventUtil;
 import net.SpectrumFATM.black_archive.util.WorldUtil;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.common.network.MessageC2S;
 import whocraft.tardis_refined.common.network.MessageContext;
 import whocraft.tardis_refined.common.network.MessageType;
@@ -42,11 +42,11 @@ public class C2STeleportMessage extends MessageC2S {
         this.dimension = dimension;
     }
 
-    public C2STeleportMessage(PacketByteBuf buf) {
+    public C2STeleportMessage(FriendlyByteBuf buf) {
         this.x = buf.readDouble();
         this.y = buf.readDouble();
         this.z = buf.readDouble();
-        this.dimension = buf.readString();
+        this.dimension = buf.readUtf();
     }
 
     @Override
@@ -54,52 +54,52 @@ public class C2STeleportMessage extends MessageC2S {
         return BlackArchiveNetworkHandler.VM_TELEPORT;
     }
 
-    public void toBytes(PacketByteBuf buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeDouble(x);
         buf.writeDouble(y);
         buf.writeDouble(z);
-        buf.writeString(dimension);
+        buf.writeUtf(dimension);
     }
 
     @Override
     public void handle(MessageContext messageContext) {
-        ServerPlayerEntity player = messageContext.getPlayer();
+        ServerPlayer player = messageContext.getPlayer();
         SpaceTimeEventUtil.setComplexSpaceTimeEvent(player, true);
 
-        if (WorldUtil.isTardisesInRange(player.getServerWorld(), player.getBlockPos(), 10, BlackArchiveConfig.COMMON.minimumTardisesToCreateTimeFissure.get())) {
+        if (WorldUtil.isTardisesInRange(player.serverLevel(), player.blockPosition(), 10, BlackArchiveConfig.COMMON.minimumTardisesToCreateTimeFissure.get())) {
             Random random = new Random();
-            TimeFissureEntity fissureEntity = new TimeFissureEntity(ModEntities.TIME_FISSURE.get(), player.getServerWorld());
+            TimeFissureEntity fissureEntity = new TimeFissureEntity(ModEntities.TIME_FISSURE.get(), player.serverLevel());
 
-            fissureEntity.refreshPositionAndAngles(player.getX() + player.getRandom().nextInt(16) - 8, player.getY(), player.getZ() + player.getRandom().nextInt(16) - 8, random.nextFloat() * 360.0f, 0);
-            player.getWorld().spawnEntity(fissureEntity);
-            fissureEntity.playSound(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 1.0f);
-            player.sendMessage(Text.translatable("vortex_manipulator.black_archive.time_fissure").formatted(Formatting.RED), true);
+            fissureEntity.moveTo(player.getX() + player.getRandom().nextInt(16) - 8, player.getY(), player.getZ() + player.getRandom().nextInt(16) - 8, random.nextFloat() * 360.0f, 0);
+            player.level().addFreshEntity(fissureEntity);
+            fissureEntity.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.0f, 1.0f);
+            player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.time_fissure").withStyle(ChatFormatting.RED), true);
             return;
         }
 
-        if (player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
-            player.sendMessage(Text.translatable("vortex_manipulator.black_archive.cooldown").formatted(Formatting.RED), true);
+        if (player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem())) {
+            player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.cooldown").withStyle(ChatFormatting.RED), true);
             return;
         }
 
-        Identifier dimensionId = new Identifier(dimension);
-        RegistryKey<World> dimensionKey = RegistryKey.of(RegistryKeys.WORLD, dimensionId);
-        ServerWorld targetWorld = player.getServer().getWorld(dimensionKey);
+        ResourceLocation dimensionId = new ResourceLocation(dimension);
+        ResourceKey<Level> dimensionKey = ResourceKey.create(Registries.DIMENSION, dimensionId);
+        ServerLevel targetWorld = player.getServer().getLevel(dimensionKey);
 
         if (targetWorld != null) {
-            player.getServerWorld().spawnParticles(ParticleTypes.SMOKE, player.getX(), player.getY(), player.getZ(), 10, 0.5, 0.5, 0.5, 0.0);
-            player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP.get(), SoundCategory.PLAYERS, 0.25f, 1.0f);
+            player.serverLevel().sendParticles(ParticleTypes.SMOKE, player.getX(), player.getY(), player.getZ(), 10, 0.5, 0.5, 0.5, 0.0);
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP.get(), SoundSource.PLAYERS, 0.25f, 1.0f);
 
             BlockPos safePos = WorldUtil.findSafeLandingPos(targetWorld, x, y, z);
 
             if (safePos != null) {
-                player.teleport(targetWorld, safePos.getX(), safePos.getY(), safePos.getZ(), player.getYaw(), player.getPitch());
-                targetWorld.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP.get(), SoundCategory.PLAYERS, 0.25f, 1.0f);
+                player.teleportTo(targetWorld, safePos.getX(), safePos.getY(), safePos.getZ(), player.getYRot(), player.getXRot());
+                targetWorld.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.VORTEX_TP.get(), SoundSource.PLAYERS, 0.25f, 1.0f);
                 if (!player.isCreative()) {
-                    player.getItemCooldownManager().set(player.getMainHandStack().getItem(), COOLDOWN_TIME);
+                    player.getCooldowns().addCooldown(player.getMainHandItem().getItem(), COOLDOWN_TIME);
                 }
             } else {
-                player.sendMessage(Text.translatable("vortex_manipulator.black_archive.landing_error").formatted(Formatting.RED), true);
+                player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.landing_error").withStyle(ChatFormatting.RED), true);
             }
         }
     }

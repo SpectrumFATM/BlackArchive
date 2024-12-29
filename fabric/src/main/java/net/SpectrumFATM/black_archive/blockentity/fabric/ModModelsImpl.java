@@ -2,8 +2,8 @@ package net.SpectrumFATM.black_archive.blockentity.fabric;
 
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import whocraft.tardis_refined.client.model.pallidium.BedrockModelUtil;
 
 import java.io.BufferedWriter;
@@ -16,13 +16,13 @@ import java.util.function.Supplier;
 
 public class ModModelsImpl {
 
-    public static EntityModelLayer register(EntityModelLayer location, Supplier<TexturedModelData> definition) {
+    public static ModelLayerLocation register(ModelLayerLocation location, Supplier<LayerDefinition> definition) {
         EntityModelLayerRegistry.registerModelLayer(location, definition::get);
 
         Objects.requireNonNull(definition);
         System.out.println(location);
-        JsonObject model = BedrockModelUtil.toJsonModel((TexturedModelData)definition.get(), location.getId().getPath());
-        Path exportFolder = Paths.get("export_models/" + location.getName());
+        JsonObject model = BedrockModelUtil.toJsonModel((LayerDefinition)definition.get(), location.getModel().getPath());
+        Path exportFolder = Paths.get("export_models/" + location.getLayer());
 
         try {
             Files.createDirectories(exportFolder);
@@ -31,7 +31,7 @@ public class ModModelsImpl {
             throw new RuntimeException("Failed to create export_models directory", e);
         }
 
-        String var10001 = location.getId().getPath().replaceAll("_ext", "");
+        String var10001 = location.getModel().getPath().replaceAll("_ext", "");
         Path modelFile = exportFolder.resolve(var10001.replaceAll("int", "door") + ".json");
 
         try {

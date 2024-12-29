@@ -1,28 +1,28 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class TooltipBlockItem extends BlockItem {
 
     private final String tooltipKey;
 
-    public TooltipBlockItem(Block block, Settings settings, String tooltipKey) {
+    public TooltipBlockItem(Block block, Properties settings, String tooltipKey) {
         super(block, settings);
         this.tooltipKey = tooltipKey;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(Text.translatable(tooltipKey).formatted(Formatting.GOLD));
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
+        super.appendHoverText(stack, world, tooltip, context);
+        tooltip.add(Component.translatable(tooltipKey).withStyle(ChatFormatting.GOLD));
     }
 }

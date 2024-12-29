@@ -1,15 +1,14 @@
 package net.SpectrumFATM.forge.renderer;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.renderer.StarSkyRenderer;
 import net.SpectrumFATM.black_archive.renderer.VortexSkyRenderer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.DimensionEffects;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,8 +19,8 @@ public class ForgeSkyRenderer {
 
     @SubscribeEvent
     public static void onRenderSky(RenderLevelStageEvent event) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        RegistryKey<World> spaceDimension = RegistryKey.of(RegistryKey.ofRegistry(new Identifier("minecraft", "dimension")), new Identifier("black_archive", "space"));
+        Minecraft client = Minecraft.getInstance();
+        ResourceKey<Level> spaceDimension = ResourceKey.create(ResourceKey.createRegistryKey(new ResourceLocation("minecraft", "dimension")), new ResourceLocation("black_archive", "space"));
 
 
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_SKY) {
@@ -30,14 +29,14 @@ public class ForgeSkyRenderer {
 
 
         if (BlackArchiveConfig.CLIENT.shouldTimeVortexRender.get()) {
-            if (client.world != null && client.world.getRegistryKey().getValue().getPath().equals("time_vortex")) {
-                MatrixStack matrixStack = event.getPoseStack();
+            if (client.level != null && client.level.dimension().location().getPath().equals("time_vortex")) {
+                PoseStack matrixStack = event.getPoseStack();
                 VortexSkyRenderer.render(matrixStack, event.getCamera());
             }
         }
 
-        if (client.world != null && client.world.getRegistryKey() == spaceDimension) {
-            MatrixStack matrixStack = event.getPoseStack();
+        if (client.level != null && client.level.dimension() == spaceDimension) {
+            PoseStack matrixStack = event.getPoseStack();
             StarSkyRenderer.render(matrixStack, event.getCamera());
         }
     }

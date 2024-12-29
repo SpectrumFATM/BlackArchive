@@ -1,7 +1,5 @@
 package net.SpectrumFATM.black_archive.mixin;
 
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -10,16 +8,18 @@ import whocraft.tardis_refined.TRConfig;
 import whocraft.tardis_refined.common.util.DimensionUtil;
 
 import java.util.List;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 
 @Mixin(DimensionUtil.class)
 public abstract class DimensionUtilMixin {
 
-    @Inject(method = "isAllowedDimension(Lnet/minecraft/registry/RegistryKey;)Z", at = @At("HEAD"), cancellable = true, remap = false)
-    private static void isAllowedDimension(RegistryKey<World> level, CallbackInfoReturnable callbackInfo) {
+    @Inject(method = "isAllowedDimension(Lnet/minecraft/resources/ResourceKey;)Z", at = @At("HEAD"), cancellable = true, remap = false)
+    private static void isAllowedDimension(ResourceKey<Level> level, CallbackInfoReturnable callbackInfo) {
         List<? extends String> bannedDimensions = (List)TRConfig.SERVER.BANNED_DIMENSIONS.get();
-        if (level.getValue().toString().equals("black_archive:time_vortex") ||
-                level.getValue().getNamespace().toString().contains("tardis") ||
-                bannedDimensions.contains(level.getValue().toString())) {
+        if (level.location().toString().equals("black_archive:time_vortex") ||
+                level.location().getNamespace().toString().contains("tardis") ||
+                bannedDimensions.contains(level.location().toString())) {
             callbackInfo.setReturnValue(false);
         }
     }

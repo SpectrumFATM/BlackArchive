@@ -1,8 +1,9 @@
 package net.SpectrumFATM.black_archive.blockentity.door;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.model.geom.ModelPart;
 import whocraft.tardis_refined.client.model.blockentity.door.interior.ShellDoorModel;
 import whocraft.tardis_refined.common.blockentity.door.GlobalDoorBlockEntity;
 
@@ -22,7 +23,7 @@ public class RaniDoorModel extends ShellDoorModel {
 	}
 
 	@Override
-	public void renderFrame(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderFrame(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.door.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.lights.render(poseStack, vertexConsumer, packedLight, packedOverlay);
 		this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -30,17 +31,17 @@ public class RaniDoorModel extends ShellDoorModel {
 
 	@Override
 	public void setDoorPosition(boolean open) {
-		this.door.yaw = open ? 90.0F : 0.0F;
+		this.door.yRot = open ? 90.0F : 0.0F;
 	}
 
 
 	@Override
-	public void renderPortalMask(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, MatrixStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderPortalMask(GlobalDoorBlockEntity doorBlockEntity, boolean open, boolean isBaseModel, PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
-	public ModelPart getPart() {
+	public ModelPart root() {
 		return this.root;
 	}
 }

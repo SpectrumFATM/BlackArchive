@@ -5,14 +5,14 @@ import net.SpectrumFATM.black_archive.network.messages.C2SRemoteMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2STeleportMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2SWaypointDeleteMessage;
 import net.SpectrumFATM.black_archive.network.messages.C2SWaypointSaveMessage;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.common.network.MessageType;
 import whocraft.tardis_refined.common.network.NetworkManager;
 
 
 public class BlackArchiveNetworkHandler {
 
-    public static final NetworkManager NETWORK = NetworkManager.create(new Identifier(BlackArchive.MOD_ID, "channel"));
+    public static final NetworkManager NETWORK = NetworkManager.create(new ResourceLocation(BlackArchive.MOD_ID, "channel"));
 
 
     public static MessageType WAYPOINT_SAVE, WAYPOINT_DELETE, VM_TELEPORT, REMOTE_PACKET;

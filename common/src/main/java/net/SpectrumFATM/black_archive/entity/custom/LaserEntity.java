@@ -2,50 +2,50 @@ package net.SpectrumFATM.black_archive.entity.custom;
 
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.projectile.thrown.ThrownEntity;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 
-public class LaserEntity extends ThrownEntity {
+public class LaserEntity extends ThrowableProjectile {
 
-    private static final TrackedData<Integer> RED = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<Integer> GREEN = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<Integer> BLUE = DataTracker.registerData(LaserEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final EntityDataAccessor<Integer> RED = SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> GREEN = SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BLUE = SynchedEntityData.defineId(LaserEntity.class, EntityDataSerializers.INT);
 
     private float damage;
     private boolean shouldDamageBlocks;
     private int lifeTime;
 
-    public LaserEntity(EntityType<? extends ThrownEntity> entityType, World world) {
+    public LaserEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
         super(entityType, world);
         this.lifeTime = 200; // 10 seconds (20 ticks per second)
     }
 
-    public LaserEntity(World world, double x, double y, double z, int r, int g, int b) {
+    public LaserEntity(Level world, double x, double y, double z, int r, int g, int b) {
         this(ModEntities.LASER.get(), world);
-        this.setPosition(x, y, z);
-        this.dataTracker.set(RED, r);
-        this.dataTracker.set(GREEN, g);
-        this.dataTracker.set(BLUE, b);
+        this.setPos(x, y, z);
+        this.entityData.set(RED, r);
+        this.entityData.set(GREEN, g);
+        this.entityData.set(BLUE, b);
     }
 
-    public LaserEntity(World world, LivingEntity owner, float damage, boolean shouldDamageBlocks, int r, int g, int b) {
+    public LaserEntity(Level world, LivingEntity owner, float damage, boolean shouldDamageBlocks, int r, int g, int b) {
         this(world, owner.getX(), owner.getEyeY() - 0.1, owner.getZ(), r, g, b);
         this.setOwner(owner);
         this.setNoGravity(true);
@@ -54,22 +54,22 @@ public class LaserEntity extends ThrownEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(RED, 255);
-        this.dataTracker.startTracking(GREEN, 255);
-        this.dataTracker.startTracking(BLUE, 255);
+    protected void defineSynchedData() {
+        this.entityData.define(RED, 255);
+        this.entityData.define(GREEN, 255);
+        this.entityData.define(BLUE, 255);
     }
 
     public int getRed() {
-        return this.dataTracker.get(RED);
+        return this.entityData.get(RED);
     }
 
     public int getGreen() {
-        return this.dataTracker.get(GREEN);
+        return this.entityData.get(GREEN);
     }
 
     public int getBlue() {
-        return this.dataTracker.get(BLUE);
+        return this.entityData.get(BLUE);
     }
 
     @Override
@@ -78,23 +78,23 @@ public class LaserEntity extends ThrownEntity {
     }
 
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
-        entityHitResult.getEntity().damage(entityHitResult.getEntity().getDamageSources().generic(), this.damage);
+    protected void onHitEntity(EntityHitResult entityHitResult) {
+        super.onHitEntity(entityHitResult);
+        entityHitResult.getEntity().hurt(entityHitResult.getEntity().damageSources().generic(), this.damage);
         this.kill();
     }
 
     @Override
-    protected void onBlockHit(BlockHitResult blockHitResult) {
-        super.onBlockHit(blockHitResult);
-        BlockState state = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+    protected void onHitBlock(BlockHitResult blockHitResult) {
+        super.onHitBlock(blockHitResult);
+        BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
 
         if (state.getBlock() instanceof DoorBlock && BlackArchiveConfig.COMMON.shouldDalekGunStickDestroyDoors.get()) {
             BlockPos pos = blockHitResult.getBlockPos();
-            this.getWorld().addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
-            getWorld().playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, 1.2f, 1.0f);
+            this.level().addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+            level().playSound(null, pos, SoundEvents.GENERIC_EXPLODE, SoundSource.AMBIENT, 1.2f, 1.0f);
             if (shouldDamageBlocks) {
-                getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), DoorBlock.NOTIFY_ALL);
+                level().setBlock(pos, Blocks.AIR.defaultBlockState(), DoorBlock.UPDATE_ALL);
             }
             for (int x = -1; x <= 1; x++) {
                 for (int y = -1; y <= 1; y++) {
@@ -109,7 +109,7 @@ public class LaserEntity extends ThrownEntity {
                         dirX /= length;
                         dirY /= length;
                         dirZ /= length;
-                        this.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particleX, particleY, particleZ, dirX * 0.1, dirY * 0.1, dirZ * 0.1);
+                        this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, particleX, particleY, particleZ, dirX * 0.1, dirY * 0.1, dirZ * 0.1);
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class LaserEntity extends ThrownEntity {
     }
 
     @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(this);
     }
 }

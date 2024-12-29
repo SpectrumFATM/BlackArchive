@@ -3,16 +3,16 @@ package net.SpectrumFATM.black_archive.network.messages;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
 import whocraft.tardis_refined.common.capability.tardis.upgrades.UpgradeHandler;
 import whocraft.tardis_refined.common.items.KeyItem;
@@ -24,7 +24,7 @@ import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 import whocraft.tardis_refined.common.util.DimensionUtil;
 import whocraft.tardis_refined.common.util.PlayerUtil;
 import whocraft.tardis_refined.constants.ModMessages;
-
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class C2SRemoteMessage extends MessageC2S {
@@ -35,7 +35,7 @@ public class C2SRemoteMessage extends MessageC2S {
         this.pos = pos;
     }
 
-    public C2SRemoteMessage(PacketByteBuf buf) {
+    public C2SRemoteMessage(FriendlyByteBuf buf) {
         this.pos = buf.readBlockPos();
     }
 
@@ -44,21 +44,21 @@ public class C2SRemoteMessage extends MessageC2S {
         return BlackArchiveNetworkHandler.REMOTE_PACKET;
     }
 
-    public void toBytes(PacketByteBuf buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
     }
 
     @Override
     public void handle(MessageContext messageContext) {
-        ServerPlayerEntity player = messageContext.getPlayer();
+        ServerPlayer player = messageContext.getPlayer();
         ItemStack heldItem = getHeldRemoteItem(player);
 
         if (heldItem.isEmpty()) return;
 
-        RegistryKey<World> currentDimension = player.getWorld().getRegistryKey();
+        ResourceKey<Level> currentDimension = player.level().dimension();
 
         // Validate dimension
-        if (currentDimension.getValue().toString().startsWith("tardis_refined:")) return;
+        if (currentDimension.location().toString().startsWith("tardis_refined:")) return;
 
         // Validate keychain
         if (!(heldItem.getItem() instanceof KeyItem keyItem)) return;
@@ -66,10 +66,10 @@ public class C2SRemoteMessage extends MessageC2S {
         if (keyChain.isEmpty()) return;
 
         // Validate air block and dimension
-        if (!player.getServerWorld().isAir(pos.up()) || !DimensionUtil.isAllowedDimension(currentDimension)) return;
+        if (!player.serverLevel().isEmptyBlock(pos.above()) || !DimensionUtil.isAllowedDimension(currentDimension)) return;
 
-        RegistryKey<World> tardisDimension = keyChain.get(0);
-        ServerWorld tardisWorld = player.getServer().getWorld(tardisDimension);
+        ResourceKey<Level> tardisDimension = keyChain.get(0);
+        ServerLevel tardisWorld = player.getServer().getLevel(tardisDimension);
         if (tardisWorld == null) return;
 
         // Validate TARDIS capabilities
@@ -89,18 +89,18 @@ public class C2SRemoteMessage extends MessageC2S {
         }
 
         // Set TARDIS target location
-        pilotingManager.setTargetLocation(new TardisNavLocation(pos.up(), player.getHorizontalFacing().getOpposite(), player.getServerWorld()));
+        pilotingManager.setTargetLocation(new TardisNavLocation(pos.above(), player.getDirection().getOpposite(), player.serverLevel()));
 
         // Play sound and notify player
-        player.getWorld().playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        PlayerUtil.sendMessage(player, Text.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);
+        player.level().playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 1.0F);
+        PlayerUtil.sendMessage(player, Component.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);
     }
 
-    private ItemStack getHeldRemoteItem(ServerPlayerEntity player) {
-        ItemStack mainHand = player.getMainHandStack();
+    private ItemStack getHeldRemoteItem(ServerPlayer player) {
+        ItemStack mainHand = player.getMainHandItem();
         if (mainHand.getItem() == ModItems.REMOTE.get()) return mainHand;
 
-        ItemStack offHand = player.getOffHandStack();
+        ItemStack offHand = player.getOffhandItem();
         return offHand.getItem() == ModItems.REMOTE.get() ? offHand : ItemStack.EMPTY;
     }
 }

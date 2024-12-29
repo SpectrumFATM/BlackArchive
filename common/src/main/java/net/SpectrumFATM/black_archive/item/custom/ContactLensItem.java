@@ -1,22 +1,22 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 import whocraft.tardis_refined.common.items.GlassesItem;
 
 import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 public class ContactLensItem extends GlassesItem {
-    public ContactLensItem(Settings properties) {
+    public ContactLensItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
-         tooltip.add(Text.translatable("item.contact_lens.tooltip").formatted(Formatting.GOLD));
+    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag context) {
+        super.appendHoverText(stack, world, tooltip, context);
+         tooltip.add(Component.translatable("item.contact_lens.tooltip").withStyle(ChatFormatting.GOLD));
     }
 }

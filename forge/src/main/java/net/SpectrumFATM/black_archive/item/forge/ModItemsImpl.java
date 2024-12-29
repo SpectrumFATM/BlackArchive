@@ -2,11 +2,10 @@ package net.SpectrumFATM.black_archive.item.forge;
 
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.item.ModItems;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,9 +18,9 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = BlackArchive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModItemsImpl {
-    public static ItemGroup getCreativeTab() {
-        return ItemGroup.builder()
-                .displayName(Text.translatable("itemgroup.black_archive"))
+    public static CreativeModeTab getCreativeTab() {
+        return CreativeModeTab.builder()
+                .title(Component.translatable("itemgroup.black_archive"))
                 .icon(() -> new ItemStack(ModItems.VORTEXMANIP.get()))
                 .build();
     }
@@ -30,7 +29,7 @@ public class ModItemsImpl {
     public static void onBuildTabsContent(BuildCreativeModeTabContentsEvent event) {
         if (event.getTab() == ModItems.MAIN_TAB.get()) {
             for (RegistrySupplier<Item> tabItem : ModItems.TAB_ITEMS) {
-                event.add(tabItem.get());
+                event.accept(tabItem.get());
             }
         }
     }

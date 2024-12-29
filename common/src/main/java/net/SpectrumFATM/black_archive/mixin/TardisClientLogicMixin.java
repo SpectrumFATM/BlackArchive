@@ -1,9 +1,9 @@
 package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,13 +19,13 @@ public class TardisClientLogicMixin {
 
     @Inject(method = "update(Lwhocraft/tardis_refined/client/TardisClientData;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private static void preventRotorStopOnLanding(TardisClientData tardisClientData, CallbackInfo ci) {
-        PlayerEntity player = MinecraftClient.getInstance().player;
-        ServerWorld tardisWorld = MinecraftClient.getInstance().getServer().getWorld(tardisClientData.getLevelKey());
+        Player player = Minecraft.getInstance().player;
+        ServerLevel tardisWorld = Minecraft.getInstance().getSingleplayerServer().getLevel(tardisClientData.getLevelKey());
         Optional<TardisLevelOperator> tardisLevelOperator = TardisLevelOperator.get(tardisWorld);
 
         if (tardisLevelOperator.get().getPilotingManager().getCurrentLocation().getDimensionKey() == ModDimensions.TIMEDIM_LEVEL_KEY) {
             tardisClientData.setFlying(true);
-            if (tardisClientData.isFlying() && !tardisClientData.ROTOR_ANIMATION.isRunning()) {
+            if (tardisClientData.isFlying() && !tardisClientData.ROTOR_ANIMATION.isStarted()) {
                 tardisClientData.ROTOR_ANIMATION.start(0);
             } else if (!tardisClientData.isFlying()) {
                 tardisClientData.isFlying();
@@ -33,7 +33,7 @@ public class TardisClientLogicMixin {
             ci.cancel();
         }
 
-        if (tardisClientData.isTakingOff() && tardisClientData.ROTOR_ANIMATION.isRunning()) {
+        if (tardisClientData.isTakingOff() && tardisClientData.ROTOR_ANIMATION.isStarted()) {
             ci.cancel();
         }
 

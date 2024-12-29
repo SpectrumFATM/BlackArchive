@@ -1,43 +1,48 @@
 package net.SpectrumFATM.black_archive.entity.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.world.entity.player.Player;
 
-public class EyestalkModel extends EntityModel<PlayerEntity> {
+public class EyestalkModel extends EntityModel<Player> {
     private final ModelPart head;
 
     public EyestalkModel(ModelPart root) {
         this.head = root.getChild("head");
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
 
         // Define the head part
-        ModelPartData head = modelPartData.addChild("head",
-                ModelPartBuilder.create()
-                        .uv(32, 32).cuboid(-0.5F, -7.0F, -8.0F, 1.0F, 1.0F, 5.0F, new Dilation(0.0F))
-                        .uv(0, 0).cuboid(-1.5F, -8.0F, -8.0F, 3.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                        .uv(0, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.0F)),
-                ModelTransform.pivot(0.0F, 0.0F, 0.0F)
+        PartDefinition head = modelPartData.addOrReplaceChild("head",
+                CubeListBuilder.create()
+                        .texOffs(32, 32).addBox(-0.5F, -7.0F, -8.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
+                        .texOffs(0, 0).addBox(-1.5F, -8.0F, -8.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+                        .texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
         );
 
-        return TexturedModelData.of(modelData, 64, 64);
+        return LayerDefinition.create(modelData, 64, 64);
     }
 
     @Override
-    public void setAngles(PlayerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Player entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         // Set head angles based on player's movement
-        this.head.yaw = netHeadYaw * 0.017453292F;  // Convert degrees to radians
-        this.head.pitch = headPitch * 0.017453292F;
+
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
         head.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
     }
 }

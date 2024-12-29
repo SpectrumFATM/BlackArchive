@@ -164,10 +164,9 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "getEyeHeight", at = @At("HEAD"), cancellable = true)
-    protected float getEyeHeight(EntityPose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
+    protected void getEyeHeight(EntityPose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
         if ((Object) this instanceof PlayerEntity) {
             cir.setReturnValue(dimensions.height * 0.85f * ((LivingEntity) (Object) this).getDataTracker().get(ENTITY_SCALE));
         }
-        return dimensions.height * 0.85f * ((LivingEntity) (Object) this).getDataTracker().get(ENTITY_SCALE);
     }
 }

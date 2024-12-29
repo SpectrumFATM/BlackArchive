@@ -18,7 +18,7 @@ import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 public class DimensionalMixin {
 
     @Inject(method = "onRightClick", at = @At("TAIL"), cancellable = true, remap = false)
-    public boolean onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable ci) {
+    public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
 
         if (player.isSneaking()) {
             if (ModUpgrades.TEMPORAL_ORBIT_UPGRADE.get().isUnlocked(operator.getUpgradeHandler())) {
@@ -26,12 +26,12 @@ public class DimensionalMixin {
                 player.sendMessage(Text.translatable("control.black_archive.temporal_orbit"), true);
             }
         }
-        return true;
+        ci.setReturnValue(true);
     }
 
     @Inject(method = "onLeftClick", at = @At("TAIL"), cancellable = true, remap = false)
-    public boolean onLeftClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable ci) {
+    public void onLeftClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
         this.onRightClick(operator, theme, controlEntity, player, ci);
-        return true;
+        ci.setReturnValue(true);
     }
 }

@@ -27,12 +27,10 @@ public abstract class EntityMixin {
 
     // Inject into the writeNbt method to save the scale
     @Inject(method = "writeNbt", at = @At("HEAD"))
-    private NbtCompound onWriteNbt(NbtCompound nbt, CallbackInfoReturnable ci) {
+    private void onWriteNbt(NbtCompound nbt, CallbackInfoReturnable ci) {
         if (cachedScale != null) {
             nbt.putFloat("Scale", cachedScale);
         }
-
-        return nbt;
     }
 
     // Safely modify entity dimensions

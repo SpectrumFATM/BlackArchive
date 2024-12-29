@@ -15,8 +15,8 @@ import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 public class ThrottleMixin {
 
     @Inject(method = "onRightClick", at = @At("HEAD"), cancellable = true, remap = false)
-    public boolean onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable ci) {
+    public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
         SpaceTimeEventUtil.setComplexSpaceTimeEvent(player, true);
-        return true;
+        ci.setReturnValue(true);
     }
 }

@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "black_archive"
+version = "1.4.1"
+displayName = "Black Archive"
+authors = "SpectrumFATM, Endertrekkie, Jeryn99"
+description = '''
+Adding a whole new world of alien technology to Minecraft!
+'''
+logoFile = "assets/black_archive/icon.png"
+
+[[dependencies.black_archive]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.black_archive]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.black_archive]]
+modId = "tardis_refined"
+mandatory = true
+versionRange = "[2.0.7,)"
+ordering = "AFTER"
+side = "BOTH"

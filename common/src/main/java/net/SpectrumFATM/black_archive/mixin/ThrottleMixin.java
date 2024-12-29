@@ -14,8 +14,8 @@ import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 @Mixin(ThrottleControl.class)
 public class ThrottleMixin {
 
-    @Inject(method = "onRightClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("HEAD"), cancellable = true, remap = false)
-    public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, Player player, CallbackInfoReturnable<Boolean> ci) {
+    @Inject(method = "onRightClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("HEAD"))
+    public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, Player player, CallbackInfoReturnable<Boolean> cir) {
         SpaceTimeEventUtil.setComplexSpaceTimeEvent(player, true);
     }
 }

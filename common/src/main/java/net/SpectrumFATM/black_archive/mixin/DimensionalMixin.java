@@ -17,7 +17,7 @@ import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
 @Mixin(DimensionalControl.class)
 public class DimensionalMixin {
 
-    @Inject(method = "onRightClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("TAIL"), cancellable = true, remap = false)
+    @Inject(method = "onRightClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("TAIL"), cancellable = true)
     public void onRightClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, Player player, CallbackInfoReturnable<Boolean> ci) {
         if (player.isShiftKeyDown()) {
             if (ModUpgrades.TEMPORAL_ORBIT_UPGRADE.get().isUnlocked(operator.getUpgradeHandler())) {
@@ -27,7 +27,7 @@ public class DimensionalMixin {
         }
     }
 
-    @Inject(method = "onLeftClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("TAIL"), cancellable = true, remap = false)
+    @Inject(method = "onLeftClick(Lwhocraft/tardis_refined/common/capability/tardis/TardisLevelOperator;Lwhocraft/tardis_refined/common/tardis/themes/ConsoleTheme;Lwhocraft/tardis_refined/common/entity/ControlEntity;Lnet/minecraft/world/entity/player/Player;)Z", at = @At("TAIL"), cancellable = true)
     public void onLeftClick(TardisLevelOperator operator, ConsoleTheme theme, ControlEntity controlEntity, Player player, CallbackInfoReturnable<Boolean> ci) {
         this.onRightClick(operator, theme, controlEntity, player, ci);
     }

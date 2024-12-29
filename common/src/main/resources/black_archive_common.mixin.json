@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ConsoleCollectionMixin",
+    "LivingEntityMixin",
+    "EntityMixin",
     "TardisPilotingMixin",
     "VictorianMixin",
     "RefurbMixin",
@@ -17,10 +19,15 @@
     "NukaMixin",
     "InitiativeMixin",
     "DimensionUtilMixin",
-    "TardisClientLogicMixin"
+    "PlayerEntityMixin",
+    "LivingEntityRendererMixin",
+    "TardisClientLogicMixin",
+    "ThrottleMixin",
+    "DimensionalMixin"
   ],
   "client": [
-    "RenderMixin"
+    "RenderMixin",
+    "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

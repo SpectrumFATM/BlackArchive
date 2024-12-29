@@ -2,12 +2,6 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-loom {
-    forge {
-        mixinConfig "black_archive_common.mixin.json"
-    }
-}
-
 architectury {
     platformSetupLoomIde()
     forge()

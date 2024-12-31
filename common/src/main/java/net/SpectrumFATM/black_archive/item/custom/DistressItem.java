@@ -1,19 +1,16 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
-import net.SpectrumFATM.BlackArchive;
+import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
 import whocraft.tardis_refined.common.tardis.TardisNavLocation;
 import whocraft.tardis_refined.common.util.DimensionUtil;
@@ -36,9 +33,9 @@ public class DistressItem extends TooltipItem {
                 // Get the ItemStack in hand
                 ItemStack itemStack = player.getItemInHand(hand);
 
-                if (!hasTardisLevelName(itemStack)) {
+                if (!TARDISBindUtil.hasTardisLevelName(itemStack)) {
                     // Save the TARDIS level name to the item's NBT
-                    setTardisLevelName(itemStack, levelName);
+                    TARDISBindUtil.setTardisLevelName(itemStack, levelName);
                     player.displayClientMessage(Component.translatable("item.superphone.saved"), true);
                 } else {
                     player.displayClientMessage(Component.translatable("item.superphone.error").withStyle(ChatFormatting.RED), true);
@@ -47,7 +44,7 @@ public class DistressItem extends TooltipItem {
                 return InteractionResultHolder.success(itemStack);
             } else {
                 // Get level from saved NBT
-                Level tardisWorld = getWorldFromNBT(player.getServer(), player.getItemInHand(hand));
+                Level tardisWorld = TARDISBindUtil.getWorldFromNBT(player.getServer(), player.getItemInHand(hand));
 
                 if (tardisWorld != null) {
                     if (DimensionUtil.isAllowedDimension(player.level().dimension())) {
@@ -69,29 +66,13 @@ public class DistressItem extends TooltipItem {
         return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
-    // Method to set the TARDIS level name in the item's NBT
-    public static void setTardisLevelName(ItemStack stack, String levelName) {
-        CompoundTag nbtData = stack.getOrCreateTag(); // Access item's NBT
-        nbtData.putString("TardisLevelName", levelName);
-    }
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
+        super.appendHoverText(stack, world, tooltip, context);
 
-    public static boolean hasTardisLevelName(ItemStack stack) {
-        CompoundTag nbtData = stack.getTag();
-        return nbtData != null && nbtData.contains("TardisLevelName");
-    }
-
-    // Method to retrieve the saved TARDIS level name from the item's NBT
-    public static String getTardisLevelName(ItemStack stack) {
-        CompoundTag nbtData = stack.getTag();
-        return nbtData != null && nbtData.contains("TardisLevelName") ? nbtData.getString("TardisLevelName") : "";
-    }
-
-    public static Level getWorldFromNBT(MinecraftServer server, ItemStack stack) {
-        String worldIdentifier = getTardisLevelName(stack);
-        if (!worldIdentifier.isEmpty()) {
-            ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(worldIdentifier));
-            return server.getLevel(worldKey);
+        if (TARDISBindUtil.hasTardisLevelName(stack)) {
+            String name = TARDISBindUtil.getTardisLevelName(stack).replaceFirst("tardis_refined:", "");
+            tooltip.add(Component.literal(name.substring(0, 5)).withStyle(ChatFormatting.GRAY));
         }
-        return null;
     }
 }

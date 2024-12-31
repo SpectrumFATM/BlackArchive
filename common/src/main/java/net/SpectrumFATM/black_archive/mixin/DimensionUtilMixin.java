@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 @Mixin(DimensionUtil.class)
 public abstract class DimensionUtilMixin {
 
-    @Inject(method = "isAllowedDimension(Lnet/minecraft/resources/ResourceKey;)Z", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "isAllowedDimension(Lnet/minecraft/resources/ResourceKey;)Z", at = @At("HEAD"), cancellable = true)
     private static void isAllowedDimension(ResourceKey<Level> level, CallbackInfoReturnable callbackInfo) {
         List<? extends String> bannedDimensions = (List)TRConfig.SERVER.BANNED_DIMENSIONS.get();
         if (level.location().toString().equals("black_archive:time_vortex") ||

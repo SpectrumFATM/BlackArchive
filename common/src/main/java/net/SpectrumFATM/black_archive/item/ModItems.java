@@ -31,7 +31,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> CONTACTLENS = registerItem("contact_lens", () -> new ContactLensItem(new Item.Properties().stacksTo(1)), true);
     public static final RegistrySupplier<Item> TARDISKEYCLASSIC = registerItem("key_01", () -> new KeyItem(new Item.Properties().stacksTo(1)), true);
     public static final RegistrySupplier<Item> SUPERPHONE = registerItem("superphone", () -> new DistressItem(new Item.Properties().stacksTo(1), "item.superphone.tooltip"), true);
-    public static final RegistrySupplier<Item> REMOTE = registerItem("remote", () -> new RemoteItem(new Item.Properties().stacksTo(1)), true);
+    public static final RegistrySupplier<Item> REMOTE = registerItem("remote", () -> new RemoteItem(new Item.Properties().stacksTo(1), "item.remote.tooltip"), true);
     public static final RegistrySupplier<Item> SONIC10 = registerItem("10thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic10.tooltip", ChatFormatting.BLUE), true);
     public static final RegistrySupplier<Item> SONIC11 = registerItem("11thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic11.tooltip", ChatFormatting.DARK_GREEN), true);
     public static final RegistrySupplier<Item> SONIC12 = registerItem("12thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic12.tooltip", ChatFormatting.BLUE), true);

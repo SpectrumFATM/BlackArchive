@@ -4,9 +4,11 @@ import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.tardis.upgrades.ModUpgrades;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -15,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
 import whocraft.tardis_refined.common.capability.tardis.upgrades.UpgradeHandler;
-import whocraft.tardis_refined.common.items.KeyItem;
 import whocraft.tardis_refined.common.network.MessageC2S;
 import whocraft.tardis_refined.common.network.MessageContext;
 import whocraft.tardis_refined.common.network.MessageType;
@@ -24,19 +25,22 @@ import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 import whocraft.tardis_refined.common.util.DimensionUtil;
 import whocraft.tardis_refined.common.util.PlayerUtil;
 import whocraft.tardis_refined.constants.ModMessages;
-import java.util.ArrayList;
+
 import java.util.Optional;
 
 public class C2SRemoteMessage extends MessageC2S {
 
     private final BlockPos pos;
+    private final String levelName;
 
-    public C2SRemoteMessage(BlockPos pos) {
+    public C2SRemoteMessage(BlockPos pos, String levelName) {
         this.pos = pos;
+        this.levelName = levelName;
     }
 
     public C2SRemoteMessage(FriendlyByteBuf buf) {
         this.pos = buf.readBlockPos();
+        this.levelName = buf.readUtf();
     }
 
     @Override
@@ -46,6 +50,7 @@ public class C2SRemoteMessage extends MessageC2S {
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
+        buf.writeUtf(levelName);
     }
 
     @Override
@@ -53,45 +58,47 @@ public class C2SRemoteMessage extends MessageC2S {
         ServerPlayer player = messageContext.getPlayer();
         ItemStack heldItem = getHeldRemoteItem(player);
 
-        if (heldItem.isEmpty()) return;
+        if (heldItem.isEmpty()) {
+            return;
+        }
 
         ResourceKey<Level> currentDimension = player.level().dimension();
 
-        // Validate dimension
-        if (currentDimension.location().toString().startsWith("tardis_refined:")) return;
+        if (!DimensionUtil.isAllowedDimension(currentDimension)) {
+            return;
+        }
 
-        // Validate keychain
-        if (!(heldItem.getItem() instanceof KeyItem keyItem)) return;
-        var keyChain = keyItem.getKeychain(heldItem);
-        if (keyChain.isEmpty()) return;
+        if (!player.serverLevel().isEmptyBlock(pos.above())) {
+            return;
+        }
 
-        // Validate air block and dimension
-        if (!player.serverLevel().isEmptyBlock(pos.above()) || !DimensionUtil.isAllowedDimension(currentDimension)) return;
-
-        ResourceKey<Level> tardisDimension = keyChain.get(0);
+        ResourceLocation dimensionId = new ResourceLocation(levelName);
+        ResourceKey<Level> tardisDimension = ResourceKey.create(Registries.DIMENSION, dimensionId);
         ServerLevel tardisWorld = player.getServer().getLevel(tardisDimension);
-        if (tardisWorld == null) return;
 
-        // Validate TARDIS capabilities
+        if (tardisWorld == null) {
+            return;
+        }
+
         Optional<TardisLevelOperator> operatorOptional = TardisLevelOperator.get(tardisWorld);
-        if (operatorOptional.isEmpty()) return;
+        if (operatorOptional.isEmpty()) {
+            return;
+        }
 
         TardisLevelOperator operator = operatorOptional.get();
         TardisPilotingManager pilotingManager = operator.getPilotingManager();
         UpgradeHandler upgradeHandler = operator.getUpgradeHandler();
 
-        // Validate upgrades and piloting state
         if (!ModUpgrades.REMOTE_UPGRADE.get().isUnlocked(upgradeHandler)
                 || pilotingManager.isInRecovery()
                 || pilotingManager.isHandbrakeOn()
-                || !pilotingManager.beginFlight(true, null)) {
+                || pilotingManager.isInFlight()) {
             return;
         }
 
-        // Set TARDIS target location
         pilotingManager.setTargetLocation(new TardisNavLocation(pos.above(), player.getDirection().getOpposite(), player.serverLevel()));
+        pilotingManager.beginFlight(true, null);
 
-        // Play sound and notify player
         player.level().playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 1.0F);
         PlayerUtil.sendMessage(player, Component.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);
     }

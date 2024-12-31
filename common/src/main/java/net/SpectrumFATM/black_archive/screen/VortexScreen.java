@@ -65,7 +65,7 @@ public class VortexScreen extends Screen {
         initButtons(x, y);
 
         fetchWaypoints();
-        updateDimensionField();
+        setDimensions(dimensions);
     }
 
     private void initTextFields(int x, int y) {

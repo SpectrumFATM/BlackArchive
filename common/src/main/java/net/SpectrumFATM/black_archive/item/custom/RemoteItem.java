@@ -42,7 +42,6 @@ public class RemoteItem extends TooltipItem {
             packet.send();
         }
 
-        BlackArchive.LOGGER.info("RemoteItem used on " + context.getClickedPos().toString());
         return super.useOn(context);
     }
 

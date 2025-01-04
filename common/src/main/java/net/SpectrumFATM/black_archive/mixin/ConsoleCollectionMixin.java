@@ -22,7 +22,7 @@ public class ConsoleCollectionMixin {
 
     ConsoleUnit rani;
 
-    @Inject(method = "registerModels(Lnet/minecraft/client/model/geom/EntityModelSet;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "registerModels(Lnet/minecraft/client/model/geom/EntityModelSet;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private void registerModels(EntityModelSet loader, CallbackInfo callbackInfo) {
         this.rani = new RaniConsole(loader.bakeLayer(ModModels.RANI_CONSOLE));
         CONSOLE_MODELS.add(this.rani);

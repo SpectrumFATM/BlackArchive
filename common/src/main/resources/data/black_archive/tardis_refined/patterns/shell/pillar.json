@@ -5,7 +5,7 @@
         "emissive": false,
         "texture": "black_archive:textures/blockentity/shell/pillar/pillar_shell.png"
       },
-      "id": "tardis:default",
+      "id": "black_archive:default",
       "interior": {
         "emissive": false,
         "texture": "black_archive:textures/blockentity/shell/pillar/pillar_door.png"

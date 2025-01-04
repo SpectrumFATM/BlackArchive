@@ -2,7 +2,7 @@
   "patterns": [
     {
       "id": "black_archive:default",
-      "name_component": "{\"color\":\"yellow\",\"text\":\"Copper\"}",
+      "name_component": "{\"color\":\"yellow\",\"text\":\"Rani\"}",
       "sound_profile": {
         "sounds": {
           "tardis_refined:generic_console": {

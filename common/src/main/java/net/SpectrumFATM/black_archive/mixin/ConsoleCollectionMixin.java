@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.mixin;
 
+import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.ModModels;
 import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -11,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleModelCollection;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleUnit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(ConsoleModelCollection.class)

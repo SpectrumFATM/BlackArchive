@@ -13,6 +13,9 @@ Adding a whole new world of alien technology to Minecraft!
 '''
 logoFile = "assets/black_archive/icon.png"
 
+[[mixins]]
+config = "black_archive_common.mixin.json"
+
 [[dependencies.black_archive]]
 modId = "forge"
 mandatory = true

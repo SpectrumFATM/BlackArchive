@@ -30,11 +30,6 @@ public class TardisClientLogicMixin {
             } else if (!tardisClientData.isFlying()) {
                 tardisClientData.isFlying();
             }
-            ci.cancel();
-        }
-
-        if (tardisClientData.isTakingOff() && tardisClientData.ROTOR_ANIMATION.isStarted()) {
-            ci.cancel();
         }
 
     }

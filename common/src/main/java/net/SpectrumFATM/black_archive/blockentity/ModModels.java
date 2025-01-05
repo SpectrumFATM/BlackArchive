@@ -57,6 +57,7 @@ public class ModModels {
         ModModels.SIDRAT_DOOR_MODEL = new SIDRATDoorModel(entityModels.bakeLayer(ModModels.SIDRAT_DOOR));
         ModModels.RANI_CONSOLE_MODEL = new RaniConsole(entityModels.bakeLayer(ModModels.RANI_CONSOLE));
         ShellEntryRegistry.init();
+        //TODO: Write ConsoleEntryRegistry upon next TR release.
     }
 
     private static void setupEventas() {

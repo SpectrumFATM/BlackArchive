@@ -4,7 +4,6 @@
   "package": "net.SpectrumFATM.black_archive.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin",
     "TardisPilotingMixin",
     "VictorianMixin",
     "RefurbMixin",
@@ -17,15 +16,12 @@
     "NukaMixin",
     "InitiativeMixin",
     "DimensionUtilMixin",
-    "PlayerEntityMixin",
-    "LivingEntityRendererMixin",
     "TardisClientLogicMixin",
     "ThrottleMixin",
     "DimensionalMixin"
   ],
   "client": [
     "ConsoleCollectionMixin",
-    "RenderMixin",
     "PlayerEntityRendererMixin"
   ],
   "injectors": {

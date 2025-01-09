@@ -2,22 +2,22 @@ package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.util.LifeSupportUtil;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public class LivingEntityMixinFabric {
+
 
     private double prevMotionX;
     private double prevMotionY;
@@ -166,7 +167,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "getEyeHeight", at = @At("HEAD"), cancellable = true)
     protected void getEyeHeight(Pose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
         if ((Object) this instanceof Player) {
-            cir.setReturnValue(dimensions.height * 0.85f * ((LivingEntity) (Object) this).getEntityData().get(ENTITY_SCALE));
+            cir.setReturnValue(dimensions.height * 0.85f * (float)((LivingEntity) (Object) this).getEntityData().get(ENTITY_SCALE));
         }
         ((LivingEntity) (Object) this).getEntityData().get(ENTITY_SCALE);
     }

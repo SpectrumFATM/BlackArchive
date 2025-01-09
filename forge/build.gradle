@@ -5,6 +5,7 @@ plugins {
 loom {
     forge {
         mixinConfig "black_archive_common.mixin.json"
+        mixinConfig "black_archive_forge.mixin.json"
     }
 }
 

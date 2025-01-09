@@ -16,6 +16,9 @@ logoFile = "assets/black_archive/icon.png"
 [[mixins]]
 config = "black_archive_common.mixin.json"
 
+[[mixins]]
+config = "black_archive_forge.mixin.json"
+
 [[dependencies.black_archive]]
 modId = "forge"
 mandatory = true

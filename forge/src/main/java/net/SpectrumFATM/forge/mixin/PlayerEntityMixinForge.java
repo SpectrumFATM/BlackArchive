@@ -1,4 +1,4 @@
-package net.SpectrumFATM.black_archive.mixin;
+package net.SpectrumFATM.forge.mixin;
 
 import net.SpectrumFATM.black_archive.util.WorldUtil;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
@@ -25,7 +25,7 @@ import java.util.Random;
 import java.util.Set;
 
 @Mixin(Player.class)
-public class PlayerEntityMixin {
+public class PlayerEntityMixinForge {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {

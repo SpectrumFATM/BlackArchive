@@ -11,8 +11,6 @@ public class RaniTheme extends ConsoleThemeDetails {
     public RaniTheme() {
     }
 
-    //TODO: Finish control positions.
-
     public ControlSpecification[] getControlSpecification() {
         return new ControlSpecification[]{new ControlSpecification(TRControlRegistry.THROTTLE, new Vector3f(0.16875F, 0.625F, -0.80625F), EntityDimensions.scalable(0.125F, 0.125F)),
                 new ControlSpecification(TRControlRegistry.HANDBRAKE, new Vector3f(-0.16875F, 0.625F, -0.80625F), EntityDimensions.scalable(0.125F, 0.125F)),

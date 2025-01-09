@@ -24,7 +24,8 @@
 		]
 	},
 	"mixins": [
-		"black_archive_common.mixin.json"
+		"black_archive_common.mixin.json",
+		"black_archive_fabric.mixin.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.12.0",

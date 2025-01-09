@@ -1,16 +1,7 @@
 ## Changelog
 
-### Added
+### Bug Fixes
+- Rani Console on Forge now doesn't crash the game.
+- Fixed TCE on Forge.
 
-- **Forge Support!!!**
-- Tissue Compression Eliminator
-- Pillar Exterior
-- Rani Exterior
-- Rani Console
-- Rani Interior
-- SIDRAT Exterior
-- Weeping Angels
-- Graveyards
-
-### Improved
-- Time rotor now continues to movie when in temporal orbit.
+###### _I hate forge! <3_

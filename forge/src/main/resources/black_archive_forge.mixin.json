@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.SpectrumFATM.forge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "LivingEntityMixinForge",
+    "PlayerEntityMixinForge"
+  ],
+  "client": [
+    "RenderMixinForge",
+    "LivingEntityRendererMixinForge"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

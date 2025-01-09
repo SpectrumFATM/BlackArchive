@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.SpectrumFATM.black_archive.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "LivingEntityMixinFabric",
+    "PlayerEntityMixinFabric"
+  ],
+  "client": [
+    "RenderMixinFabric",
+    "LivingEntityRendererMixinFabric"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

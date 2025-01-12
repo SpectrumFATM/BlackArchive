@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.SpectrumFATM.black_archive.mixin",
+  "plugin": "net.SpectrumFATM.black_archive.mixin.DWDMixinsPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "TardisPilotingMixin",
@@ -18,7 +19,9 @@
     "DimensionUtilMixin",
     "TardisClientLogicMixin",
     "ThrottleMixin",
-    "DimensionalMixin"
+    "DimensionalMixin",
+    "DWDSonicItemMixin",
+    "DWDCompatMixin"
   ],
   "client": [
     "ConsoleCollectionMixin",

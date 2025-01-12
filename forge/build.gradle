@@ -42,6 +42,7 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_forge"
+    modImplementation "maven.modrinth:whocosmetics:$rootProject.dwc_version_forge"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

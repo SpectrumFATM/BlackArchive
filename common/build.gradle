@@ -11,7 +11,8 @@ dependencies {
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-   modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_fabric"
+    modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_fabric"
+    modImplementation "maven.modrinth:whocosmetics:$rootProject.dwc_version_fabric"
 
     // Adds a dependency on the base cardinal components module (required by every other module)
     // Replace modImplementation with modApi if you expose components in your own API

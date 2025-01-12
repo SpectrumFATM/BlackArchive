@@ -32,6 +32,7 @@ public class BlackArchiveConfig {
         public final ForgeConfigSpec.IntValue minimumTardisesToCreateTimeFissure;
         public final ForgeConfigSpec.BooleanValue shouldDalekGunStickDestroyDoors;
         public final ForgeConfigSpec.BooleanValue shouldCybermatSpawnAroundCybermen;
+        public final ForgeConfigSpec.BooleanValue enableSonicEngine;
 
         CommonConfig(ForgeConfigSpec.Builder builder) {
             builder.push("common");
@@ -67,6 +68,10 @@ public class BlackArchiveConfig {
             minimumTardisesToCreateTimeFissure = builder
                     .comment("The minimum number of TARDISes required to create a time fissure.")
                     .defineInRange("minimumTardisesToCreateTimeFissure", 5, 1, 100);
+
+            enableSonicEngine = builder
+                    .comment("Should the sonic engine be enabled? This will add additional functionality to Tardis Refined and Doctor Who Deco sonic screwdrivers.")
+                    .define("enableSonicEngine", true);
 
             builder.pop();
         }

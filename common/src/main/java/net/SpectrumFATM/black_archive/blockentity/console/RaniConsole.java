@@ -104,9 +104,4 @@ public class RaniConsole extends HierarchicalModel implements ConsoleUnit {
 	public ResourceLocation getDefaultTexture() {
 		return TEXTURE;
 	}
-
-	@Override
-	public ResourceLocation getConsoleTheme() {
-		return ModConsoles.RANI.getId();
-	}
 }

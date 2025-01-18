@@ -24,7 +24,6 @@
     "DWDCompatMixin"
   ],
   "client": [
-    "ConsoleCollectionMixin",
     "PlayerEntityRendererMixin"
   ],
   "injectors": {

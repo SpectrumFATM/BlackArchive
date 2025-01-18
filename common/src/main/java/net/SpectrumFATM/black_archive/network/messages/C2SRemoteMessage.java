@@ -97,7 +97,7 @@ public class C2SRemoteMessage extends MessageC2S {
         }
 
         pilotingManager.setTargetLocation(new TardisNavLocation(pos.above(), player.getDirection().getOpposite(), player.serverLevel()));
-        pilotingManager.beginFlight(true, null);
+        pilotingManager.beginFlight(true);
 
         player.level().playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 1.0F);
         PlayerUtil.sendMessage(player, Component.translatable(ModMessages.TARDIS_IS_ON_THE_WAY), true);

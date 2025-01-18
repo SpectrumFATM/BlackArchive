@@ -3,6 +3,7 @@ package net.SpectrumFATM.black_archive.blockentity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
+import net.SpectrumFATM.black_archive.blockentity.console.themes.RaniTheme;
 import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.door.RaniDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.door.SIDRATDoorModel;
@@ -15,6 +16,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.api.event.TardisClientEvents;
+import whocraft.tardis_refined.client.model.blockentity.console.ConsoleModelEntry;
 import whocraft.tardis_refined.client.model.blockentity.console.ConsoleUnit;
 import whocraft.tardis_refined.common.util.Platform;
 import whocraft.tardis_refined.common.util.PlatformWarning;
@@ -57,11 +59,11 @@ public class ModModels {
         ModModels.SIDRAT_DOOR_MODEL = new SIDRATDoorModel(entityModels.bakeLayer(ModModels.SIDRAT_DOOR));
         ModModels.RANI_CONSOLE_MODEL = new RaniConsole(entityModels.bakeLayer(ModModels.RANI_CONSOLE));
         ShellEntryRegistry.init();
-        //TODO: Write ConsoleEntryRegistry upon next TR release.
     }
 
     private static void setupEventas() {
         TardisClientEvents.SHELLENTRY_MODELS_SETUP.register(ModModels::setupModelInstances);
+        TardisClientEvents.CONSOLE_MODELS_SETUP.register((consoleModelCollection, entityModelSet) -> consoleModelCollection.registerModel(ModConsoles.RANI.getId(), new ConsoleModelEntry(RANI_CONSOLE_MODEL)));
     }
 
     @ExpectPlatform

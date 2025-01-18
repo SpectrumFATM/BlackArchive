@@ -9,6 +9,7 @@
     "SonicMixinForge"
   ],
   "client": [
+    "PlayerEntityRendererMixinForge",
     "RenderMixinForge",
     "LivingEntityRendererMixinForge"
   ],

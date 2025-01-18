@@ -1,4 +1,4 @@
-package net.SpectrumFATM.black_archive.mixin;
+package net.SpectrumFATM.forge.mixin;
 
 import net.SpectrumFATM.black_archive.entity.features.DalekEyestalkFeatureRenderer;
 import net.minecraft.client.model.PlayerModel;
@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
-public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Player, PlayerModel<Player>> {
+public abstract class PlayerEntityRendererMixinForge extends LivingEntityRenderer<Player, PlayerModel<Player>> {
 
-    public PlayerEntityRendererMixin(EntityRendererProvider.Context ctx, PlayerModel<Player> model, float shadowRadius) {
+    public PlayerEntityRendererMixinForge(EntityRendererProvider.Context ctx, PlayerModel<Player> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
 

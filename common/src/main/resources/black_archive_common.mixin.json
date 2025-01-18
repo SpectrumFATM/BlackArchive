@@ -24,7 +24,6 @@
     "DWDCompatMixin"
   ],
   "client": [
-    "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

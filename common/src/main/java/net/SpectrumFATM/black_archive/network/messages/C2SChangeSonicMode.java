@@ -67,7 +67,10 @@ public class C2SChangeSonicMode extends MessageC2S {
                 case "location":
                     player.displayClientMessage(Component.translatable("item.sonic.locator"), true);
                     break;
-                case "block":
+                case "homing":
+                    player.displayClientMessage(Component.translatable("item.sonic.homing"), true);
+                    break;
+                default:
                     player.displayClientMessage(Component.translatable("item.sonic.block"), true);
                     break;
             }

@@ -8,6 +8,7 @@ import net.SpectrumFATM.black_archive.entity.custom.CybermatEntity;
 import net.SpectrumFATM.black_archive.entity.custom.TimeFissureEntity;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.SpectrumFATM.black_archive.network.messages.C2SChangeSonicMode;
+import net.SpectrumFATM.black_archive.network.messages.C2SHomeFunction;
 import net.SpectrumFATM.black_archive.network.messages.C2SLockFunction;
 import net.SpectrumFATM.black_archive.network.messages.C2SSetLocation;
 import net.SpectrumFATM.black_archive.util.ScreenUtil;
@@ -47,12 +48,17 @@ public class SonicEngine {
                 Player player = context.getPlayer();
 
                 if (item.isScrewdriverMode(context.getItemInHand(), ScrewdriverMode.ENABLED) && !player.isCrouching()) {
-                     if (getSonicSetting(context.getItemInHand()).equals("location")) {
-                         locationSet(player, context);
-                    } else {
-                        defaultSet(context, item, player);
+                    switch (getSonicSetting(context.getItemInHand())) {
+                        case "location":
+                            locationSet(player, context);
+                            break;
+                        case "homing":
+                            homingSet(player);
+                            break;
+                        default:
+                            defaultSet(context, item, player);
+                            break;
                     }
-
                 } else if (player.isCrouching()) {
                     ScreenUtil.openSonicScreen(0);
                 }
@@ -61,7 +67,7 @@ public class SonicEngine {
     }
 
     public static void entityActivate(ItemStack stack, Player user, LivingEntity entity, ChatFormatting colorFormat) {
-        if (BlackArchiveConfig.COMMON.enableSonicEngine.get()) {
+        if (BlackArchiveConfig.COMMON.enableSonicEngine.get() && getSonicSetting(stack).equals("block")) {
             ScrewdriverItem item = (ScrewdriverItem) stack.getItem();
             Random random = new Random();
 
@@ -234,6 +240,12 @@ public class SonicEngine {
         setSetting("block", false);
     }
 
+    public static void homingSet(Player player) {
+        player.displayClientMessage(Component.translatable("item.sonic.homing"), true);
+        C2SHomeFunction message = new C2SHomeFunction();
+        message.send();
+    }
+
     public static Vector3f getSonicItemVector(Item item) {
         if (Platform.isModLoaded("whocosmetics")) {
             if (item == WCItems.SONIC_10.get()) {
@@ -291,6 +303,8 @@ public class SonicEngine {
         switch (setting) {
             case "location":
                 return "item.sonic.locator_name";
+            case "homing":
+                return "item.sonic.homing_name";
             default:
                 return "item.sonic.block_name";
         }

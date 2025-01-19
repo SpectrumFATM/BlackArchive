@@ -46,6 +46,13 @@ public class SonicMainScreen extends SonicScreen {
                     SonicEngine.setSetting("location", true);
                 }
             });
+            addCircularButton(Component.translatable("item.sonic.homing_name"), () -> {
+                if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("homing")) {
+                    SonicEngine.setSetting("block", true);
+                } else {
+                    SonicEngine.setSetting("homing", true);
+                }
+            });
         }
     }
 

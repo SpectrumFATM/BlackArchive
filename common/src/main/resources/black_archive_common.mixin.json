@@ -21,7 +21,8 @@
     "ThrottleMixin",
     "DimensionalMixin",
     "DWDSonicItemMixin",
-    "DWDCompatMixin"
+    "DWDCompatMixin",
+    "ScrewdriverMixin"
   ],
   "client": [
   ],

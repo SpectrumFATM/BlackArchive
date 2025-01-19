@@ -2,7 +2,7 @@ package net.SpectrumFATM.black_archive.mixin;
 
 import dev.jeryn.doctorwho.compat.TardisRefinedCompat;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
-import net.SpectrumFATM.black_archive.util.SonicEngine;
+import net.SpectrumFATM.black_archive.util.sonic.SonicEngine;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import org.spongepowered.asm.mixin.Mixin;

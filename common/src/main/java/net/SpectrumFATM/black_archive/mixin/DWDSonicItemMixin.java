@@ -1,7 +1,7 @@
 package net.SpectrumFATM.black_archive.mixin;
 
 import dev.jeryn.doctorwho.common.items.SonicItem;
-import net.SpectrumFATM.black_archive.util.sonic.SonicEngine;
+import net.SpectrumFATM.black_archive.util.SonicEngine;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;

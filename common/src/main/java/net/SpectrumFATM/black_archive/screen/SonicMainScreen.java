@@ -2,10 +2,13 @@ package net.SpectrumFATM.black_archive.screen;
 
 import net.SpectrumFATM.black_archive.network.messages.C2SSonicMode;
 import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
-import net.SpectrumFATM.black_archive.util.sonic.SonicEngine;
+import net.SpectrumFATM.black_archive.util.SonicEngine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import whocraft.tardis_refined.common.items.ScrewdriverItem;
+import whocraft.tardis_refined.common.items.ScrewdriverMode;
 
 public class SonicMainScreen extends SonicScreen {
 
@@ -24,6 +27,7 @@ public class SonicMainScreen extends SonicScreen {
     @Override
     protected void init() {
         super.init();
+        ScrewdriverItem item = (ScrewdriverItem) Minecraft.getInstance().player.getMainHandItem().getItem();
         String settingString = SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem());
         setting = Component.translatable("item.sonic.setting_name").append(Component.translatable(SonicEngine.getSettingKey(settingString)));
 
@@ -35,10 +39,16 @@ public class SonicMainScreen extends SonicScreen {
             message.send(); // Send the mode change message
         });
 
-        if (TARDISBindUtil.hasTardisLevelName(Minecraft.getInstance().player.getMainHandItem())) {
+        if (TARDISBindUtil.hasTardisLevelName(Minecraft.getInstance().player.getMainHandItem()) && item.isScrewdriverMode(Minecraft.getInstance().player.getMainHandItem(), ScrewdriverMode.ENABLED)) {
             isBound = true;
             boundTo = TARDISBindUtil.getTardisLevelName(Minecraft.getInstance().player.getMainHandItem()).replaceFirst("tardis_refined:", "").substring(0, 5);
-            addCircularButton(Component.translatable("item.sonic.setting.lock"), SonicEngine::lock);
+            addCircularButton(Component.translatable("item.sonic.setting.lock"), () -> {
+                if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("lock")) {
+                    SonicEngine.setSetting("block", true);
+                } else {
+                    SonicEngine.setSetting("lock", true);
+                }
+            });
             addCircularButton(Component.translatable("item.sonic.setting.set"), () -> {
                 if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("location")) {
                     SonicEngine.setSetting("block", true);

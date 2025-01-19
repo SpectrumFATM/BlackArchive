@@ -2,7 +2,6 @@ package net.SpectrumFATM.black_archive.util;
 
 import net.SpectrumFATM.black_archive.screen.SonicMainScreen;
 import net.SpectrumFATM.black_archive.screen.VortexScreen;
-import net.SpectrumFATM.black_archive.util.sonic.SonicEngine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.Item;

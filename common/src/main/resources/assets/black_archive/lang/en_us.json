@@ -72,6 +72,7 @@
   "item.sonic.homing.begin": "Scanning for temporal emissions!",
   "item.sonic.homing.error": "Error: No temporal emissions detected!",
   "item.sonic.homing.found": "TARDIS signature detected! ",
+  "item.sonic.lock_name": "Lock",
   "item.dalek_laser.tooltip": "A laser weapon salvaged from a Dalek's casing!",
   "item.dalek_bracelet.tooltip": "Protects you from the Dalek Nanocloud.",
   "item.superphone.tooltip": "Call me if you ever need me!",

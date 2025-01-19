@@ -1,6 +1,6 @@
 package net.SpectrumFATM.black_archive.item.custom;
 
-import net.SpectrumFATM.black_archive.util.sonic.SonicEngine;
+import net.SpectrumFATM.black_archive.util.SonicEngine;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

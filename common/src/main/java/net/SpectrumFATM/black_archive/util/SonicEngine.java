@@ -1,7 +1,6 @@
-package net.SpectrumFATM.black_archive.util.sonic;
+package net.SpectrumFATM.black_archive.util;
 
 import dev.jeryn.doctorwho.common.WCItems;
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.entity.custom.CybermatEntity;
@@ -11,12 +10,11 @@ import net.SpectrumFATM.black_archive.network.messages.C2SChangeSonicMode;
 import net.SpectrumFATM.black_archive.network.messages.C2SHomeFunction;
 import net.SpectrumFATM.black_archive.network.messages.C2SLockFunction;
 import net.SpectrumFATM.black_archive.network.messages.C2SSetLocation;
-import net.SpectrumFATM.black_archive.util.ScreenUtil;
-import net.SpectrumFATM.black_archive.util.SpaceTimeEventUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
@@ -41,6 +39,29 @@ import java.util.Random;
 
 public class SonicEngine {
 
+    public static void miscUse(Level level, Player player, InteractionHand interactionHand) {
+        if (BlackArchiveConfig.COMMON.enableSonicEngine.get()) {
+            ItemStack stack = player.getItemInHand(interactionHand);
+            ScrewdriverItem item = (ScrewdriverItem) stack.getItem();
+
+            if (item.isScrewdriverMode(stack, ScrewdriverMode.ENABLED) && !player.isCrouching()) {
+                switch (getSonicSetting(stack)) {
+                    case "lock":
+                        if (level.isClientSide()) {
+                            lockSet();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+             if (player.isCrouching()) {
+                ScreenUtil.openSonicScreen(0);
+            }
+        }
+    }
+
     public static void blockActivate(UseOnContext context) {
         ScrewdriverItem item = (ScrewdriverItem) context.getItemInHand().getItem();
         if (BlackArchiveConfig.COMMON.enableSonicEngine.get()) {
@@ -59,11 +80,8 @@ public class SonicEngine {
                             defaultSet(context, item, player);
                             break;
                     }
-                } else if (player.isCrouching()) {
-                    ScreenUtil.openSonicScreen(0);
                 }
         }
-        BlackArchive.LOGGER.info(String.valueOf(hasSonicSetting(context.getItemInHand())));
     }
 
     public static void entityActivate(ItemStack stack, Player user, LivingEntity entity, ChatFormatting colorFormat) {
@@ -134,7 +152,7 @@ public class SonicEngine {
         }
     }
 
-    public static void lock() {
+    public static void lockSet() {
         C2SLockFunction message = new C2SLockFunction();
         message.send();
     }
@@ -305,6 +323,8 @@ public class SonicEngine {
                 return "item.sonic.locator_name";
             case "homing":
                 return "item.sonic.homing_name";
+            case "lock":
+                return "item.sonic.lock_name";
             default:
                 return "item.sonic.block_name";
         }

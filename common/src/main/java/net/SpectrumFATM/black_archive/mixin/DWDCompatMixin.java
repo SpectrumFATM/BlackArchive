@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(TardisRefinedCompat.class)
 public class DWDCompatMixin {
 
-    @Inject(method = "doSonicInteraction(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doSonicInteraction", at = @At("HEAD"), cancellable = true)
     private static void doSonicInteraction(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         if (BlackArchiveConfig.COMMON.enableSonicEngine.get()) {
             SonicEngine.blockActivate(context);

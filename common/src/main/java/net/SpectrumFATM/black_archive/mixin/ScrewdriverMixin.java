@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.mixin;
 
+import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.network.messages.C2SLockFunction;
 import net.SpectrumFATM.black_archive.util.ScreenUtil;
 import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
@@ -7,6 +8,7 @@ import net.SpectrumFATM.black_archive.util.SonicEngine;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,5 +59,12 @@ public class ScrewdriverMixin extends Item {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
+        SonicEngine.entityActivate(itemStack, player, livingEntity, null);
+        BlackArchive.LOGGER.info("ScrewdriverMixin: interactLivingEntity");
+        return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
     }
 }

@@ -6,10 +6,10 @@ import net.SpectrumFATM.black_archive.entity.custom.CybermanEntity;
 import net.SpectrumFATM.black_archive.entity.custom.CybermatEntity;
 import net.SpectrumFATM.black_archive.entity.custom.TimeFissureEntity;
 import net.SpectrumFATM.black_archive.item.ModItems;
-import net.SpectrumFATM.black_archive.network.messages.C2SChangeSonicMode;
-import net.SpectrumFATM.black_archive.network.messages.C2SHomeFunction;
-import net.SpectrumFATM.black_archive.network.messages.C2SLockFunction;
-import net.SpectrumFATM.black_archive.network.messages.C2SSetLocation;
+import net.SpectrumFATM.black_archive.network.messages.sonic.C2SChangeSonicMode;
+import net.SpectrumFATM.black_archive.network.messages.sonic.C2SHomeFunction;
+import net.SpectrumFATM.black_archive.network.messages.sonic.C2SLockFunction;
+import net.SpectrumFATM.black_archive.network.messages.sonic.C2SSetLocation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -51,6 +51,9 @@ public class SonicEngine {
                             lockSet();
                         }
                         break;
+                    case "homing":
+                        homingSet(player);
+                        break;
                     default:
                         break;
                 }
@@ -70,11 +73,10 @@ public class SonicEngine {
 
                 if (item.isScrewdriverMode(context.getItemInHand(), ScrewdriverMode.ENABLED) && !player.isCrouching()) {
                     switch (getSonicSetting(context.getItemInHand())) {
+                        case "homing", "lock":
+                            break;
                         case "location":
                             locationSet(player, context);
-                            break;
-                        case "homing":
-                            homingSet(player);
                             break;
                         default:
                             defaultSet(context, item, player);
@@ -90,10 +92,10 @@ public class SonicEngine {
             Random random = new Random();
 
             if (colorFormat == null) {
-                colorFormat = ChatFormatting.BLUE;
+                colorFormat = getSonicChatFormatting(stack.getItem());
             }
 
-            if (user.level() instanceof ServerLevel serverWorld) {
+            if (user.level() instanceof ServerLevel serverWorld && item.isScrewdriverMode(stack, ScrewdriverMode.ENABLED)) {
                 if (!user.level().isClientSide) {
                     if (entity instanceof Creeper creeper && !user.isShiftKeyDown()) {
                         creeper.setSwellDir(0);
@@ -283,22 +285,55 @@ public class SonicEngine {
             }
         } else {
             if (item == ModItems.SONIC10.get()) {
-                return new Vector3f(0.2f, 0.2f, 1.0f);
-            } else if (item == ModItems.SONIC10.get()) {
                 return new Vector3f(0.2f, 1.0f, 0.2f);
             } else if (item == ModItems.SONIC11.get()) {
-                return new Vector3f(0.0f, 0.0f, 1.0f);
+                return new Vector3f(0.2f, 1.0f, 0.2f);
             } else if (item == ModItems.SONIC12.get()) {
-                return new Vector3f(1.0f, 0.647f, 0.0f);
+                return new Vector3f(0.0f, 0.0f, 1.0f);
             } else if (item == ModItems.SONIC13.get()) {
-                return new Vector3f(0.5f, 0.5f, 1.0f);
+                return new Vector3f(1.0f, 0.647f, 0.0f);
             } else if (item == ModItems.SONIC14.get()) {
-                return new Vector3f(1.0f, 0.2f, 0.2f);
+                return new Vector3f(0.2f, 1.0f, 0.2f);
             }else if (item == ModItems.SONIC15.get()) {
-                return new Vector3f(1.0f, 0.2f, 0.2f);
+                return new Vector3f(0.2f, 1.0f, 0.2f);
             }
         }
         return new Vector3f(0.2f, 0.2f, 1.0f);
+    }
+
+    public static ChatFormatting getSonicChatFormatting(Item item) {
+        if (Platform.isModLoaded("whocosmetics")) {
+            if (item == WCItems.SONIC_10.get()) {
+                return ChatFormatting.BLUE;
+            } else if (item == WCItems.SONIC_11.get()) {
+                return ChatFormatting.GREEN;
+            } else if (item == WCItems.SONIC_12.get()) {
+                return ChatFormatting.BLUE;
+            } else if (item == WCItems.SONIC_13.get()) {
+                return ChatFormatting.GOLD;
+            } else if (item == WCItems.SONIC_14.get()) {
+                return ChatFormatting.BLUE;
+            } else if (item == WCItems.SONIC_RIVER.get()) {
+                return ChatFormatting.RED;
+            } else if (item == WCItems.SONIC_TROWEL.get()) {
+                return ChatFormatting.BLUE;
+            }
+        } else {
+            if (item == ModItems.SONIC10.get()) {
+                return ChatFormatting.BLUE;
+            } else if (item == ModItems.SONIC11.get()) {
+                return ChatFormatting.GREEN;
+            } else if (item == ModItems.SONIC12.get()) {
+                return ChatFormatting.BLUE;
+            } else if (item == ModItems.SONIC13.get()) {
+                return ChatFormatting.GOLD;
+            } else if (item == ModItems.SONIC14.get()) {
+                return ChatFormatting.BLUE;
+            }else if (item == ModItems.SONIC15.get()) {
+                return ChatFormatting.BLUE;
+            }
+        }
+        return ChatFormatting.BLUE;
     }
 
     public static void setSetting(String setting, boolean shouldDisplayChangeMessage) {
@@ -312,11 +347,6 @@ public class SonicEngine {
         return nbtData != null && nbtData.contains("SonicSetting") ? nbtData.getString("SonicSetting") : "";
     }
 
-    public static boolean hasSonicSetting(ItemStack stack) {
-        CompoundTag nbtData = stack.getTag();
-        return nbtData != null && nbtData.contains("SonicSetting");
-    }
-
     public static String getSettingKey(String setting) {
         switch (setting) {
             case "location":
@@ -325,8 +355,10 @@ public class SonicEngine {
                 return "item.sonic.homing_name";
             case "lock":
                 return "item.sonic.lock_name";
-            default:
+            case "block":
                 return "item.sonic.block_name";
+            default:
+                return "null";
         }
     }
 }

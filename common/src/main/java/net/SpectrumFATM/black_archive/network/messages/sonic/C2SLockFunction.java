@@ -1,4 +1,4 @@
-package net.SpectrumFATM.black_archive.network.messages;
+package net.SpectrumFATM.black_archive.network.messages.sonic;
 
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.util.TARDISBindUtil;

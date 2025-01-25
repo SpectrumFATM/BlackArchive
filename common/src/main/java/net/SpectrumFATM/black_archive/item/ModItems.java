@@ -63,7 +63,7 @@ public class ModItems {
 
     // Spawn Eggs
     public static final RegistrySupplier<Item> CYBERMAN_SPAWN_EGG = registerItem("cyberman_spawn_egg", () -> new SpawnItem(new Item.Properties(), "cyberman"), true);
-    public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () -> new SpawnItem(new Item.Properties(), "tardis"), true);
+    public static final RegistrySupplier<Item> CYBERMAT_EGG = registerItem("cybermat_spawn_egg", () -> new SpawnItem(new Item.Properties(), "cybermat"), true);
     public static final RegistrySupplier<Item> DALEK_SPAWN_EGG = registerItem("dalek_spawn_egg", () -> new SpawnItem(new Item.Properties(), "dalek"), true);
     public static final RegistrySupplier<Item> ANGEL_SPAWN_EGG = registerItem("weeping_angel_egg", () -> new SpawnItem(new Item.Properties(), "weeping_angel", "item.weeping_angel.tooltip"), true);
 

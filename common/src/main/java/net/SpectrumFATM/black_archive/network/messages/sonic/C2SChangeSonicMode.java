@@ -1,4 +1,4 @@
-package net.SpectrumFATM.black_archive.network.messages;
+package net.SpectrumFATM.black_archive.network.messages.sonic;
 
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.minecraft.nbt.CompoundTag;
@@ -52,6 +52,9 @@ public class C2SChangeSonicMode extends MessageC2S {
             switch (mode) {
                 case "location":
                     player.displayClientMessage(Component.translatable("item.sonic.locator"), true);
+                    break;
+                case "lock":
+                    player.displayClientMessage(Component.translatable("item.sonic.lock"), true);
                     break;
                 case "homing":
                     player.displayClientMessage(Component.translatable("item.sonic.homing"), true);

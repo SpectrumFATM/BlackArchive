@@ -1,12 +1,11 @@
 package net.SpectrumFATM.black_archive.screen;
 
-import net.SpectrumFATM.black_archive.network.messages.C2SSonicMode;
+import net.SpectrumFATM.black_archive.network.messages.sonic.C2SSonicMode;
 import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
 import net.SpectrumFATM.black_archive.util.SonicEngine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.items.ScrewdriverMode;
 
@@ -38,31 +37,34 @@ public class SonicMainScreen extends SonicScreen {
             C2SSonicMode message = new C2SSonicMode();
             message.send(); // Send the mode change message
         });
+        if (item.isScrewdriverMode(Minecraft.getInstance().player.getMainHandItem(), ScrewdriverMode.ENABLED)) {
+            addCircularButton(Component.translatable("item.sonic.setting.block"), () -> SonicEngine.setSetting("block", true));
 
-        if (TARDISBindUtil.hasTardisLevelName(Minecraft.getInstance().player.getMainHandItem()) && item.isScrewdriverMode(Minecraft.getInstance().player.getMainHandItem(), ScrewdriverMode.ENABLED)) {
-            isBound = true;
-            boundTo = TARDISBindUtil.getTardisLevelName(Minecraft.getInstance().player.getMainHandItem()).replaceFirst("tardis_refined:", "").substring(0, 5);
-            addCircularButton(Component.translatable("item.sonic.setting.lock"), () -> {
-                if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("lock")) {
-                    SonicEngine.setSetting("block", true);
-                } else {
-                    SonicEngine.setSetting("lock", true);
-                }
-            });
-            addCircularButton(Component.translatable("item.sonic.setting.set"), () -> {
-                if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("location")) {
-                    SonicEngine.setSetting("block", true);
-                } else {
-                    SonicEngine.setSetting("location", true);
-                }
-            });
-            addCircularButton(Component.translatable("item.sonic.homing_name"), () -> {
-                if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("homing")) {
-                    SonicEngine.setSetting("block", true);
-                } else {
-                    SonicEngine.setSetting("homing", true);
-                }
-            });
+            if (TARDISBindUtil.hasTardisLevelName(Minecraft.getInstance().player.getMainHandItem())) {
+                isBound = true;
+                boundTo = TARDISBindUtil.getTardisLevelName(Minecraft.getInstance().player.getMainHandItem()).replaceFirst("tardis_refined:", "").substring(0, 5);
+                addCircularButton(Component.translatable("item.sonic.setting.lock"), () -> {
+                    if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("lock")) {
+                        SonicEngine.setSetting("block", true);
+                    } else {
+                        SonicEngine.setSetting("lock", true);
+                    }
+                });
+                addCircularButton(Component.translatable("item.sonic.setting.set"), () -> {
+                    if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("location")) {
+                        SonicEngine.setSetting("block", true);
+                    } else {
+                        SonicEngine.setSetting("location", true);
+                    }
+                });
+                addCircularButton(Component.translatable("item.sonic.homing_name"), () -> {
+                    if (SonicEngine.getSonicSetting(Minecraft.getInstance().player.getMainHandItem()).equals("homing")) {
+                        SonicEngine.setSetting("block", true);
+                    } else {
+                        SonicEngine.setSetting("homing", true);
+                    }
+                });
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.network;
 
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.network.messages.*;
+import net.SpectrumFATM.black_archive.network.messages.sonic.*;
 import net.minecraft.resources.ResourceLocation;
 import whocraft.tardis_refined.common.network.MessageType;
 import whocraft.tardis_refined.common.network.NetworkManager;

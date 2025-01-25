@@ -1,6 +1,5 @@
-package net.SpectrumFATM.black_archive.network.messages;
+package net.SpectrumFATM.black_archive.network.messages.sonic;
 
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.network.BlackArchiveNetworkHandler;
 import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
 import net.minecraft.core.BlockPos;
@@ -20,6 +19,8 @@ import whocraft.tardis_refined.common.network.MessageContext;
 import whocraft.tardis_refined.common.network.MessageType;
 import whocraft.tardis_refined.common.tardis.TardisNavLocation;
 import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
+import whocraft.tardis_refined.common.util.DimensionUtil;
+import whocraft.tardis_refined.common.util.LevelHelper;
 import whocraft.tardis_refined.registry.TRSoundRegistry;
 
 public class C2SSetLocation extends MessageC2S {
@@ -57,9 +58,12 @@ public class C2SSetLocation extends MessageC2S {
             TardisLevelOperator operator = TardisLevelOperator.get(tardisWorld).get();
             TardisPilotingManager pilotingManager = operator.getPilotingManager();
 
-
-            pilotingManager.setTargetLocation(new TardisNavLocation(pos, player.getDirection().getOpposite(), player.serverLevel()));
-            player.displayClientMessage(Component.translatable("item.sonic.locator.set"), true);
+            if (DimensionUtil.isAllowedDimension(player.serverLevel().dimension())) {
+                pilotingManager.setTargetLocation(new TardisNavLocation(pos, player.getDirection().getOpposite(), player.serverLevel()));
+                player.displayClientMessage(Component.translatable("item.sonic.locator.set"), true);
+            } else {
+                player.displayClientMessage(Component.translatable("item.sonic.locator.error"), true);
+            }
             item.playScrewdriverSound(player.serverLevel(), pos, TRSoundRegistry.SCREWDRIVER_SHORT.get());
         }
     }

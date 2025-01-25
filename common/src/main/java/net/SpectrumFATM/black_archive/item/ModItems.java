@@ -30,14 +30,14 @@ public class ModItems {
     public static final DeferredRegistry<Item> ITEMS = DeferredRegistry.create(BlackArchive.MOD_ID, Registries.ITEM);
 
     // Sonic Screwdriver Items - Conditionally registered
-    public static final RegistrySupplier<Item> SONIC10 = registerItemConditional("10thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic10.tooltip", ChatFormatting.BLUE));
-    public static final RegistrySupplier<Item> SONIC11 = registerItemConditional("11thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic11.tooltip", ChatFormatting.DARK_GREEN));
-    public static final RegistrySupplier<Item> SONIC12 = registerItemConditional("12thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic12.tooltip", ChatFormatting.BLUE));
-    public static final RegistrySupplier<Item> SONIC13 = registerItemConditional("13thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic13.tooltip", ChatFormatting.GOLD));
-    public static final RegistrySupplier<Item> SONIC14 = registerItemConditional("14thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic.tooltip", ChatFormatting.BLUE));
+    public static final RegistrySupplier<Item> SONIC10 = registerItemConditional("10thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic10.tooltip"));
+    public static final RegistrySupplier<Item> SONIC11 = registerItemConditional("11thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic11.tooltip"));
+    public static final RegistrySupplier<Item> SONIC12 = registerItemConditional("12thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic12.tooltip"));
+    public static final RegistrySupplier<Item> SONIC13 = registerItemConditional("13thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic13.tooltip"));
+    public static final RegistrySupplier<Item> SONIC14 = registerItemConditional("14thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic.tooltip"));
 
     //Sonic Screwdriver Items - Always registered
-    public static final RegistrySupplier<Item> SONIC15 = registerItem("15thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic15.tooltip", ChatFormatting.BLUE), true);
+    public static final RegistrySupplier<Item> SONIC15 = registerItem("15thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic15.tooltip"), true);
 
     // Other Custom Items
     public static final RegistrySupplier<Item> VORTEXMANIP = registerItem("vortex_manipulator", () -> new VortexManipulatorItem(new Item.Properties().stacksTo(1)), true);

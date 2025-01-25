@@ -58,7 +58,7 @@ public class ScrewdriverMixin extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
-        SonicEngine.entityActivate(itemStack, player, livingEntity, null);
+        SonicEngine.entityActivate(itemStack, player, livingEntity);
         BlackArchive.LOGGER.info("ScrewdriverMixin: interactLivingEntity");
         return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
     }

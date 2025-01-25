@@ -23,10 +23,9 @@ public class SonicItem extends ScrewdriverItem {
     ChatFormatting colorFormat;
     Random random = new Random();
 
-    public SonicItem(Properties properties, String tooltipKey, ChatFormatting colorFormat) {
+    public SonicItem(Properties properties, String tooltipKey) {
         super(properties);
         this.tooltipKey = tooltipKey;
-        this.colorFormat = colorFormat;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class SonicItem extends ScrewdriverItem {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
-        SonicEngine.entityActivate(itemStack, player, livingEntity, colorFormat);
+        SonicEngine.entityActivate(itemStack, player, livingEntity);
         return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
     }
 

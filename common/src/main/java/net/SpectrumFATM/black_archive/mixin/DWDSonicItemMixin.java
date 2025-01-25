@@ -19,7 +19,7 @@ public abstract class DWDSonicItemMixin extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
-        SonicEngine.entityActivate(itemStack, player, livingEntity, null);
+        SonicEngine.entityActivate(itemStack, player, livingEntity);
         return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
     }
 }

@@ -23,6 +23,9 @@ public class SpaceTimeEventUtil {
     }
 
     public static boolean isComplexSpaceTimeEvent(Player player) {
-        return player.getEntityData().get(IS_COMPLEX_SPACE_TIME_EVENT);
+        if (player.getEntityData().get(IS_COMPLEX_SPACE_TIME_EVENT) != null) {
+            return player.getEntityData().get(IS_COMPLEX_SPACE_TIME_EVENT);
+        }
+        return false;
     }
 }

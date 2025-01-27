@@ -10,5 +10,5 @@
 
 ### Added
 - Added cross-compatibility with Doctor Who Deco and config to match.
-
-###### _I hate forge! <3_
+- Silurians.
+- Silurian Hives.

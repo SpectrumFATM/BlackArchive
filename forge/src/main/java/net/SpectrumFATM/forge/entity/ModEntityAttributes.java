@@ -17,6 +17,7 @@ public class ModEntityAttributes {
         event.put(ModEntities.CYBERMAN.get(), CybermanEntity.createCyberAttributes().build());
         event.put(ModEntities.CYBERMAT.get(), CybermatEntity.createCyberAttributes().build());
         event.put(ModEntities.ANGEL.get(), WeepingAngelEntity.createAngelAttributes().build());
+        event.put(ModEntities.SILURIAN.get(), SilurianEntity.createSilurianAttributes().build());
         event.put(ModEntities.TIME_FISSURE.get(), TimeFissureEntity.createTimeFissureAttributes().build());
     }
 }

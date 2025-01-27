@@ -12,6 +12,7 @@ public class ModEntitiesFabric {
         FabricDefaultAttributeRegistry.register(ModEntities.CYBERMAN.get(), CybermanEntity.createCyberAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CYBERMAT.get(), CybermatEntity.createCyberAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.ANGEL.get(), WeepingAngelEntity.createAngelAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SILURIAN.get(), SilurianEntity.createSilurianAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TIME_FISSURE.get(), TimeFissureEntity.createTimeFissureAttributes());
     }
 }

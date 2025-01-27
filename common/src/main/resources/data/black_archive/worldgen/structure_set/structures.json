@@ -19,6 +19,10 @@
     {
       "structure": "black_archive:graveyard",
       "weight": 1
+    },
+    {
+      "structure": "black_archive:silurian",
+      "weight": 1
     }
   ],
   "placement": {

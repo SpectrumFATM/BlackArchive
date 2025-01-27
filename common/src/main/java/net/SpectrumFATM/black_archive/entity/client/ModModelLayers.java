@@ -11,5 +11,6 @@ public class ModModelLayers {
     public static final ModelLayerLocation CYBERMAN = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "cyberman"), "main");
     public static final ModelLayerLocation CYBERMAT = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "cybermat"), "main");
     public static final ModelLayerLocation ANGEL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "weeping_angel"), "main");
+    public static final ModelLayerLocation SILURIAN = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "silurian"), "main");
     public static final ModelLayerLocation TIME_FISSURE = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "time_fissure"), "main");
 }

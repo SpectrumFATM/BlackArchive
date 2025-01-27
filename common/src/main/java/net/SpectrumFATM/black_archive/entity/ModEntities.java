@@ -50,6 +50,12 @@ public class ModEntities {
                     .build(new ResourceLocation(BlackArchive.MOD_ID, "weeping_angel").toString())
     );
 
+    public static final RegistrySupplier<EntityType<SilurianEntity>> SILURIAN = ENTITY_TYPES.register("silurian",
+            () -> EntityType.Builder.of(SilurianEntity::new, MobCategory.CREATURE)
+                    .sized(1f, 2f)
+                    .build(new ResourceLocation(BlackArchive.MOD_ID, "silurian").toString())
+    );
+
     public static final RegistrySupplier<EntityType<TimeFissureEntity>> TIME_FISSURE = ENTITY_TYPES.register("time_fissure",
             () -> EntityType.Builder.of(TimeFissureEntity::new, MobCategory.CREATURE)
                     .sized(1f, 2f)

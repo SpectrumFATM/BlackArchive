@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:taiga"
+  ],
+  "terrain_adaptation": "encapsulate",
+  "spawn_overrides": {},
+  "step": "strongholds",
+  "start_pool": "black_archive:silurian_pool",
+  "size": 7,
+  "start_height": {
+    "absolute": -60
+  },
+  "max_distance_from_center": 116,
+  "use_expansion_hack": true
+}

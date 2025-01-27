@@ -1,10 +1,5 @@
 package net.SpectrumFATM.black_archive.fabric.entity;
 
-import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
-import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
-import net.SpectrumFATM.black_archive.blockentity.door.RaniDoorModel;
-import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
-import net.SpectrumFATM.black_archive.blockentity.shell.RaniShellModel;
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.entity.client.*;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -18,6 +13,7 @@ public class ModEntityRenderers {
         EntityRendererRegistry.register(ModEntities.CYBERMAN.get(), CybermanRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYBERMAT.get(), CybermatRenderer::new);
         EntityRendererRegistry.register(ModEntities.ANGEL.get(), WeepingAngelRenderer::new);
+        EntityRendererRegistry.register(ModEntities.SILURIAN.get(), SilurianRenderer::new);
         EntityRendererRegistry.register(ModEntities.TIME_FISSURE.get(), TimeFissureRenderer::new);
     }
 
@@ -27,6 +23,7 @@ public class ModEntityRenderers {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAN, CybermanModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.SILURIAN, SilurianModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
     }
 }

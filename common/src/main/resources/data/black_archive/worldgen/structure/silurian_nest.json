@@ -9,7 +9,19 @@
     "minecraft:snowy_taiga"
   ],
   "terrain_adaptation": "encapsulate",
-  "spawn_overrides": {},
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "black_archive:silurian",
+          "weight": 2,
+          "minCount": 2,
+          "maxCount": 4
+        }
+      ]
+    }
+  },
   "step": "strongholds",
   "start_pool": "black_archive:silurian_pool",
   "size": 7,

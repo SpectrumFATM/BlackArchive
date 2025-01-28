@@ -47,7 +47,8 @@ public class ModItems {
     public static final RegistrySupplier<Item> REMOTE = registerItem("remote", () -> new RemoteItem(new Item.Properties().stacksTo(1), "item.remote.tooltip"), true);
 
     // Weapon Items
-    public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get()), true);
+    public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get(), 117, 117, 255), true);
+    public static final RegistrySupplier<Item> SILURIAN_GUN = registerItem("silurian_blaster", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.silurian_gun.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get(), 115, 255, 117), true);
     public static final RegistrySupplier<Item> TCE = registerItem("tce", () -> new CompressorItem(new Item.Properties().stacksTo(1), "item.tce.tooltip"), true);
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", () -> new TooltipItem(new Item.Properties().stacksTo(1), "item.dalek_bracelet.tooltip"), true);
 

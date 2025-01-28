@@ -24,12 +24,18 @@ public class LaserGunItem extends Item {
     private final String tooltipKey;
     private final SoundEvent soundEvent;
     private final SoundEvent malfunctionSound;
+    int r;
+    int g;
+    int b;
 
-    public LaserGunItem(Properties settings, String tooltipKey,  SoundEvent soundEvent, SoundEvent malfunctionSound) {
+    public LaserGunItem(Properties settings, String tooltipKey,  SoundEvent soundEvent, SoundEvent malfunctionSound, int r, int g, int b) {
         super(settings.durability(200));
         this.tooltipKey = tooltipKey;
         this.soundEvent = soundEvent;
         this.malfunctionSound = malfunctionSound;
+        this.r = r;
+        this.g = g;
+        this.b = b;
     }
 
     @Override
@@ -59,7 +65,7 @@ public class LaserGunItem extends Item {
             if (stack.getDamageValue() <= stack.getMaxDamage()) {
                 world.playSound(null, player.blockPosition(), soundEvent, player.getSoundSource(), 1.0F, 1.0F);
                 // Logic to fire the laser entity
-                LaserEntity laser = new LaserEntity(world, player, 2.0f, true, 117, 117 ,255);
+                LaserEntity laser = new LaserEntity(world, player, 2.0f, true, r, g ,b);
                 laser.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
                 world.addFreshEntity(laser);
                 discharge(stack, player);

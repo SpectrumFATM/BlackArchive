@@ -73,12 +73,12 @@ public class C2STeleportMessage extends MessageC2S {
             fissureEntity.moveTo(player.getX() + player.getRandom().nextInt(16) - 8, player.getY(), player.getZ() + player.getRandom().nextInt(16) - 8, random.nextFloat() * 360.0f, 0);
             player.level().addFreshEntity(fissureEntity);
             fissureEntity.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.0f, 1.0f);
-            player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.time_fissure").withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component.translatable("vortexmanipulator.black_archive.time_fissure").withStyle(ChatFormatting.RED), true);
             return;
         }
 
         if (player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem())) {
-            player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.cooldown").withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component.translatable("vortexmanipulator.black_archive.cooldown").withStyle(ChatFormatting.RED), true);
             return;
         }
 
@@ -99,7 +99,7 @@ public class C2STeleportMessage extends MessageC2S {
                     player.getCooldowns().addCooldown(player.getMainHandItem().getItem(), COOLDOWN_TIME);
                 }
             } else {
-                player.displayClientMessage(Component.translatable("vortex_manipulator.black_archive.landing_error").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("vortexmanipulator.black_archive.landing_error").withStyle(ChatFormatting.RED), true);
             }
         }
     }

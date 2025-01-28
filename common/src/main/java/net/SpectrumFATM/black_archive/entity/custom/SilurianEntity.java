@@ -48,5 +48,9 @@ public class SilurianEntity extends Monster {
         if(random.nextInt(10) == 1) {
             this.spawnAtLocation(new ItemStack(ModItems.SILURIAN_SPAWN_EGG.get()), 1);
         }
+
+        if (random.nextInt(20) == 1) {
+            this.spawnAtLocation(new ItemStack(ModItems.SILURIAN_GUN.get()), 1);
+        }
     }
 }

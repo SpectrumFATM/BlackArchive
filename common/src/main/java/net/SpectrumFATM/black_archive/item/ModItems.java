@@ -5,7 +5,6 @@ import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.item.custom.*;
 import net.SpectrumFATM.black_archive.sound.ModSounds;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -48,7 +47,7 @@ public class ModItems {
 
     // Weapon Items
     public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get(), 117, 117, 255), true);
-    public static final RegistrySupplier<Item> SILURIAN_GUN = registerItem("silurian_blaster", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.silurian_gun.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get(), 115, 255, 117), true);
+    public static final RegistrySupplier<Item> SILURIAN_GUN = registerItem("silurian_blaster", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.silurian_blaster.tooltip", ModSounds.LASER.get(), ModSounds.CYBERMAN_MALFUNCTION.get(), 255, 117, 117), true);
     public static final RegistrySupplier<Item> TCE = registerItem("tce", () -> new CompressorItem(new Item.Properties().stacksTo(1), "item.tce.tooltip"), true);
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", () -> new TooltipItem(new Item.Properties().stacksTo(1), "item.dalek_bracelet.tooltip"), true);
 

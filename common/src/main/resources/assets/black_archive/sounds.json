@@ -52,5 +52,11 @@
         "sounds": [
         "black_archive:tce"
         ]
+    },
+    "laser": {
+        "subtitle": "sounds.black_archive.laser.subtitle",
+        "sounds": [
+        "black_archive:laser"
+        ]
     }
 }

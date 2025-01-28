@@ -20,6 +20,7 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> CYBERMAN_MALFUNCTION = registerSoundEvent("cyberman_malfunction");
     public static final RegistrySupplier<SoundEvent> TARDIS_GROAN = registerSoundEvent("tardis_groan");
     public static final RegistrySupplier<SoundEvent> TCE = registerSoundEvent("tce");
+    public static final RegistrySupplier<SoundEvent> LASER = registerSoundEvent("laser");
 
     private static RegistrySupplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = new ResourceLocation(BlackArchive.MOD_ID, name);

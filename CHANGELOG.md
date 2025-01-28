@@ -10,5 +10,6 @@
 
 ### Added
 - Added cross-compatibility with Doctor Who Deco and config to match.
+- Sonic Engine functionality.
 - Silurians.
 - Silurian Hives.

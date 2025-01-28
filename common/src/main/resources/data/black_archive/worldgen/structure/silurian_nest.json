@@ -2,7 +2,11 @@
   "type": "minecraft:jigsaw",
   "biomes": [
     "minecraft:plains",
-    "minecraft:taiga"
+    "minecraft:desert",
+    "minecraft:savanna",
+    "minecraft:taiga",
+    "minecraft:snowy_plains",
+    "minecraft:snowy_taiga"
   ],
   "terrain_adaptation": "encapsulate",
   "spawn_overrides": {},

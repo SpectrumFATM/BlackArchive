@@ -3,13 +3,10 @@ package net.SpectrumFATM.black_archive.blockentity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.blockentity.console.RaniConsole;
-import net.SpectrumFATM.black_archive.blockentity.console.themes.RaniTheme;
 import net.SpectrumFATM.black_archive.blockentity.door.PillarDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.door.RaniDoorModel;
-import net.SpectrumFATM.black_archive.blockentity.door.SIDRATDoorModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.PillarShellModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.RaniShellModel;
-import net.SpectrumFATM.black_archive.blockentity.shell.SIDRATModel;
 import net.SpectrumFATM.black_archive.blockentity.shell.ShellEntryRegistry;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -27,11 +24,9 @@ public class ModModels {
 
     public static PillarShellModel PILLAR_SHELL_MODEL;
     public static RaniShellModel RANI_SHELL_MODEL;
-    public static SIDRATModel SIDRAT_SHELL_MODEL;
 
     public static PillarDoorModel PILLAR_DOOR_MODEL;
     public static RaniDoorModel RANI_DOOR_MODEL;
-    public static SIDRATDoorModel SIDRAT_DOOR_MODEL;
 
     public static ConsoleUnit RANI_CONSOLE_MODEL;
 
@@ -40,7 +35,6 @@ public class ModModels {
     public static ModelLayerLocation RANI_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_shell"), "shell");
     public static ModelLayerLocation RANI_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_door"), "door");
     public static ModelLayerLocation SIDRAT_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "sidrat_door"), "door");
-    public static ModelLayerLocation SIDRAT_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "sidrat_shell"), "shell");
     public static ModelLayerLocation RANI_CONSOLE = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_console"), "console");
 
 
@@ -55,8 +49,6 @@ public class ModModels {
         ModModels.PILLAR_DOOR_MODEL = new PillarDoorModel(entityModels.bakeLayer(ModModels.PILLAR_DOOR));
         ModModels.RANI_SHELL_MODEL = new RaniShellModel(entityModels.bakeLayer(ModModels.RANI_SHELL));
         ModModels.RANI_DOOR_MODEL = new RaniDoorModel(entityModels.bakeLayer(ModModels.RANI_DOOR));
-        ModModels.SIDRAT_SHELL_MODEL = new SIDRATModel(entityModels.bakeLayer(ModModels.SIDRAT_SHELL));
-        ModModels.SIDRAT_DOOR_MODEL = new SIDRATDoorModel(entityModels.bakeLayer(ModModels.SIDRAT_DOOR));
         ModModels.RANI_CONSOLE_MODEL = new RaniConsole(entityModels.bakeLayer(ModModels.RANI_CONSOLE));
         ShellEntryRegistry.init();
     }

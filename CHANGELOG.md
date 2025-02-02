@@ -13,3 +13,6 @@
 - Sonic Engine functionality.
 - Silurians.
 - Silurian Hives.
+
+### Removed
+- Removed SIDRAT exterior.

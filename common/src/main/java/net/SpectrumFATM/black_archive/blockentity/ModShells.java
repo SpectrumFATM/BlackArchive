@@ -12,7 +12,6 @@ public class ModShells {
 
     public static final RegistrySupplier<ShellTheme> DORIC = registerShellTheme("pillar", true);
     public static final RegistrySupplier<ShellTheme> RANI = registerShellTheme("rani", true);
-    public static final RegistrySupplier<ShellTheme> SIDRAT = registerShellTheme("sidrat", !Platform.isModLoaded("audreys_additions"));
 
     private static RegistrySupplier<ShellTheme> registerShellTheme(String id, boolean shoiuldRegister) {
         if (shoiuldRegister) {

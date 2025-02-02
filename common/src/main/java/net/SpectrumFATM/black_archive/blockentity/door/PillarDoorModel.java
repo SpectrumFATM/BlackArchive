@@ -15,7 +15,7 @@ public class PillarDoorModel extends ShellDoorModel {
 
 	public PillarDoorModel(ModelPart root) {
 		this.root = root;
-		this.main = root.getChild("frame");
+		this.main = root.getChild("main");
 		this.door = root.getChild("door");
 		this.portal = root.getChild("portal");
 	}
@@ -29,7 +29,7 @@ public class PillarDoorModel extends ShellDoorModel {
 
 	@Override
 	public void setDoorPosition(boolean open) {
-		this.door.yRot = open ? -90.0F : 0.0F;
+		this.door.yRot = open ? 90.0F : 0.0F;
 	}
 
 

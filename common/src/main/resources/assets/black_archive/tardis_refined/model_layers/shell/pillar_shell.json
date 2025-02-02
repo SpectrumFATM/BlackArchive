@@ -1,37 +1,36 @@
 {
-  "format_version": "1.12.0",
-  "minecraft:geometry": [
-    {
-      "description": {
-        "identifier": "geometry.unknown",
-        "texture_width": 128,
-        "texture_height": 128,
-        "visible_bounds_width": 2,
-        "visible_bounds_height": 4.5,
-        "visible_bounds_offset": [0, 1.75, 0]
-      },
-      "bones": [
-        {
-          "name": "main",
-          "pivot": [-7, 31, -7],
-          "cubes": [
-            {"origin": [-8, 0, -8], "size": [16, 2, 16], "uv": [0, 0]},
-            {"origin": [-8, 46, -8], "size": [16, 2, 16], "uv": [26, 18]},
-            {"origin": [-7, 2, -5], "size": [1, 44, 12], "uv": [0, 18]},
-            {"origin": [6, 2, -5], "size": [1, 44, 12], "uv": [0, 18]},
-            {"origin": [-6, 2, 6], "size": [12, 44, 1], "uv": [26, 60]},
-            {"origin": [-7, 34, -7], "size": [14, 12, 12], "uv": [26, 36]},
-            {"origin": [-7, 34, -7], "size": [14, 12, 2], "uv": [64, 0]}
-          ]
-        },
-        {
-          "name": "door",
-          "pivot": [-7, 2, -5],
-          "cubes": [
-            {"origin": [-7, 2, -7], "size": [14, 32, 2], "uv": [52, 60]}
-          ]
-        }
-      ]
-    }
-  ]
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.pillar_shell",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "door",
+					"pivot": [-7, 0, -5],
+					"cubes": [
+						{"origin": [-7, 2, -7], "size": [12, 30, 2], "uv": [64, 0]}
+					]
+				},
+				{
+					"name": "main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 0, -8], "size": [16, 2, 16], "uv": [0, 0]},
+						{"origin": [-8, 38, -8], "size": [16, 2, 16], "uv": [0, 18]},
+						{"origin": [-5, 2, 5], "size": [10, 36, 2], "uv": [60, 36]},
+						{"origin": [5, 2, -7], "size": [2, 36, 14], "uv": [0, 36]},
+						{"origin": [-7, 2, -5], "size": [2, 36, 12], "uv": [32, 36]},
+						{"origin": [-7, 32, -7], "size": [12, 6, 2], "uv": [60, 74]}
+					]
+				}
+			]
+		}
+	]
 }

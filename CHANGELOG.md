@@ -7,6 +7,7 @@
 
 ### Changed
 - Vortex Manipulator texture.
+- Doric column model.
 
 ### Added
 - Added cross-compatibility with Doctor Who Deco and config to match.

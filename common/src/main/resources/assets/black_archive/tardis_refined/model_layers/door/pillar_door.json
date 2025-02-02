@@ -3,39 +3,37 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.pillar_door",
+				"identifier": "pillar_door",
 				"texture_width": 128,
 				"texture_height": 128,
-				"visible_bounds_width": 3,
+				"visible_bounds_width": 4,
 				"visible_bounds_height": 3.5,
 				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
 					"name": "door",
-					"pivot": [-7, 17, 10],
+					"pivot": [-7, 0, 8],
 					"cubes": [
-						{"origin": [-7, 0, 7.9], "size": [14, 32, 2], "uv": [28, 1]}
+						{"origin": [-7, 2, 6], "size": [12, 30, 2], "uv": [0, 0]}
 					]
 				},
 				{
-					"name": "frame",
-					"pivot": [-7, 17, -5],
+					"name": "main",
+					"pivot": [0, 0, 13],
 					"cubes": [
-						{"origin": [7, 0, 7], "size": [3, 35, 3], "uv": [1, 35]},
-						{"origin": [-7, 32, 7], "size": [14, 2, 3], "uv": [60, 0]},
-						{"origin": [-10, 0, 7], "size": [3, 35, 3], "uv": [0, 35]}
+						{"origin": [-8, 0, 5], "size": [16, 2, 3], "uv": [36, 30]},
+						{"origin": [-8, 38, 5], "size": [16, 2, 3], "uv": [36, 35]},
+						{"origin": [5, 2, 6], "size": [2, 36, 2], "uv": [28, 30]},
+						{"origin": [-7, 2, 8], "size": [2, 36, 0], "uv": [0, 32]},
+						{"origin": [-7, 32, 6], "size": [12, 6, 2], "uv": [36, 40]}
 					]
-				},
-				{
-					"name": "fade_value",
-					"pivot": [-24, 0, 0]
 				},
 				{
 					"name": "portal",
-					"pivot": [0, 0, 0],
+					"pivot": [-7, 2, 8],
 					"cubes": [
-						{"origin": [-7, 0, 8], "size": [14, 32, 0], "uv": [0, 3]}
+						{"origin": [-5, 2, 8], "size": [10, 30, 0], "uv": [28, 0]}
 					]
 				}
 			]

@@ -11,10 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 public class VortexSkyRenderer {
-    private static final ResourceLocation VORTEX_TEXTURE = new ResourceLocation("black_archive", "textures/environment/vortex.png");
     private static VortexRenderer instance = new VortexRenderer(VortexRegistry.CLOUDS.get());
 
     public static void render(PoseStack matrixStack, Camera camera) {

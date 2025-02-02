@@ -10,7 +10,7 @@
         "emissive": true,
         "texture": "black_archive:textures/blockentity/shell/rani/rani_door.png"
       },
-      "name_component": "{\"color\":\"yellow\",\"text\":\"Rani Cabinet\"}",
+      "name_component": "{\"color\":\"yellow\",\"text\":\"Default\"}",
       "sound_profile": {
         "sounds": {
           "tardis_refined:door_close": {

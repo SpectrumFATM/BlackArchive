@@ -10,7 +10,7 @@
         "emissive": false,
         "texture": "black_archive:textures/blockentity/shell/pillar/pillar_door.png"
       },
-      "name_component": "{\"color\":\"yellow\",\"text\":\"Doric Column\"}",
+      "name_component": "{\"color\":\"yellow\",\"text\":\"Default\"}",
       "sound_profile": {
         "sounds": {
           "tardis_refined:door_close": {

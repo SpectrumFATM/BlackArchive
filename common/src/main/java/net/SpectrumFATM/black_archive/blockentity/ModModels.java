@@ -34,7 +34,6 @@ public class ModModels {
     public static ModelLayerLocation PILLAR_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "pillar_door"), "door");
     public static ModelLayerLocation RANI_SHELL = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_shell"), "shell");
     public static ModelLayerLocation RANI_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_door"), "door");
-    public static ModelLayerLocation SIDRAT_DOOR = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "sidrat_door"), "door");
     public static ModelLayerLocation RANI_CONSOLE = new ModelLayerLocation(new ResourceLocation(BlackArchive.MOD_ID, "rani_console"), "console");
 
 
@@ -55,7 +54,7 @@ public class ModModels {
 
     private static void setupEventas() {
         TardisClientEvents.SHELLENTRY_MODELS_SETUP.register(ModModels::setupModelInstances);
-        TardisClientEvents.CONSOLE_MODELS_SETUP.register((consoleModelCollection, entityModelSet) -> consoleModelCollection.registerModel(ModConsoles.RANI.getId(), new ConsoleModelEntry(RANI_CONSOLE_MODEL)));
+        TardisClientEvents.CONSOLE_MODELS_SETUP.register((consoleModelCollection, entityModelSet) -> consoleModelCollection.registerModel(ModConsoles.RANI.getId(), new ConsoleModelEntry(new RaniConsole(entityModelSet.bakeLayer(RANI_CONSOLE)))));
     }
 
     @ExpectPlatform

@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.util.LifeSupportUtil;
+import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -69,7 +70,7 @@ public class LivingEntityMixinFabric {
             return;
         }
 
-        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity);
+        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity) && world.dimension() == ModDimensions.SPACEDIM_LEVEL_KEY;
 
         if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
             shouldSuffocate = false;

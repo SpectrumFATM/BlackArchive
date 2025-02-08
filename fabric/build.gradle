@@ -41,6 +41,7 @@ dependencies {
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_fabric"
     modImplementation "maven.modrinth:whocosmetics:$rootProject.dwc_version_fabric"
+    modImplementation "maven.modrinth:audreys_additions:$rootProject.audreys_version_fabric"
 
     // Adds a dependency on the base cardinal components module (required by every other module)
     // Replace modImplementation with modApi if you expose components in your own API

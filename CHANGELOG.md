@@ -4,6 +4,7 @@
 - Rani Console on Forge now doesn't crash the game.
 - Fixed TCE on Forge.
 - Fixed Sattenheim.
+- Fixed Oxygen.
 
 ### Changed
 - Vortex Manipulator texture.

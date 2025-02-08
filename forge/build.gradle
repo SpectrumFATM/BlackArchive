@@ -43,6 +43,7 @@ dependencies {
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_forge"
     modImplementation "maven.modrinth:whocosmetics:$rootProject.dwc_version_forge"
+    modImplementation "maven.modrinth:audreys_additions:$rootProject.audreys_version_forge"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

@@ -48,6 +48,22 @@ subprojects {
         maven{
             url = "https://maven.teamresourceful.com/repository/maven-public/"
         }
+
+        maven {
+            name "Create"
+            url "https://maven.createmod.net"
+        }
+
+        maven {
+            name "tterrag maven"
+            url "https://maven.tterrag.com"
+        }
+
+        maven {
+            name "shedaniel"
+            url "https://maven.shedaniel.me"
+        }
+
         mavenCentral()
     }
 

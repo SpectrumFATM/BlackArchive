@@ -38,6 +38,11 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:$rootProject.forge_version"
 
+    // Mixin Extras: annotation processor + runtime for Forge
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))
+    implementation("io.github.llamalad7:mixinextras-forge:0.5.0")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     // Architectury API. This is optional, and you can comment it out if you don't need it.
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
@@ -45,7 +50,14 @@ dependencies {
     modImplementation "maven.modrinth:doctor-who-deco:$rootProject.dwc_version_forge"
     modImplementation "maven.modrinth:tardis-refined-audreys-additions:$rootProject.aa_version_forge"
 
-    modImplementation(group: "earth.terrarium.adastra", name: "ad_astra-forge-$minecraft_version", version: ad_astra_version) {transitive = false}
+    modImplementation group: "earth.terrarium.adastra", name: "ad_astra-forge-$minecraft_version", version: ad_astra_version
+    modImplementation "maven.modrinth:resourceful-lib:2.1.29-forge"
+    modImplementation "maven.modrinth:resourceful-config:2.1.3-forge"
+    modImplementation "maven.modrinth:botarium:2.3.4-forge"
+    modImplementation "maven.modrinth:create:mc1.20.1-6.0.8-forge"
+
+    forgeRuntimeLibrary("com.teamresourceful:bytecodecs:1.0.2")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }

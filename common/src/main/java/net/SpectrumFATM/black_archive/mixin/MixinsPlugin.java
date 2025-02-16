@@ -32,6 +32,22 @@ public class MixinsPlugin implements IMixinConfigPlugin {
             return Platform.isModLoaded("audreys_additions");
         }
 
+        if (mixinClassName.equals("net.SpectrumFATM.black_archive.mixin.AAHartnellMixin")) {
+            return Platform.isModLoaded("audreys_additions");
+        }
+
+        if (mixinClassName.equals("net.SpectrumFATM.black_archive.mixin.AASecondaryMixin")) {
+            return Platform.isModLoaded("audreys_additions");
+        }
+
+        if (mixinClassName.equals("net.SpectrumFATM.black_archive.mixin.AAKeltMixin")) {
+            return Platform.isModLoaded("audreys_additions");
+        }
+
+        if (mixinClassName.equals("net.SpectrumFATM.black_archive.mixin.AAPertweeMixin")) {
+            return Platform.isModLoaded("audreys_additions");
+        }
+
         return true;
     }
 

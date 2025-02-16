@@ -6,6 +6,10 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AAToyotaMixin",
+    "AAHartnellMixin",
+    "AASecondaryMixin",
+    "AAKeltMixin",
+    "AAPertweeMixin",
     "TardisPilotingMixin",
     "VictorianMixin",
     "RefurbMixin",

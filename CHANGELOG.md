@@ -12,9 +12,11 @@
 
 ### Added
 - Added cross-compatibility with Doctor Who Deco and config to match.
+- Added compatibility with Audrey's Additions.
 - Sonic Engine functionality.
 - Silurians.
 - Silurian Hives.
+- Fugitive Interior
 
 ### Removed
 - Removed SIDRAT exterior.

@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
+import whocraft.tardis_refined.common.util.Platform;
 
 @Mixin(ScrewdriverItem.class)
 public class ScrewdriverMixin extends Item {
@@ -42,8 +43,7 @@ public class ScrewdriverMixin extends Item {
         String levelName = level.dimension().location().toString();
         ItemStack itemStack = context.getItemInHand();
 
-        if (context.getPlayer().isCrouching()) {
-
+        if (context.getPlayer().isCrouching() && Platform.isClient()) {
             if (levelName.startsWith("tardis_refined:") && !TARDISBindUtil.hasTardisLevelName(itemStack)) {
                 TARDISBindUtil.setTardisLevelName(itemStack, levelName);
             } else {

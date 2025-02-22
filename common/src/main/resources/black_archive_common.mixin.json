@@ -22,7 +22,6 @@
     "NukaMixin",
     "InitiativeMixin",
     "DimensionUtilMixin",
-    "TardisClientLogicMixin",
     "ThrottleMixin",
     "DimensionalMixin",
     "DWDSonicItemMixin",

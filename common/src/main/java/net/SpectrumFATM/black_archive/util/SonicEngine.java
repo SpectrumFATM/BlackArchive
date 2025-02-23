@@ -82,7 +82,7 @@ public class SonicEngine {
         ItemStack stack = context.getItemInHand();
 
         if (world instanceof ServerLevel serverWorld && !world.isClientSide) {
-            if (state.hasProperty(BlockStateProperties.POWERED)) {
+            if (state.hasProperty(BlockStateProperties.POWERED) && !(state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock) ) {
                 cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.POWERED);
             } else if (state.hasProperty(BlockStateProperties.LIT)) {
                 cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.LIT);

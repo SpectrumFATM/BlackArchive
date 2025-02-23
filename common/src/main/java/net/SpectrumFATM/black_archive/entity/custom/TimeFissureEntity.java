@@ -138,7 +138,7 @@ public class TimeFissureEntity extends LivingEntity {
         if (this.level().isClientSide) return;
 
         EntityType<?>[] possibleEntities = new EntityType<?>[]{
-                ModEntities.DALEK.get(), ModEntities.CYBERMAT.get(), ModEntities.CYBERMAN.get()
+                ModEntities.DALEK.get(), ModEntities.CYBERMAT.get(), ModEntities.CYBERMAN.get(), ModEntities.ANGEL.get(), ModEntities.SILURIAN.get()
         };
 
         for (int i = 0; i < 4; i++) {
@@ -169,6 +169,10 @@ public class TimeFissureEntity extends LivingEntity {
             );
             world.addFreshEntity(spawnedEntity);
         }
+    }
+
+    public void close() {
+        this.remove(RemovalReason.DISCARDED);
     }
 
     private void spawnAdditionalTimeFissures(int count) {

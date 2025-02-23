@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
+import org.joml.Random;
 import org.joml.Vector3f;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.items.ScrewdriverMode;
@@ -95,6 +96,10 @@ public class SonicEngine {
                 destroyBlock(serverWorld, context, player, stack);
             } else if (state.getBlock() instanceof PowderSnowBlock) {
                 world.setBlock(context.getClickedPos(), Blocks.SNOW_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
+            } else if (state.getBlock() instanceof DoorBlock) {
+                cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.OPEN);
+            } else if (state.getBlock() instanceof TrapDoorBlock) {
+                cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.OPEN);
             }
         }
     }
@@ -133,6 +138,13 @@ public class SonicEngine {
                 entity.kill();
             } else if (entity instanceof CybermanEntity cyberman) {
                 cyberman.disableFire(100);
+            } else if (entity instanceof TimeFissureEntity timeFissure) {
+                Random random = new Random();
+                if (random.nextInt(10) == 1) {
+                    timeFissure.aggrovate();
+                } else {
+                    timeFissure.close();
+                }
             } else {
                 scanEntity(user, entity);
             }

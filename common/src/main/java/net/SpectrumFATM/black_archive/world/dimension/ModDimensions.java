@@ -18,6 +18,7 @@ public class ModDimensions {
             new ResourceLocation(BlackArchive.MOD_ID, "space"));
     public static final ResourceKey<Level> SPACEDIM_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
             new ResourceLocation(BlackArchive.MOD_ID, "space"));
+
     public static final ResourceKey<DimensionType> SPACE_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             new ResourceLocation(BlackArchive.MOD_ID, "space_type"));
 
@@ -27,22 +28,4 @@ public class ModDimensions {
             new ResourceLocation(BlackArchive.MOD_ID, "time_vortex"));
 
 
-    public static void bootstrapType(BootstapContext<DimensionType> context) {
-        context.register(SPACE_DIM_TYPE, new DimensionType(
-                OptionalLong.of(18000), // fixedTime
-                false, // hasSkylight
-                false, // hasCeiling
-                false, // ultraWarm
-                true, // natural
-                16, // coordinateScale
-                true, // bedWorks
-                false, // respawnAnchorWorks
-                0, // minY
-                256, // height
-                256, // logicalHeight
-                BlockTags.INFINIBURN_OVERWORLD, // infiniburn
-                BuiltinDimensionTypes.OVERWORLD_EFFECTS, // effectsLocation
-                0.25f, // ambientLight
-                new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 0), 0)));
-    }
 }

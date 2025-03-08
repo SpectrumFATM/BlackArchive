@@ -12,7 +12,7 @@ public class BlackArchiveNetworkHandler {
 
     public static final NetworkManager NETWORK = NetworkManager.create(new ResourceLocation(BlackArchive.MOD_ID, "channel"));
 
-    public static MessageType WAYPOINT_SAVE, WAYPOINT_DELETE, VM_TELEPORT, REMOTE_PACKET, FETCH_DIMENSIONS, OPEN_VORTEX_SCREEN, SONIC_SETTING, SONIC_CHANGE, SONIC_LOCK, SONIC_LOCATION, SONIC_HOMING;
+    public static MessageType WAYPOINT_SAVE, WAYPOINT_DELETE, VM_TELEPORT, REMOTE_PACKET, FETCH_DIMENSIONS, OPEN_VORTEX_SCREEN, ADD_DIM, SONIC_SETTING, SONIC_CHANGE, SONIC_LOCK, SONIC_LOCATION, SONIC_HOMING;
 
     public static void registerPackets() {
         WAYPOINT_SAVE = NETWORK.registerC2S("waypoint_save", C2SWaypointSaveMessage::new);
@@ -26,5 +26,6 @@ public class BlackArchiveNetworkHandler {
         SONIC_LOCATION = NETWORK.registerC2S("sonic_location", C2SSetLocation::new);
         SONIC_SETTING = NETWORK.registerC2S("sonic_setting", C2SChangeSonicMode::new);
         SONIC_HOMING = NETWORK.registerC2S("sonic_homing", C2SHomeFunction::new);
+        ADD_DIM = NETWORK.registerC2S("add_dim", C2SAddDimension::new);
     }
 }

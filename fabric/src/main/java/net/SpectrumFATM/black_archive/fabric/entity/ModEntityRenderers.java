@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.fabric.entity;
 
 import net.SpectrumFATM.black_archive.entity.ModEntities;
 import net.SpectrumFATM.black_archive.entity.client.*;
+import net.SpectrumFATM.black_archive.entity.custom.ShipRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
@@ -15,7 +16,8 @@ public class ModEntityRenderers {
         EntityRendererRegistry.register(ModEntities.ANGEL.get(), WeepingAngelRenderer::new);
         EntityRendererRegistry.register(ModEntities.SILURIAN.get(), SilurianRenderer::new);
         EntityRendererRegistry.register(ModEntities.TIME_FISSURE.get(), TimeFissureRenderer::new);
-    }
+
+        EntityRendererRegistry.register(ModEntities.SHIP.get(), ShipRenderer::new);}
 
     public static void registerModelLayers() {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.DALEK, DalekModel::getTexturedModelData);

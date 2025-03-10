@@ -23,6 +23,10 @@
     {
       "structure": "black_archive:silurian_nest",
       "weight": 1
+    },
+    {
+      "structure": "black_archive:sontaran_ship",
+      "weight": 1
     }
   ],
   "placement": {

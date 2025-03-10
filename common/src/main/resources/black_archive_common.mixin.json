@@ -28,7 +28,8 @@
     "DWDCompatMixin",
     "ScrewdriverMixin",
     "MinecraftServerMixin",
-    "MappedRegistryMixin"
+    "MappedRegistryMixin",
+    "StructureTemplateAccessor"
   ],
   "client": [
   ],

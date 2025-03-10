@@ -1,9 +1,7 @@
 package net.SpectrumFATM.black_archive.block;
 
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.block.custom.DalekGravityGenBlock;
-import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
-import net.SpectrumFATM.black_archive.block.custom.OxygenGenBlock;
+import net.SpectrumFATM.black_archive.block.custom.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -27,4 +25,6 @@ public class ModBlocks {
     public static final RegistrySupplier<StairBlock> STEEL_STAIRS = BLOCKS.register("steel_stairs", () -> new StairBlock(STEEL_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().sound(SoundType.COPPER).destroyTime(5.0F).explosionResistance(6.0F)));
 
     public static final RegistrySupplier<SlabBlock> STEEL_SLAB = BLOCKS.register("steel_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.COPPER).destroyTime(5.0F).explosionResistance(6.0F)));
+
+    public static final RegistrySupplier<Block> SHIP_DOOR = BLOCKS.register("ship_door", ShipDoor::new);
 }

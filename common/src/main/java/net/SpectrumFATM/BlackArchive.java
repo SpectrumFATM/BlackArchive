@@ -1,6 +1,7 @@
 package net.SpectrumFATM;
 
 import net.SpectrumFATM.black_archive.block.ModBlocks;
+import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.blockentity.ModConsoles;
 import net.SpectrumFATM.black_archive.blockentity.ModShells;
 import net.SpectrumFATM.black_archive.effects.ModEffects;
@@ -22,6 +23,7 @@ public final class BlackArchive {
     public static void init() {
         // Write common init code here.
         ModEntities.ENTITY_TYPES.registerToModBus();
+        ModBlockEntities.BLOCK_ENTITIES.registerToModBus();
         ModItems.TABS.registerToModBus();
         ModBlocks.BLOCKS.registerToModBus();
         ModSounds.SOUNDS.registerToModBus();

@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +26,7 @@ public class DimensionRegistry {
 
     private static final Logger LOGGER = BlackArchive.LOGGER;
 
-    public static void createDimension(MinecraftServer server, ResourceKey<Level> dimensionKey, ServerPlayer player) {
+    public static ResourceLocation createDimension(MinecraftServer server, ResourceKey<Level> dimensionKey) {
 
         WorldData worldData = server.getWorldData();
         ServerLevelData serverLevelData = worldData.overworldData();
@@ -69,4 +70,6 @@ public class DimensionRegistry {
 
         (ServerWorldEvents.LOAD.invoker()).onWorldLoad(server, newWorld);
         (new S2CSyncLevelList(newWorld.dimension(), true)).sendToAll();
+
+        return dimensionKey.location();
     }}

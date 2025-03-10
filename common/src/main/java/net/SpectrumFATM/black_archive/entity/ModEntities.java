@@ -61,4 +61,10 @@ public class ModEntities {
                     .sized(1f, 2f)
                     .build(new ResourceLocation(BlackArchive.MOD_ID, "time_fissure").toString())
     );
+
+    public static final RegistrySupplier<EntityType<ShipEntity>> SHIP = ENTITY_TYPES.register("ship",
+            () -> EntityType.Builder.of(ShipEntity::new, MobCategory.CREATURE)
+                    .sized(5f, 5f)
+                    .build(new ResourceLocation(BlackArchive.MOD_ID, "ship").toString())
+    );
 }

@@ -3,15 +3,21 @@ package net.SpectrumFATM.black_archive.entity.custom;
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.blockentity.entities.ShipDoorEntity;
+import net.SpectrumFATM.black_archive.util.DimensionRegistry;
+import net.SpectrumFATM.black_archive.util.ShipUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -27,22 +33,46 @@ import java.util.Optional;
 
 public class ShipEntity extends Entity {
 
-    private static final EntityDataAccessor<String> DIMENSION = SynchedEntityData.defineId(ShipEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> FUEL = SynchedEntityData.defineId(ShipEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> OPEN = SynchedEntityData.defineId(ShipEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(ShipEntity.class, EntityDataSerializers.STRING);
 
-    public ShipEntity(EntityType<? extends LivingEntity> entityType, Level level) {
+    public ShipEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+    }
 
-        if (!level.isClientSide && this.getEntityData().get(DIMENSION).isEmpty()) {
-            this.getEntityData().get(DIMENSION);
+    @Override
+    public InteractionResult interactAt(Player player, Vec3 vec3, InteractionHand interactionHand) {
+        if (!player.level().isClientSide) {
+            initializeDimension(player.level());
+        }
+        toggleOpenState(player);
+        return InteractionResult.SUCCESS;
+    }
+
+    private void initializeDimension(Level level) {
+        ResourceLocation levelLocation = new ResourceLocation(BlackArchive.MOD_ID, this.getStringUUID());
+        ResourceKey<Level> levelKey = ResourceKey.create(Registries.DIMENSION, levelLocation);
+        ServerLevel serverLevel = level.getServer().getLevel(levelKey);
+        if (serverLevel == null) {
+            DimensionRegistry.createDimension(level.getServer(), levelKey);
+            generateStructure(level.getServer().getLevel(levelKey), BlockPos.ZERO, this.blockPosition());
+        }
+    }
+
+    private void toggleOpenState(Player player) {
+        if (this.isOpen()) {
+            this.setOpen(false);
+            this.playSound(SoundEvents.IRON_DOOR_CLOSE, 1.0f, 1.0f);
+        } else {
+            this.setOpen(true);
+            this.playSound(SoundEvents.IRON_DOOR_OPEN, 1.0f, 1.0f);
         }
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand interactionHand) {
-        player.displayClientMessage(Component.literal("sdad"), true);
-        return InteractionResult.SUCCESS;
+    public boolean mayInteract(Level level, BlockPos blockPos) {
+        return true;
     }
 
     @Override
@@ -54,7 +84,21 @@ public class ShipEntity extends Entity {
     public void move(MoverType moverType, Vec3 vec3) {
         super.move(moverType, vec3);
         this.setPos(Math.floor(this.getX()) + 0.5, Math.floor(this.getY()), Math.floor(this.getZ()) + 0.5);
+    }
 
+    @Override
+    public void playerTouch(Player player) {
+        super.playerTouch(player);
+        if (isOpen() && !player.level().isClientSide()) {
+            teleportPlayerToShip(player);
+        }
+    }
+
+    private void teleportPlayerToShip(Player player) {
+        ServerLevel level = ShipUtil.getServerLevelFromDimension(this, player);
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.teleportTo(level, 0.5, 128, -2.5, 0.0f, 0.0f);
+        }
     }
 
     @Override
@@ -63,41 +107,49 @@ public class ShipEntity extends Entity {
     }
 
     private void generateStructure(ServerLevel level, BlockPos pos, BlockPos currentPos) {
+        ResourceLocation structureLocation = ShipUtil.getShipStructureInterior(this.getShipType());
         StructureTemplateManager structureManager = level.getStructureManager();
-        Optional<StructureTemplate> template = structureManager.get(new ResourceLocation("black_archive", "sontaran_ship"));
+        Optional<StructureTemplate> template = structureManager.get(structureLocation);
 
-        if (template != null) {
-            BlockPos structurePos = pos.offset(-4, 127, -6); // Adjust the position as needed
-            template.get().placeInWorld(level, structurePos, structurePos,
-                    new StructurePlaceSettings(), level.random, 3);
+        if (template.isPresent()) {
+            BlockPos structurePos = ShipUtil.calcuateInteriorOffset(pos, this.getShipType());
+            template.get().placeInWorld(level, structurePos, structurePos, new StructurePlaceSettings(), level.random, 3);
         }
 
-        BlockPos doorPos = new BlockPos(-4, 128, 0);
-
+        BlockPos doorPos = ShipUtil.calculateInteriorDoorPosition(this.getShipType());
         level.setBlock(doorPos, ModBlocks.SHIP_DOOR.get().defaultBlockState(), 3);
 
         if (level.getBlockEntity(doorPos) instanceof ShipDoorEntity shipDoor) {
             shipDoor.setPos(currentPos.asLong());
-            BlackArchive.LOGGER.info("Ship door entity created at: " + doorPos + "with exterior pos: " + currentPos.north(3));
+            shipDoor.setExteriorDimension(level.dimension().location().toString());
         }
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DIMENSION, "");
-        this.entityData.define(FUEL, 0);
+        this.entityData.define(FUEL, 100);
         this.entityData.define(OPEN, false);
+        this.entityData.define(TYPE, "sontaran");
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (compoundTag.contains("dimension")) {
-            this.entityData.set(DIMENSION, compoundTag.getString("dimension"));
-        }
-
         if (compoundTag.contains("fuel")) {
             this.entityData.set(FUEL, compoundTag.getInt("fuel"));
         }
+        if (compoundTag.contains("open")) {
+            this.entityData.set(OPEN, compoundTag.getBoolean("open"));
+        }
+        if (compoundTag.contains("type")) {
+            this.entityData.set(TYPE, compoundTag.getString("type"));
+        }
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        compoundTag.putInt("fuel", this.entityData.get(FUEL));
+        compoundTag.putBoolean("open", this.entityData.get(OPEN));
+        compoundTag.putString("type", this.entityData.get(TYPE));
     }
 
     @Override
@@ -107,17 +159,6 @@ public class ShipEntity extends Entity {
 
     @Override
     public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        if (this.entityData.get(DIMENSION) != null) {
-            compoundTag.putString("dimension", this.entityData.get(DIMENSION));
-        }
-
-        if (this.entityData.get(FUEL) != null) {
-            compoundTag.putInt("fuel", this.entityData.get(FUEL));
-        }
     }
 
     public boolean isOpen() {
@@ -134,5 +175,23 @@ public class ShipEntity extends Entity {
 
     public void setFuel(int fuel) {
         this.entityData.set(FUEL, fuel);
+    }
+
+    public String getShipType() {
+        return this.entityData.get(TYPE);
+    }
+
+    public void setShipType(String type) {
+        this.entityData.set(TYPE, type);
+    }
+
+    @Override
+    public boolean isAttackable() {
+        return true;
+    }
+
+    @Override
+    public boolean isPickable() {
+        return true;
     }
 }

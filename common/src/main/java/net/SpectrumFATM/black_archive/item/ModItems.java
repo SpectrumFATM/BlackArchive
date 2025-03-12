@@ -60,7 +60,6 @@ public class ModItems {
     public static final RegistrySupplier<Item> ETCHED_STEEL = registerItem("etched_steel", () -> new BlockItem(ModBlocks.ETCHED_STEEL.get(), new Item.Properties()), true);
     public static final RegistrySupplier<Item> STEEL_STAIRS = registerItem("steel_stairs", () -> new BlockItem(ModBlocks.STEEL_STAIRS.get(), new Item.Properties()), true);
     public static final RegistrySupplier<Item> STEEL_SLAB = registerItem("steel_slab", () -> new BlockItem(ModBlocks.STEEL_SLAB.get(), new Item.Properties()), true);
-    public static final RegistrySupplier<Item> LARGE_BLOCK = registerItem("large_block", () -> new BlockItem(ModBlocks.LARGE_BLOCK.get(), new Item.Properties()), true);
 
     // Spawn Eggs
     public static final RegistrySupplier<Item> CYBERMAN_SPAWN_EGG = registerItem("cyberman_spawn_egg", () -> new SpawnItem(new Item.Properties(), "cyberman"), true);

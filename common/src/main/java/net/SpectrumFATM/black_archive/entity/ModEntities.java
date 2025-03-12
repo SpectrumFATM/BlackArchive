@@ -63,7 +63,7 @@ public class ModEntities {
     );
 
     public static final RegistrySupplier<EntityType<ShipEntity>> SHIP = ENTITY_TYPES.register("ship",
-            () -> EntityType.Builder.of(ShipEntity::new, MobCategory.CREATURE)
+            () -> EntityType.Builder.of(ShipEntity::new, MobCategory.MISC)
                     .sized(5f, 5f)
                     .build(new ResourceLocation(BlackArchive.MOD_ID, "ship").toString())
     );

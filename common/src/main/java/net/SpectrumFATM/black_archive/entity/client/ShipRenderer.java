@@ -1,8 +1,9 @@
-package net.SpectrumFATM.black_archive.entity.custom;
+package net.SpectrumFATM.black_archive.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.SpectrumFATM.BlackArchive;
+import net.SpectrumFATM.black_archive.entity.custom.ShipEntity;
 import net.SpectrumFATM.black_archive.mixin.StructureTemplateAccessor;
 import net.SpectrumFATM.black_archive.util.ShipUtil;
 import net.minecraft.client.Minecraft;
@@ -82,6 +83,7 @@ public class ShipRenderer extends EntityRenderer<ShipEntity> {
                 poseStack.popPose();
             }
         }
+
         poseStack.popPose();
     }
 

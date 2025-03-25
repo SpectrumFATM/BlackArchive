@@ -1,9 +1,9 @@
 package net.SpectrumFATM.black_archive.block.custom;
 
-import net.SpectrumFATM.black_archive.blockentity.entities.ShipDoorEntity;
 import net.SpectrumFATM.black_archive.entity.custom.ShipEntity;
 import net.SpectrumFATM.black_archive.util.ShipUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class ShipDoor extends BaseEntityBlock {
+public class ShipDoor extends Block {
 
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
@@ -59,35 +59,22 @@ public class ShipDoor extends BaseEntityBlock {
         super.entityInside(blockState, level, blockPos, entity);
         if (entity instanceof ServerPlayer player && !level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof ShipDoorEntity shipDoor && blockState.getValue(OPEN)) {
-                handlePlayerInsideShipDoor(level, player, shipDoor);
-            }
+            handlePlayerInsideShipDoor(level, player);
         }
     }
 
-    private void handlePlayerInsideShipDoor(Level level, ServerPlayer player, ShipDoorEntity shipDoor) {
+    private void handlePlayerInsideShipDoor(Level level, ServerPlayer player) {
         UUID entityUUID = UUID.fromString(level.dimension().location().toString().replace("black_archive:", ""));
-        ServerLevel currentLevel = ShipUtil.getServerLevelFromInteriorDoorDimension(player, shipDoor.getExteriorDimension());
+        ShipEntity ship = (ShipEntity) ShipUtil.getEntityFromUUID(player.getServer(), entityUUID);
+        ServerLevel currentLevel = (ServerLevel) ship.level();
 
-        if (currentLevel == null) {
-            currentLevel = level.getServer().overworld();
-        }
+        BlockPos position = ship.blockPosition().north(3);
 
-        Entity shipEntity = currentLevel.getEntity(entityUUID);
-        if (shipEntity instanceof ShipEntity ship) {
-            ship.setOpen(false);
-            BlockPos pos = shipEntity.blockPosition().north(3);
+        player.teleportTo(currentLevel, position.getX() + 0.5, position.getY(), position.getZ() + 0.5, player.getYRot(), player.getXRot());
+        ship.setOpen(false);
 
-            player.teleportTo(currentLevel, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.getYRot(), player.getXRot());
-        }
-
-        toggleDoor(level.getBlockState(shipDoor.getBlockPos()), level, shipDoor.getBlockPos(), player);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new ShipDoorEntity(blockPos, blockState);
+        BlockPos interiorDoorPos = ShipUtil.calculateInteriorDoorPosition(ship.getShipType());
+        toggleDoor(level.getBlockState(interiorDoorPos), level, interiorDoorPos, player);
     }
 
     @Override

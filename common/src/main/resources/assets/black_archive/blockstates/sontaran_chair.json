@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "black_archive:block/sontaran_chair" },
+    "facing=south": { "model": "black_archive:block/sontaran_chair", "y": 180 },
+    "facing=west": { "model": "black_archive:block/sontaran_chair", "y": 270 },
+    "facing=east": { "model": "black_archive:block/sontaran_chair", "y": 90 }
+  }
+}

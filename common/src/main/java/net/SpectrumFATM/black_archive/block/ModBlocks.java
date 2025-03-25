@@ -27,4 +27,5 @@ public class ModBlocks {
     public static final RegistrySupplier<SlabBlock> STEEL_SLAB = BLOCKS.register("steel_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.COPPER).destroyTime(5.0F).explosionResistance(6.0F)));
 
     public static final RegistrySupplier<Block> SHIP_DOOR = BLOCKS.register("ship_door", ShipDoor::new);
+    public static final RegistrySupplier<Block> CHAIR = BLOCKS.register("sontaran_chair", ChairBlock::new);
 }

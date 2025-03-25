@@ -6,10 +6,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.joml.Vector3d;
+
+import java.util.UUID;
 
 public class ShipUtil {
     public static ResourceLocation getShipStructureExterior(String type) {
@@ -28,18 +32,19 @@ public class ShipUtil {
         }
     }
 
-    public static ServerLevel getServerLevelFromDimension(ShipEntity entity, Player player) {
-        ResourceLocation location = new ResourceLocation(BlackArchive.MOD_ID, entity.getStringUUID());
-        ResourceKey<Level> key = ResourceKey.create(Registries.DIMENSION, location);
-        ServerLevel level = player.getServer().getLevel(key);
-        return level;
-    }
-
-    public static ServerLevel getServerLevelFromInteriorDoorDimension(Player player, String levelString) {
+    public static ServerLevel getServerLevelFromComputerDimension(Player player, String levelString) {
         ResourceLocation location = new ResourceLocation(levelString);
         ResourceKey<Level> key = ResourceKey.create(Registries.DIMENSION, location);
         ServerLevel level = player.getServer().getLevel(key);
+        BlackArchive.LOGGER.info("Level: " + levelString);
         return level;
+    }
+
+    public static ServerLevel getInteriorFromEntity(ShipEntity entity) {
+        ResourceLocation levelLocation = new ResourceLocation(BlackArchive.MOD_ID, entity.getStringUUID());
+        ResourceKey<Level> levelKey = ResourceKey.create(Registries.DIMENSION, levelLocation);
+        ServerLevel serverLevel = entity.level().getServer().getLevel(levelKey);
+        return serverLevel;
     }
 
     public static BlockPos calcuateInteriorOffset(BlockPos pos, String type) {
@@ -64,6 +69,17 @@ public class ShipUtil {
         }
     }
 
+    public static BlockPos calculateChairPosition(String type) {
+        switch (type) {
+            case ("sontaran") -> {
+                return new BlockPos(0, 128, 0);
+            }
+            default -> {
+                return BlockPos.ZERO;
+            }
+        }
+    }
+
     public static Vector3d calculateExteriorOffset(String type) {
         switch (type) {
             case ("sontaran") -> {
@@ -73,5 +89,15 @@ public class ShipUtil {
                 return new Vector3d(0, 0, 0);
             }
         }
+    }
+
+    public static Entity getEntityFromUUID(MinecraftServer server, UUID uuid) {
+        for (ServerLevel level : server.getAllLevels()) {
+            Entity entity = level.getEntity(uuid);
+            if (entity != null) {
+                return entity;
+            }
+        }
+        return null;
     }
 }

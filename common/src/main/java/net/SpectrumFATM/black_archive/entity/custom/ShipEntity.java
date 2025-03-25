@@ -2,14 +2,12 @@ package net.SpectrumFATM.black_archive.entity.custom;
 
 import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
-import net.SpectrumFATM.black_archive.blockentity.entities.ShipDoorEntity;
 import net.SpectrumFATM.black_archive.util.DimensionRegistry;
 import net.SpectrumFATM.black_archive.util.ShipUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -46,7 +44,7 @@ public class ShipEntity extends Entity {
         if (!player.level().isClientSide) {
             initializeDimension(player.level());
         }
-        toggleOpenState(player);
+        toggleOpenState();
         return InteractionResult.SUCCESS;
     }
 
@@ -60,7 +58,7 @@ public class ShipEntity extends Entity {
         }
     }
 
-    private void toggleOpenState(Player player) {
+    private void toggleOpenState() {
         if (this.isOpen()) {
             this.setOpen(false);
             this.playSound(SoundEvents.IRON_DOOR_CLOSE, 1.0f, 1.0f);
@@ -95,7 +93,7 @@ public class ShipEntity extends Entity {
     }
 
     private void teleportPlayerToShip(Player player) {
-        ServerLevel level = ShipUtil.getServerLevelFromDimension(this, player);
+        ServerLevel level = ShipUtil.getInteriorFromEntity(this);
         if (player instanceof ServerPlayer serverPlayer) {
             serverPlayer.teleportTo(level, 0.5, 128, -2.5, 0.0f, 0.0f);
         }
@@ -117,12 +115,9 @@ public class ShipEntity extends Entity {
         }
 
         BlockPos doorPos = ShipUtil.calculateInteriorDoorPosition(this.getShipType());
+        BlockPos chairPos = ShipUtil.calculateChairPosition(this.getShipType());
         level.setBlock(doorPos, ModBlocks.SHIP_DOOR.get().defaultBlockState(), 3);
-
-        if (level.getBlockEntity(doorPos) instanceof ShipDoorEntity shipDoor) {
-            shipDoor.setPos(currentPos.asLong());
-            shipDoor.setExteriorDimension(level.dimension().location().toString());
-        }
+        level.setBlock(chairPos, ModBlocks.CHAIR.get().defaultBlockState(), 3);
     }
 
     @Override

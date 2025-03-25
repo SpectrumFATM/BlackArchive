@@ -67,4 +67,10 @@ public class ModEntities {
                     .sized(5f, 5f)
                     .build(new ResourceLocation(BlackArchive.MOD_ID, "ship").toString())
     );
+
+    public static final RegistrySupplier<EntityType<ChairEntity>> CHAIR = ENTITY_TYPES.register("chair",
+            () -> EntityType.Builder.<ChairEntity>of(ChairEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .build(new ResourceLocation(BlackArchive.MOD_ID, "chair").toString())
+    );
 }

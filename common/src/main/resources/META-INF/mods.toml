@@ -5,7 +5,7 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId = "black_archive"
-version = "1.5.1"
+version = "1.5.3"
 displayName = "Black Archive"
 authors = "SpectrumFATM, Endertrekkie, Jeryn99"
 description = '''

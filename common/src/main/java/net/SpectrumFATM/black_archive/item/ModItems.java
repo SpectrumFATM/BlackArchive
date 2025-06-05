@@ -48,6 +48,7 @@ public class ModItems {
     // Weapon Items
     public static final RegistrySupplier<Item> DALEK_LASER_GUN = registerItem("dalek_gun_stick", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.dalek_laser.tooltip", ModSounds.DALEK_LASER.get(), ModSounds.DALEK_MALFUNCTION.get(), 117, 117, 255), true);
     public static final RegistrySupplier<Item> SILURIAN_GUN = registerItem("silurian_blaster", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.silurian_blaster.tooltip", ModSounds.LASER.get(), ModSounds.CYBERMAN_MALFUNCTION.get(), 255, 117, 117), true);
+    public static final RegistrySupplier<Item> FUGITIVE_GUN = registerItem("fugitive_rifle", () -> new LaserGunItem(new Item.Properties().stacksTo(1), "item.fugitive_rifle.tooltip", ModSounds.LASER.get(), ModSounds.CYBERMAN_MALFUNCTION.get(), 212, 175, 55), true);
     public static final RegistrySupplier<Item> TCE = registerItem("tce", () -> new CompressorItem(new Item.Properties().stacksTo(1), "item.tce.tooltip"), true);
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", () -> new TooltipItem(new Item.Properties().stacksTo(1), "item.dalek_bracelet.tooltip"), true);
 

@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.joml.Random;
 import org.joml.Vector3f;
+import whocraft.tardis_refined.common.block.device.AstralManipulatorBlock;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.items.ScrewdriverMode;
 import whocraft.tardis_refined.registry.TRSoundRegistry;
@@ -82,7 +83,7 @@ public class SonicEngine {
         ItemStack stack = context.getItemInHand();
 
         if (world instanceof ServerLevel serverWorld && !world.isClientSide) {
-            if (state.hasProperty(BlockStateProperties.POWERED) && !(state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock) ) {
+            if (state.hasProperty(BlockStateProperties.POWERED) && !(state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock || state.getBlock() instanceof AstralManipulatorBlock) ) {
                 cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.POWERED);
             } else if (state.hasProperty(BlockStateProperties.LIT)) {
                 cycleBlockState(serverWorld, state, context, player, stack, BlockStateProperties.LIT);

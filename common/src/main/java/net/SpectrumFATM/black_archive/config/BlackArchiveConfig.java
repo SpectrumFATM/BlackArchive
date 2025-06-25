@@ -26,6 +26,7 @@ public class BlackArchiveConfig {
     public static class CommonConfig {
         public final ForgeConfigSpec.IntValue vortexManipulatorCooldown;
         public final ForgeConfigSpec.IntValue tardisLifeSupportRange;
+        public final ForgeConfigSpec.IntValue maximumTimeLockRange;
         public final ForgeConfigSpec.IntValue gravityFieldRange;
         public final ForgeConfigSpec.IntValue oxygenFieldRange;
         public final ForgeConfigSpec.IntValue telepathicCircuitRange;
@@ -44,6 +45,10 @@ public class BlackArchiveConfig {
             tardisLifeSupportRange = builder
                     .comment("The range of the TARDIS life support in blocks.")
                     .defineInRange("tardisLifeSupportRange", 3, 1, 100);
+
+            maximumTimeLockRange = builder
+                    .comment("The maximum radius of the time lock field in blocks.")
+                    .defineInRange("maximumTimeLockRange", 5, 1, 64);
 
             gravityFieldRange = builder
                     .comment("The range of the gravity field in blocks.")

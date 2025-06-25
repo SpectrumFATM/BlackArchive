@@ -11,4 +11,5 @@ public class ModControls {
     public static final DeferredRegistry<Control> CONTROL_DEFERRED_REGISTRY = DeferredRegistry.create(BlackArchive.MOD_ID, TRControlRegistry.CONTROL_REGISTRY_KEY);
 
     public static final RegistrySupplier<Control> TELEPATHIC = CONTROL_DEFERRED_REGISTRY.register("telepathic", () -> new TelepathicControl(new ResourceLocation("black_archive", "telepathic"), "control.black_archive.telepathic", false));
+    public static final RegistrySupplier<Control> TIME_LOCK = CONTROL_DEFERRED_REGISTRY.register("time_lock", () -> new TimeLockControl(new ResourceLocation("black_archive", "time_lock"), "control.black_archive.time_lock", true));
 }

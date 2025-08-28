@@ -18,6 +18,7 @@ public class ModUpgrades {
     public static RegistrySupplier<Upgrade> TELEPATHIC_UPGRADE;
     public static RegistrySupplier<Upgrade> REMOTE_UPGRADE;
     public static RegistrySupplier<Upgrade> TEMPORAL_ORBIT_UPGRADE;
+    public static RegistrySupplier<Upgrade> TIME_LOCK_UPGRADE;
 
     static {
         REMOTE_UPGRADE = UPGRADE_DEFERRED_REGISTRY.register("remote_upgrade", () -> {
@@ -34,6 +35,11 @@ public class ModUpgrades {
             Item i = Items.CLOCK;
             Objects.requireNonNull(i);
             return (new Upgrade(i::getDefaultInstance, TRUpgrades.DIMENSION_TRAVEL, RegistryHelper.makeKey("temporal_orbit_upgrade"), Upgrade.UpgradeType.SUB_UPGRADE)).setSkillPointsRequired(25).setPosition(6.0, 5.0);
+        });
+        TIME_LOCK_UPGRADE = UPGRADE_DEFERRED_REGISTRY.register("time_lock_upgrade", () -> {
+            Item i = Items.SHIELD;
+            Objects.requireNonNull(i);
+            return (new Upgrade(i::getDefaultInstance, TRUpgrades.MATERIALIZE_AROUND, RegistryHelper.makeKey("time_lock_upgrade"), Upgrade.UpgradeType.SUB_UPGRADE)).setSkillPointsRequired(30).setPosition(1.0, 3.0);
         });
     }
 

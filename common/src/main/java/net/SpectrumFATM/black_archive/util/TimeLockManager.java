@@ -5,6 +5,7 @@ import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -82,9 +83,9 @@ public class TimeLockManager {
     public void preventEntityEntry(ServerLevel level) {
         if (timeLockBoundingBox == null) return;
 
-        List<LivingEntity> entitiesNearBoundary = level.getEntitiesOfClass(LivingEntity.class, timeLockBoundingBox.inflate(1), entity -> true);
+        List<Entity> entitiesNearBoundary = level.getEntitiesOfClass(Entity.class, timeLockBoundingBox.inflate(1), entity -> true);
 
-        for (LivingEntity entity : entitiesNearBoundary) {
+        for (Entity entity : entitiesNearBoundary) {
             if (!timeLockBoundingBox.contains(entity.position())) {
                 Vec3 knockbackDirection = entity.position().subtract(timeLockBoundingBox.getCenter()).normalize();
                 entity.setDeltaMovement(knockbackDirection.scale(1.5)); // Apply knockback

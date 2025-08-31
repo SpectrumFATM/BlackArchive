@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " B ",
+    " N ",
+    " I "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blue_stained_glass"
+    },
+    "N": {
+      "item": "minecraft:nether_brick"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "black_archive:sonic_pen"
+  }
+}

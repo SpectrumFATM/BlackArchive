@@ -34,6 +34,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> SONIC12 = registerItemConditional("12thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic12.tooltip"));
     public static final RegistrySupplier<Item> SONIC13 = registerItemConditional("13thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic13.tooltip"));
     public static final RegistrySupplier<Item> SONIC14 = registerItemConditional("14thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic.tooltip"));
+    public static final RegistrySupplier<Item> SONIC_PEN = registerItem("sonic_pen", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic_pen.tooltip"), true);
 
     //Sonic Screwdriver Items - Always registered
     public static final RegistrySupplier<Item> SONIC15 = registerItem("15thsonic", () -> new SonicItem(new Item.Properties().stacksTo(1), "item.sonic15.tooltip"), true);

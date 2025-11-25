@@ -15,9 +15,9 @@ import java.util.OptionalLong;
 
 public class ModDimensions {
     public static final ResourceKey<LevelStem> SPACEDIM_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(BlackArchive.MOD_ID, "space"));
+            new ResourceLocation(BlackArchive.MOD_ID, "space.json"));
     public static final ResourceKey<Level> SPACEDIM_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(BlackArchive.MOD_ID, "space"));
+            new ResourceLocation(BlackArchive.MOD_ID, "space.json"));
     public static final ResourceKey<DimensionType> SPACE_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             new ResourceLocation(BlackArchive.MOD_ID, "space_type"));
 

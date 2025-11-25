@@ -42,9 +42,10 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
 
     modImplementation "maven.modrinth:tardis-refined:$rootProject.tr_version_forge"
-    modImplementation "maven.modrinth:whocosmetics:$rootProject.dwc_version_forge"
-    modImplementation "maven.modrinth:audreys_additions:$rootProject.audreys_version_forge"
+    modImplementation "maven.modrinth:doctor-who-deco:$rootProject.dwc_version_forge"
+    modImplementation "maven.modrinth:tardis-refined-audreys-additions:$rootProject.aa_version_forge"
 
+    modImplementation(group: "earth.terrarium.adastra", name: "ad_astra-forge-$minecraft_version", version: ad_astra_version) {transitive = false}
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }

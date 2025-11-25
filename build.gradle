@@ -10,7 +10,7 @@ architectury {
 
 allprojects {
     group = rootProject.maven_group
-    version = rootProject.mod_version
+    version = "${rootProject.mod_version}+${rootProject.minecraft_version}" as Object
 }
 
 subprojects {
@@ -19,62 +19,41 @@ subprojects {
     apply plugin: 'maven-publish'
 
     base {
-        // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
-        archivesName = "$rootProject.archives_name-$project.name"
-    }
-
-    sourceSets.main.resources {
-        srcDir project(":common").file("src/resources").absolutePath
+        archivesName = rootProject.archives_name
     }
 
     repositories {
-
-        //Modrinth Maven
-        maven {
-            url = "https://api.modrinth.com/maven"
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
+            }
         }
 
-        // Forge Config Port Maven
-        maven {
-            name = "Fuzs Mod Resources"
-            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
-        }
-
-        // Cardinal Components Maven
         maven {
             name = 'Ladysnake Mods'
             url = 'https://maven.ladysnake.org/releases'
         }
 
-        flatDir {
-            dirs '../mods'
-        }
-    }
-
-    loom {
-        silentMojangMappingsLicense()
-
-        mixin {
-            // Add mixin refmap for the common module
-            add sourceSets.main, "common.refmap.json"
+        maven {
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
         }
 
-        tasks.withType(JavaCompile).configureEach {
-            options.release = 17
+        maven{
+            url = "https://maven.teamresourceful.com/repository/maven-public/"
         }
-
-        java {
-            withSourcesJar()
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
+        mavenCentral()
     }
 
     dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-
-        mappings loom.layered() {officialMojangMappings()}
-        implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
+        mappings loom.officialMojangMappings()
     }
 
     java {
@@ -89,23 +68,5 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 17
-    }
-
-    // Configure Maven publishing.
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-            }
-        }
-
-        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-        repositories {
-            // Add repositories to publish to here.
-            // Notice: This block does NOT have the same function as the block in the top level.
-            // The repositories here will be used for publishing your artifact, not for
-            // retrieving dependencies.
-        }
     }
 }

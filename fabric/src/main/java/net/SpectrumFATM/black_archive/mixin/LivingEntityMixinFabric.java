@@ -2,6 +2,7 @@ package net.SpectrumFATM.black_archive.mixin;
 
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.util.LifeSupportUtil;
+import net.SpectrumFATM.black_archive.util.Platform;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -28,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixinFabric {
 
+    //TODO Implement Ad Astra compatible oxyen and gravity generators
 
     private double prevMotionX;
     private double prevMotionY;
@@ -70,7 +72,7 @@ public class LivingEntityMixinFabric {
             return;
         }
 
-        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity) && world.dimension() == ModDimensions.SPACEDIM_LEVEL_KEY;
+        shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity) && world.dimension() == ModDimensions.SPACEDIM_LEVEL_KEY && !Platform.isModLoaded("ad_astra");
 
         if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
             shouldSuffocate = false;
@@ -89,7 +91,9 @@ public class LivingEntityMixinFabric {
             return;
         }
 
-        handleFreefallMotion(entity);
+        if (!Platform.isModLoaded("ad_astra")) {
+            handleFreefallMotion(entity);
+        }
 
         this.prevMotionX = entity.getDeltaMovement().x;
         this.prevMotionY = entity.getDeltaMovement().y;

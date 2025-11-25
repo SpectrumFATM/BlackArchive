@@ -23,6 +23,4 @@ public class FabricBlackArchive implements ModInitializer {
 		ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.COMMON, BlackArchiveConfig.COMMON_SPEC);
 		ForgeConfigRegistry.INSTANCE.register("black_archive", ModConfig.Type.CLIENT, BlackArchiveConfig.CLIENT_SPEC);
 	}
-
-
 }

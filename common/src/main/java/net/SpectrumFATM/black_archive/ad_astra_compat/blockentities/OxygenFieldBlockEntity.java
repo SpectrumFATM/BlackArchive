@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.ad_astra_compat.blockentities;
 
+import earth.terrarium.adastra.api.systems.GravityApi;
 import earth.terrarium.adastra.api.systems.OxygenApi;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import net.SpectrumFATM.BlackArchive;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class OxygenFieldBlockEntity extends BlockEntity {
 
     private static  int radius;
+    private static  BlockPos position;
 
     public OxygenFieldBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OXYGEN_SUPPORT_BE.get(), pos, state);
@@ -23,6 +25,7 @@ public class OxygenFieldBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, OxygenFieldBlockEntity be) {
         if (level.isClientSide) return;
+        position = pos;
         if (state.getValue(OxygenField.POWERED)) {
             try {
                 OxygenApi.API.setOxygen(level, AATools.getPositionsInRadius(pos, radius, radius), true);
@@ -30,13 +33,16 @@ public class OxygenFieldBlockEntity extends BlockEntity {
             } catch (Exception e) {
                 BlackArchive.LOGGER.error("Error applying Life Support effects: " + e.getMessage());
             }
-        } else {
-            try {
-                OxygenApi.API.removeOxygen(level, AATools.getPositionsInRadius(pos, radius, radius));
-                TemperatureApi.API.removeTemperature(level, AATools.getPositionsInRadius(pos, radius, radius));
-            } catch (Exception e) {
-                BlackArchive.LOGGER.error("Error removing Life Support effects: " + e.getMessage());
-            }
         }
+    }
+
+    @Override
+    public boolean isRemoved() {
+        try {
+            OxygenApi.API.removeOxygen(level, AATools.getPositionsInRadius(position, radius, radius));
+        } catch (Exception e) {
+            BlackArchive.LOGGER.error("Error removing Life Support effects: " + e.getMessage());
+        }
+        return super.isRemoved();
     }
 }

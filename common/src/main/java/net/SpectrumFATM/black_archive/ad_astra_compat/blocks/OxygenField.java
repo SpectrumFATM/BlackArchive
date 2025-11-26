@@ -91,5 +91,4 @@ public class OxygenField extends BaseEntityBlock {
     }
 
     //TODO Fix power logic.
-    //TODO Fix issue where destorying block does not remove oxygen and temperature.
 }

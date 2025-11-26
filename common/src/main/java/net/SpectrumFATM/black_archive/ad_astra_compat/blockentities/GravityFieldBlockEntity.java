@@ -11,12 +11,14 @@ import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GravityFieldBlockEntity extends BlockEntity {
 
     private static  int radius;
+    private  static  BlockPos position;
 
     public GravityFieldBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.GRAVITY_SUPPORT_BE.get(), pos, state);
@@ -25,6 +27,7 @@ public class GravityFieldBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, GravityFieldBlockEntity be) {
         if (level.isClientSide) return;
+        position = pos;
         if (state.getValue(GravityField.POWERED)) {
             try {
                 GravityApi.API.setGravity(level, AATools.getPositionsInRadius(pos, radius, radius), 0.98f);
@@ -38,5 +41,15 @@ public class GravityFieldBlockEntity extends BlockEntity {
                 BlackArchive.LOGGER.error("Error removing Life Support effects: " + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public boolean isRemoved() {
+        try {
+            GravityApi.API.removeGravity(level, AATools.getPositionsInRadius(position, radius, radius));
+        } catch (Exception e) {
+            BlackArchive.LOGGER.error("Error removing Life Support effects: " + e.getMessage());
+        }
+        return super.isRemoved();
     }
 }

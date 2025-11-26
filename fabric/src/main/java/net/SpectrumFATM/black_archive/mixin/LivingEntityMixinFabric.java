@@ -29,8 +29,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixinFabric {
 
-    //TODO Implement Ad Astra compatible oxyen and gravity generators
-
     private double prevMotionX;
     private double prevMotionY;
     private double prevMotionZ;

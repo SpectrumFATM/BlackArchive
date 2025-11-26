@@ -53,9 +53,16 @@ public class ModItems {
     public static final RegistrySupplier<Item> DALEK_BRACELET = registerItem("dalek_bracelet", () -> new TooltipItem(new Item.Properties().stacksTo(1), "item.dalek_bracelet.tooltip"), true);
 
     // Block Items
-    public static final RegistrySupplier<Item> DALEK_GRAV_GEN = registerItem("dalek_gravity_generator", () -> new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN.get(), new Item.Properties(), "block.dalek_gravity.tooltip"), false);
-    public static final RegistrySupplier<Item> GRAVITY_GEN = registerItem("gravity_generator", () -> new TooltipBlockItem(ModBlocks.GRAVITY_GEN.get(), new Item.Properties(), "block.gravity.tooltip"), true);
-    public static final RegistrySupplier<Item> OXYGEN_GEN = registerItem("oxygen_field", () -> new TooltipBlockItem(ModBlocks.OXYGEN_GEN.get(), new Item.Properties(), "block.oxygen.tooltip"), true);
+    public static final RegistrySupplier<Item> DALEK_GRAV_GEN = registerItem("dalek_gravity_generator", () -> new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN.get(), new Item.Properties(), "block.dalek_gravity.tooltip"), false, !Platform.isModLoaded("ad_astra"));
+    public static final RegistrySupplier<Item> GRAVITY_GEN = registerItem("gravity_generator", () -> new TooltipBlockItem(ModBlocks.GRAVITY_GEN.get(), new Item.Properties(), "block.gravity.tooltip"), true, !Platform.isModLoaded("ad_astra"));
+    public static final RegistrySupplier<Item> OXYGEN_GEN = registerItem("oxygen_field", () -> new TooltipBlockItem(ModBlocks.OXYGEN_GEN.get(), new Item.Properties(), "block.oxygen.tooltip"), true, !Platform.isModLoaded("ad_astra"));
+
+    //Ad Astra Compat Block Items
+    public static final RegistrySupplier<Item> DALEK_GRAV_GEN_AA = registerItem("dalek_gravity_generator", () -> new TooltipBlockItem(ModBlocks.DALEK_GRAVITY_GEN_AA.get(), new Item.Properties(), "block.dalek_gravity.tooltip"), false, Platform.isModLoaded("ad_astra"));
+    public static final RegistrySupplier<Item> OXYGEN_GEN_AA = registerItem("oxygen_field", () -> new TooltipBlockItem(ModBlocks.OXYGEN_GEN_AA.get(), new Item.Properties(), "block.oxygen.tooltip"), true, Platform.isModLoaded("ad_astra"));
+    public static final RegistrySupplier<Item> GRAVITY_GEN_AA = registerItem("gravity_generator", () -> new TooltipBlockItem(ModBlocks.GRAVITY_GEN_AA.get(), new Item.Properties(), "block.gravity.tooltip"), true, Platform.isModLoaded("ad_astra"));
+
+
     public static final RegistrySupplier<Item> STEEL_BLOCK = registerItem("steel_block", () -> new BlockItem(ModBlocks.STEEL_BLOCK.get(), new Item.Properties()), true);
     public static final RegistrySupplier<Item> CUT_STEEL = registerItem("cut_steel", () -> new BlockItem(ModBlocks.CUT_STEEL.get(), new Item.Properties()), true);
     public static final RegistrySupplier<Item> ETCHED_STEEL = registerItem("etched_steel", () -> new BlockItem(ModBlocks.ETCHED_STEEL.get(), new Item.Properties()), true);

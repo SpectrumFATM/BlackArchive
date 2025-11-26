@@ -83,11 +83,11 @@ public class LifeSupportUtil {
 
         for (BlockPos generatorPos : BlockPos.betweenClosed(entityPos.offset(-searchRadiusXY, -searchRadiusZ, -searchRadiusXY), entityPos.offset(searchRadiusXY, searchRadiusZ, searchRadiusXY))) {
             BlockState state = world.getBlockState(generatorPos);
-            if (state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED)) {
+            if (state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED) || state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED)) {
                 Random random = new Random();
                 if (random.nextInt(100) < 10 && entity instanceof Player player) {
                     if (!player.getInventory().contains(new ItemStack(ModItems.DALEK_BRACELET.get()))) {
-                        //applyInfinitePotionEffect(player);
+                        applyInfinitePotionEffect(player);
                     }
                 }
                 return true;

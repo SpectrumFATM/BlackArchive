@@ -75,17 +75,17 @@ public class DalekLifeSupport extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (world.isClientSide) {
-            return;
-        }
-        boolean bl = state.getValue(POWERED);
-        if (bl != world.hasNeighborSignal(pos)) {
-            if (bl) {
-                world.scheduleTick(pos, this, 4);
-            } else {
-                world.setBlock(pos, state.cycle(POWERED), Block.UPDATE_CLIENTS);
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+        if (!level.isClientSide) {
+            boolean bl2 = (Boolean)blockState.getValue(POWERED);
+            if (bl2 != level.hasNeighborSignal(blockPos)) {
+                if (bl2) {
+                    level.scheduleTick(blockPos, this, 4);
+                } else {
+                    level.setBlock(blockPos, (BlockState)blockState.cycle(POWERED), 2);
+                }
             }
+
         }
     }
 
@@ -106,18 +106,6 @@ public class DalekLifeSupport extends BaseEntityBlock {
                 popResource(world, pos, new ItemStack(TRItemRegistry.RAW_ZEITON.get(), 3));
                 popResource(world, pos, new ItemStack(Items.COPPER_BLOCK.asItem(), 2));
             }
-        }
-    }
-
-    @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack itemStack) {
-        super.playerDestroy(level, player, pos, blockState, blockEntity, itemStack);
-        try {
-            OxygenApi.API.removeOxygen(level, AATools.getPositionsInRadius(pos, 33, 18));
-            TemperatureApi.API.removeTemperature(level, AATools.getPositionsInRadius(pos, 33, 18));
-            GravityApi.API.removeGravity(level, AATools.getPositionsInRadius(pos, 33, 18));
-        } catch (Exception e) {
-            BlackArchive.LOGGER.error("Error removing Life Support effects: " + e.getMessage());
         }
     }
 }

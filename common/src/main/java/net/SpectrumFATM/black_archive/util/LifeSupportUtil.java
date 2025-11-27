@@ -1,5 +1,6 @@
 package net.SpectrumFATM.black_archive.util;
 
+import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.DalekLifeSupport;
 import net.SpectrumFATM.black_archive.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.OxygenGenBlock;
@@ -83,7 +84,7 @@ public class LifeSupportUtil {
 
         for (BlockPos generatorPos : BlockPos.betweenClosed(entityPos.offset(-searchRadiusXY, -searchRadiusZ, -searchRadiusXY), entityPos.offset(searchRadiusXY, searchRadiusZ, searchRadiusXY))) {
             BlockState state = world.getBlockState(generatorPos);
-            if (state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED) || state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED)) {
+            if (state.getBlock() instanceof DalekGravityGenBlock && state.getValue(DalekGravityGenBlock.POWERED) || state.getBlock() instanceof DalekLifeSupport && state.getValue(DalekLifeSupport.POWERED)) {
                 Random random = new Random();
                 if (random.nextInt(100) < 10 && entity instanceof Player player) {
                     if (!player.getInventory().contains(new ItemStack(ModItems.DALEK_BRACELET.get()))) {

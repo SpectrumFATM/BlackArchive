@@ -1,17 +1,11 @@
 package net.SpectrumFATM.black_archive.ad_astra_compat.blocks;
 
-import earth.terrarium.adastra.api.systems.GravityApi;
-import earth.terrarium.adastra.api.systems.OxygenApi;
-import earth.terrarium.adastra.api.systems.TemperatureApi;
-import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.OxygenFieldBlockEntity;
-import net.SpectrumFATM.black_archive.ad_astra_compat.util.AATools;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -59,17 +53,17 @@ public class OxygenField extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (world.isClientSide) {
-            return;
-        }
-        boolean bl = state.getValue(POWERED);
-        if (bl != world.hasNeighborSignal(pos)) {
-            if (bl) {
-                world.scheduleTick(pos, this, 4);
-            } else {
-                world.setBlock(pos, state.cycle(POWERED), Block.UPDATE_CLIENTS);
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+        if (!level.isClientSide) {
+            boolean bl2 = (Boolean)blockState.getValue(POWERED);
+            if (bl2 != level.hasNeighborSignal(blockPos)) {
+                if (bl2) {
+                    level.scheduleTick(blockPos, this, 4);
+                } else {
+                    level.setBlock(blockPos, (BlockState)blockState.cycle(POWERED), 2);
+                }
             }
+
         }
     }
 
@@ -89,6 +83,4 @@ public class OxygenField extends BaseEntityBlock {
             }
         }
     }
-
-    //TODO Fix power logic.
 }

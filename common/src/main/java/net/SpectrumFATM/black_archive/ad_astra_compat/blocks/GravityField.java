@@ -60,17 +60,17 @@ public class GravityField extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (world.isClientSide) {
-            return;
-        }
-        boolean bl = state.getValue(POWERED);
-        if (bl != world.hasNeighborSignal(pos)) {
-            if (bl) {
-                world.scheduleTick(pos, this, 4);
-            } else {
-                world.setBlock(pos, state.cycle(POWERED), Block.UPDATE_CLIENTS);
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+        if (!level.isClientSide) {
+            boolean bl2 = (Boolean)blockState.getValue(POWERED);
+            if (bl2 != level.hasNeighborSignal(blockPos)) {
+                if (bl2) {
+                    level.scheduleTick(blockPos, this, 4);
+                } else {
+                    level.setBlock(blockPos, (BlockState)blockState.cycle(POWERED), 2);
+                }
             }
+
         }
     }
 

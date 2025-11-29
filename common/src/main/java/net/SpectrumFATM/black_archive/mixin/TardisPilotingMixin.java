@@ -15,8 +15,6 @@ import whocraft.tardis_refined.common.capability.tardis.TardisLevelOperator;
 import whocraft.tardis_refined.common.tardis.TardisNavLocation;
 import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 
-import static com.ibm.icu.impl.SortedSetRelation.B;
-
 @Mixin(TardisPilotingManager.class)
 public abstract class TardisPilotingMixin {
 

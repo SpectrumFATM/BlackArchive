@@ -4,10 +4,10 @@
   "group": "minecraft:redstone",
   "ingredients": [
     {
-      "item": "black_archive:war_sonic"
+      "item": "black_archive:15thsonic"
     }
   ],
   "result": {
-    "item": "black_archive:10thsonic"
+    "item": "black_archive:war_sonic"
   }
 }

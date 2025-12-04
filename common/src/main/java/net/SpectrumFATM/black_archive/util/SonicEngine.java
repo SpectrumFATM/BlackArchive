@@ -232,6 +232,8 @@ public class SonicEngine {
                 return new Vector3f(0.2f, 1.0f, 0.2f);
             }else if (item == ModItems.SONIC15.get()) {
                 return new Vector3f(0.2f, 1.0f, 0.2f);
+            } else if (item == ModItems.SONIC_WAR.get()) {
+                return new Vector3f(1f, 0f, 0f);
             }
         }
         return new Vector3f(0.2f, 0.2f, 1.0f);

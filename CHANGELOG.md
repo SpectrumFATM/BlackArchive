@@ -5,12 +5,12 @@
 - Sonic screwdriver can now be used to interact with the astral manipulator.
 - Time fissures can now be closed with the interact setting on the sonic screwdriver.
 - The interact setting on the sonic now works on doors and trap doors.
-- 12th Doctor's Sonic now shows when Doctor Who Deco is installed.
 
 ### Added
 - Time fissures now have a chance of spawning Silurians and Weeping Angels, as well as the already added mobs.
 - Added time lock control.
 - Sonic pen.
+- War Doctor's Sonic Screwdriver.
 - Ad Astra compatability.
 
 ### Removed

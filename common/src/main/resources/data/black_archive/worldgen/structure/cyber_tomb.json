@@ -53,7 +53,8 @@
     "minecraft:frozen_peaks",
     "minecraft:dripstone_caves",
     "minecraft:lush_caves",
-    "minecraft:deep_dark"
+    "minecraft:deep_dark",
+    "black_archive:mondas_plains"
   ],
   "step": "raw_generation",
   "spawn_overrides": {},
@@ -62,7 +63,7 @@
   "start_height": {
     "type": "minecraft:uniform",
     "min_inclusive": {
-      "absolute": -59
+      "absolute": -64
     },
     "max_inclusive": {
       "absolute": -59

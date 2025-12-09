@@ -21,6 +21,13 @@ public class ModDimensions {
     public static final ResourceKey<DimensionType> SPACE_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             new ResourceLocation(BlackArchive.MOD_ID, "space_type"));
 
+    public static final ResourceKey<LevelStem> MONDAS_KEY = ResourceKey.create(Registries.LEVEL_STEM,
+            new ResourceLocation(BlackArchive.MOD_ID, "mondas.json"));
+    public static final ResourceKey<Level> MONDAS_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
+            new ResourceLocation(BlackArchive.MOD_ID, "mondas.json"));
+    public static final ResourceKey<DimensionType> MONDAS_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
+            new ResourceLocation(BlackArchive.MOD_ID, "mondas_type"));
+
     public static final ResourceKey<LevelStem> TIMEDIM_KEY = ResourceKey.create(Registries.LEVEL_STEM,
             new ResourceLocation(BlackArchive.MOD_ID, "time_vortex"));
     public static final ResourceKey<Level> TIMEDIM_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,

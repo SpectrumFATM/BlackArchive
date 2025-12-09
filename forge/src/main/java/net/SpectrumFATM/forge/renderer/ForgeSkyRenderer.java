@@ -21,7 +21,7 @@ public class ForgeSkyRenderer {
     public static void onRenderSky(RenderLevelStageEvent event) {
         Minecraft client = Minecraft.getInstance();
         ResourceKey<Level> spaceDimension = ResourceKey.create(ResourceKey.createRegistryKey(new ResourceLocation("minecraft", "dimension")), new ResourceLocation("black_archive", "space"));
-
+        ResourceKey<Level> mondasDimension = ResourceKey.create(ResourceKey.createRegistryKey(new ResourceLocation("minecraft", "dimension")), new ResourceLocation("black_archive", "mondas"));
 
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_SKY) {
             return; // Only render after the default sky
@@ -35,7 +35,7 @@ public class ForgeSkyRenderer {
             }
         }
 
-        if (client.level != null && client.level.dimension() == spaceDimension) {
+        if (client.level != null && (client.level.dimension() == spaceDimension || client.level.dimension() == mondasDimension)) {
             PoseStack matrixStack = event.getPoseStack();
             StarSkyRenderer.render(matrixStack, event.getCamera());
         }

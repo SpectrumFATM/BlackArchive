@@ -1,0 +1,48 @@
+{
+  "type": "black_archive:mondas_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "minecraft:ice_spikes",
+          "parameters": {
+            "temperature": -1,
+            "humidity": 0,
+            "continentalness": 0.5,
+            "erosion": 0.3,
+            "weirdness": 0.4,
+            "depth": 0.2,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "black_archive:mondas_plains",
+          "parameters": {
+            "temperature": -1,
+            "humidity": 0,
+            "continentalness": 1,
+            "erosion": 0.1,
+            "weirdness": -0.1,
+            "depth": 0.1,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "minecraft:frozen_ocean",
+          "parameters": {
+            "temperature": -1,
+            "humidity": 0,
+            "continentalness": -2,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": -1,
+            "offset": 0
+          }
+        }
+      ]
+    }
+  }
+}

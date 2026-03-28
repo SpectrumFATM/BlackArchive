@@ -31,13 +31,13 @@ public class SonicItem extends ScrewdriverItem {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         SonicEngine.blockActivate(context);
-        return super.useOn(context);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
         SonicEngine.entityActivate(itemStack, player, livingEntity);
-        return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
+        return InteractionResult.SUCCESS;
     }
 
     @Override

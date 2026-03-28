@@ -229,7 +229,7 @@ public class SonicEngine {
             } else if (item == ModItems.SONIC13.get()) {
                 return new Vector3f(1.0f, 0.647f, 0.0f);
             } else if (item == ModItems.SONIC14.get()) {
-                return new Vector3f(0.2f, 1.0f, 0.2f);
+                return new Vector3f(0.5f, 0.5f, 1.0f);
             }else if (item == ModItems.SONIC15.get()) {
                 return new Vector3f(0.2f, 1.0f, 0.2f);
             } else if (item == ModItems.SONIC_WAR.get()) {

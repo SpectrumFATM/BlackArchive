@@ -7,6 +7,8 @@
 - The interact setting on the sonic now works on doors and trap doors.
 - Vortex manipulator no longer works in the TARDIS interior.
 - Shell viewing no longer causes damage in space.
+- Fixed sonic screwdriver interactions.
+- Fixed 14th doctor sonic interface colour.
 
 ### Added
 - Time fissures now have a chance of spawning Silurians and Weeping Angels, as well as the already added mobs.
@@ -14,7 +16,7 @@
 - Sonic pen.
 - War Doctor's Sonic Screwdriver.
 - Ad Astra compatability.
-- Mondas planet.
+- Mondas
 
 ### Removed
 - Rani console, exterior and interior.

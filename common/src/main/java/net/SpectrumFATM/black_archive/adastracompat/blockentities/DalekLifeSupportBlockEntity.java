@@ -1,12 +1,12 @@
 // java
-package net.SpectrumFATM.black_archive.ad_astra_compat.blockentities;
+package net.SpectrumFATM.black_archive.adastracompat.blockentities;
 
 import earth.terrarium.adastra.api.systems.GravityApi;
 import earth.terrarium.adastra.api.systems.OxygenApi;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.DalekLifeSupport;
-import net.SpectrumFATM.black_archive.ad_astra_compat.util.AATools;
+import net.SpectrumFATM.black_archive.adastracompat.blocks.DalekLifeSupport;
+import net.SpectrumFATM.black_archive.adastracompat.util.AATools;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

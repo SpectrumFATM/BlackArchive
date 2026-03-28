@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import whocraft.tardis_refined.common.util.Platform;
+import whocraft.tardis_refined.registry.TRDimensionTypes;
 
 public class VortexManipulatorItem extends Item {
 
@@ -21,7 +22,7 @@ public class VortexManipulatorItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
         ItemStack stack = user.getItemInHand(hand);
 
-        if (Platform.isClient()) {
+        if (Platform.isClient() && user.level().dimensionTypeId() != TRDimensionTypes.TARDIS) {
                 C2SFetchDimensions message = new C2SFetchDimensions();
                 message.send();
             } else {

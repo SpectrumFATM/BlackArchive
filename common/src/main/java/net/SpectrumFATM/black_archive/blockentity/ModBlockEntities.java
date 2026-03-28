@@ -1,9 +1,9 @@
 package net.SpectrumFATM.black_archive.blockentity;
 
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.DalekLifeSupportBlockEntity;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.GravityFieldBlockEntity;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.OxygenFieldBlockEntity;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.DalekLifeSupportBlockEntity;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.GravityFieldBlockEntity;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.OxygenFieldBlockEntity;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.util.Platform;
 import net.minecraft.core.registries.Registries;

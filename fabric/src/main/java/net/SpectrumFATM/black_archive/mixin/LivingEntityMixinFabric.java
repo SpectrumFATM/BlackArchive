@@ -25,6 +25,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import whocraft.tardis_refined.common.capability.player.TardisPlayerInfo;
+
+import java.util.Optional;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixinFabric {
@@ -38,7 +41,7 @@ public class LivingEntityMixinFabric {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
-        Entity entity = (Entity) (Object) this;
+        LivingEntity entity = (LivingEntity) (Object) this;
         applyZeroGravity(entity);
 
         if (entity instanceof Player player) {
@@ -63,16 +66,22 @@ public class LivingEntityMixinFabric {
         }
     }
 
-    private void applyZeroGravity(Entity entity) {
+    private void applyZeroGravity(LivingEntity entity) {
         Level world = entity.level();
+        Optional<TardisPlayerInfo> tardisInfo = TardisPlayerInfo.get(entity);
 
-        if (!LifeSupportUtil.isInZeroGravityDimension(world)) {
+        if (!LifeSupportUtil.isInZeroGravityDimension(world))  {
             return;
         }
 
         shouldSuffocate = !LifeSupportUtil.oxygenNearby(entity, BlackArchiveConfig.COMMON.oxygenFieldRange.get()) && !LifeSupportUtil.tardisNearby(entity) && world.dimension() == ModDimensions.SPACEDIM_LEVEL_KEY && !Platform.isModLoaded("ad_astra");
 
         if (LifeSupportUtil.dalekGravityGenNearby(entity, 33, 18)) {
+            shouldSuffocate = false;
+            return;
+        }
+
+        if(tardisInfo.isPresent() && tardisInfo.get().isViewingTardis()) {
             shouldSuffocate = false;
             return;
         }

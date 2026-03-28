@@ -3,7 +3,7 @@ package net.SpectrumFATM.black_archive.mixin;
 import earth.terrarium.adastra.api.systems.OxygenApi;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.util.AATools;
+import net.SpectrumFATM.black_archive.adastracompat.util.AATools;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.world.dimension.ModDimensions;
 import org.spongepowered.asm.mixin.Mixin;

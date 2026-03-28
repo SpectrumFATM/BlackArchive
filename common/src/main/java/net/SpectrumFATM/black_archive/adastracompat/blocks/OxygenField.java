@@ -1,21 +1,14 @@
-package net.SpectrumFATM.black_archive.ad_astra_compat.blocks;
+package net.SpectrumFATM.black_archive.adastracompat.blocks;
 
-import earth.terrarium.adastra.api.systems.GravityApi;
-import earth.terrarium.adastra.api.systems.OxygenApi;
-import earth.terrarium.adastra.api.systems.TemperatureApi;
-import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.GravityFieldBlockEntity;
-import net.SpectrumFATM.black_archive.ad_astra_compat.util.AATools;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.OxygenFieldBlockEntity;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -28,11 +21,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
-public class GravityField extends BaseEntityBlock {
+public class OxygenField extends BaseEntityBlock {
 
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    public GravityField(Properties settings) {
+    public OxygenField(Properties settings) {
         super(settings.lightLevel((state) -> state.getValue(POWERED) ? 15 : 0).strength(3.0f, 3.0f).mapColor(MapColor.COLOR_ORANGE));
         this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
@@ -45,13 +38,13 @@ public class GravityField extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new GravityFieldBlockEntity(pos, state);
+        return new OxygenFieldBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntities.GRAVITY_SUPPORT_BE.get(), GravityFieldBlockEntity::tick);
+        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntities.OXYGEN_SUPPORT_BE.get(), OxygenFieldBlockEntity::tick);
     }
 
     @Override
@@ -86,7 +79,7 @@ public class GravityField extends BaseEntityBlock {
         super.spawnAfterBreak(state, world, pos, tool, dropExperience);
         if (!world.isClientSide) {
             if (tool.isEnchanted() && EnchantmentHelper.hasSilkTouch(tool)) {
-                popResource(world, pos, new ItemStack(ModItems.GRAVITY_GEN_AA.get(), 1));
+                popResource(world, pos, new ItemStack(ModItems.OXYGEN_GEN_AA.get(), 1));
             }
         }
     }

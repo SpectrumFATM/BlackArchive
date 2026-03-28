@@ -1,9 +1,9 @@
 package net.SpectrumFATM.black_archive.block;
 
 import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.DalekLifeSupport;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.GravityField;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.OxygenField;
+import net.SpectrumFATM.black_archive.adastracompat.blocks.DalekLifeSupport;
+import net.SpectrumFATM.black_archive.adastracompat.blocks.GravityField;
+import net.SpectrumFATM.black_archive.adastracompat.blocks.OxygenField;
 import net.SpectrumFATM.black_archive.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.OxygenGenBlock;

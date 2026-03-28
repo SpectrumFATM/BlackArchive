@@ -1,4 +1,4 @@
-package net.SpectrumFATM.black_archive.ad_astra_compat.util;
+package net.SpectrumFATM.black_archive.adastracompat.util;
 
 import net.minecraft.core.BlockPos;
 

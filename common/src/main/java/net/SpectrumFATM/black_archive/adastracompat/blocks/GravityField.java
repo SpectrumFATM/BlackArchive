@@ -1,6 +1,6 @@
-package net.SpectrumFATM.black_archive.ad_astra_compat.blocks;
+package net.SpectrumFATM.black_archive.adastracompat.blocks;
 
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.OxygenFieldBlockEntity;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.GravityFieldBlockEntity;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.minecraft.core.BlockPos;
@@ -21,11 +21,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
-public class OxygenField extends BaseEntityBlock {
+public class GravityField extends BaseEntityBlock {
 
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    public OxygenField(Properties settings) {
+    public GravityField(Properties settings) {
         super(settings.lightLevel((state) -> state.getValue(POWERED) ? 15 : 0).strength(3.0f, 3.0f).mapColor(MapColor.COLOR_ORANGE));
         this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
@@ -38,13 +38,13 @@ public class OxygenField extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new OxygenFieldBlockEntity(pos, state);
+        return new GravityFieldBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntities.OXYGEN_SUPPORT_BE.get(), OxygenFieldBlockEntity::tick);
+        return level.isClientSide ? null : createTickerHelper(type, ModBlockEntities.GRAVITY_SUPPORT_BE.get(), GravityFieldBlockEntity::tick);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class OxygenField extends BaseEntityBlock {
         super.spawnAfterBreak(state, world, pos, tool, dropExperience);
         if (!world.isClientSide) {
             if (tool.isEnchanted() && EnchantmentHelper.hasSilkTouch(tool)) {
-                popResource(world, pos, new ItemStack(ModItems.OXYGEN_GEN_AA.get(), 1));
+                popResource(world, pos, new ItemStack(ModItems.GRAVITY_GEN_AA.get(), 1));
             }
         }
     }

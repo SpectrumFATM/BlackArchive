@@ -10,7 +10,7 @@ import whocraft.tardis_refined.registry.RegistrySupplier;
 public class ModShells {
     public static final DeferredRegistry<ShellTheme> SHELL_THEMES = DeferredRegistry.create(BlackArchive.MOD_ID, ShellTheme.SHELL_THEME_REGISTRY_KEY);
 
-    public static final RegistrySupplier<ShellTheme> DORIC = registerShellTheme("pillar", true);
+    //public static final RegistrySupplier<ShellTheme> DORIC = registerShellTheme("pillar", true);
     //public static final RegistrySupplier<ShellTheme> RANI = registerShellTheme("rani", true);
 
     private static RegistrySupplier<ShellTheme> registerShellTheme(String id, boolean shoiuldRegister) {

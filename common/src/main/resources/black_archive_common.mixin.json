@@ -26,7 +26,8 @@
     "DimensionalMixin",
     "DWDSonicItemMixin",
     "DWDCompatMixin",
-    "ScrewdriverMixin"
+    "ScrewdriverMixin",
+    "TardisPlayerInfoMixin"
   ],
   "client": [
   ],

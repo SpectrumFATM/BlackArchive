@@ -1,6 +1,6 @@
 package net.SpectrumFATM.black_archive.util;
 
-import net.SpectrumFATM.black_archive.ad_astra_compat.blocks.DalekLifeSupport;
+import net.SpectrumFATM.black_archive.adastracompat.blocks.DalekLifeSupport;
 import net.SpectrumFATM.black_archive.block.custom.DalekGravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.GravityGenBlock;
 import net.SpectrumFATM.black_archive.block.custom.OxygenGenBlock;
@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import whocraft.tardis_refined.common.block.shell.ShellBaseBlock;
+import whocraft.tardis_refined.common.capability.player.TardisPlayerInfo;
 
 import java.util.Random;
 

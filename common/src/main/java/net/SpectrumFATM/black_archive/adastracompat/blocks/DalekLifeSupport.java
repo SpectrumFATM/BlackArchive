@@ -1,21 +1,14 @@
-package net.SpectrumFATM.black_archive.ad_astra_compat.blocks;
+package net.SpectrumFATM.black_archive.adastracompat.blocks;
 
-import earth.terrarium.adastra.api.systems.GravityApi;
-import earth.terrarium.adastra.api.systems.OxygenApi;
-import earth.terrarium.adastra.api.systems.TemperatureApi;
-import net.SpectrumFATM.BlackArchive;
-import net.SpectrumFATM.black_archive.ad_astra_compat.blockentities.DalekLifeSupportBlockEntity;
-import net.SpectrumFATM.black_archive.ad_astra_compat.util.AATools;
+import net.SpectrumFATM.black_archive.adastracompat.blockentities.DalekLifeSupportBlockEntity;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;

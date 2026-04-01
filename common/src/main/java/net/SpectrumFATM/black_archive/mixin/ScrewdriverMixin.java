@@ -15,6 +15,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.util.Platform;
 
@@ -33,33 +36,30 @@ public class ScrewdriverMixin extends Item {
         return super.use(level, player, interactionHand);
     }
 
-    /**
-     * @author SpectrumFATM
-     * @reason Prevent mode change, this will be done in the GUI
-     */
-    @Overwrite
-    public InteractionResult useOn(UseOnContext context) {
-        Level level = context.getLevel();
-        String levelName = level.dimension().location().toString();
-        ItemStack itemStack = context.getItemInHand();
-
-        if (context.getPlayer().isCrouching() && Platform.isClient()) {
-            if (levelName.startsWith("tardis_refined:") && !TARDISBindUtil.hasTardisLevelName(itemStack)) {
-                TARDISBindUtil.setTardisLevelName(itemStack, levelName);
-            } else {
-                ScreenUtil.openSonicScreen(0);
-            }
-        } else {
-            SonicEngine.blockActivate(context);
-        }
-
-        return InteractionResult.PASS;
-    }
-
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
         SonicEngine.entityActivate(itemStack, player, livingEntity);
         BlackArchive.LOGGER.info("ScrewdriverMixin: interactLivingEntity");
         return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
+    }
+
+    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+    private void modifyUseOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+        Level level = context.getLevel();
+        String levelName = level.dimension().location().toString();
+        ItemStack itemStack = context.getItemInHand();
+        Player player = context.getPlayer();
+
+        if (player != null && player.isCrouching() && Platform.isClient()) {
+            if (levelName.startsWith("tardis_refined:") && !TARDISBindUtil.hasTardisLevelName(itemStack)) {
+                TARDISBindUtil.setTardisLevelName(itemStack, levelName);
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            } else {
+                ScreenUtil.openSonicScreen(0);
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            }
+        } else {
+            SonicEngine.blockActivate(context);
+        }
     }
 }

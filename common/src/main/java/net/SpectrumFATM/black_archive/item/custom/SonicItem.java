@@ -30,23 +30,6 @@ public class SonicItem extends ScrewdriverItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-        if (!level.isClientSide()) {
-            SonicEngine.miscUse(level, player, interactionHand);
-        }
-        return super.use(level, player, interactionHand);
-    }
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        SonicEngine.blockActivate(context);
-        if (context.getPlayer().isCrouching()) {
-            return super.useOn(context);
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
         SonicEngine.entityActivate(itemStack, player, livingEntity);
         return InteractionResult.SUCCESS;

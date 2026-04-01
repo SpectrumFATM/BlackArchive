@@ -1,6 +1,7 @@
 package net.SpectrumFATM.black_archive.util;
 
 import dev.jeryn.doctorwho.common.WCItems;
+import net.SpectrumFATM.BlackArchive;
 import net.SpectrumFATM.black_archive.config.BlackArchiveConfig;
 import net.SpectrumFATM.black_archive.entity.custom.*;
 import net.SpectrumFATM.black_archive.item.ModItems;
@@ -38,16 +39,15 @@ public class SonicEngine {
         ItemStack stack = player.getItemInHand(hand);
         ScrewdriverItem item = (ScrewdriverItem) stack.getItem();
 
-        if (item.isScrewdriverMode(stack, ScrewdriverMode.ENABLED)) {
-            if (player.isCrouching()) {
-                ScreenUtil.openSonicScreen(0);
-            } else {
-                handleSonicSetting(level, player, stack);
-            }
+        if (player.isCrouching()) {
+            ScreenUtil.openSonicScreen(0);
+        } else if (item.isScrewdriverMode(stack, ScrewdriverMode.ENABLED)) {
+            handleSonicSetting(level, player, stack);
         }
     }
 
     private static void handleSonicSetting(Level level, Player player, ItemStack stack) {
+        BlackArchive.LOGGER.info("Handling Sonic Setting: " + getSonicSetting(stack));
         String setting = getSonicSetting(stack);
         switch (setting) {
             case "lock" -> {

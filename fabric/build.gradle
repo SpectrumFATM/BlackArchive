@@ -44,6 +44,9 @@ dependencies {
     modImplementation "maven.modrinth:tardis-refined-audreys-additions:$rootProject.aa_version_fabric"
 
     modImplementation group: "earth.terrarium.adastra", name: "ad_astra-fabric-$minecraft_version", version: ad_astra_version
+    modImplementation "maven.modrinth:resourceful-lib:2.1.29-fabric"
+    modImplementation "maven.modrinth:resourceful-config:2.1.3-fabric"
+    modImplementation "maven.modrinth:botarium:2.3.4-fabric"
 
     // Adds a dependency on the base cardinal components module (required by every other module)
     // Replace modImplementation with modApi if you expose components in your own API

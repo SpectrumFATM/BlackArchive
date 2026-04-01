@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +30,19 @@ public class SonicItem extends ScrewdriverItem {
     }
 
     @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+        if (!level.isClientSide()) {
+            SonicEngine.miscUse(level, player, interactionHand);
+        }
+        return super.use(level, player, interactionHand);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         SonicEngine.blockActivate(context);
+        if (context.getPlayer().isCrouching()) {
+            return super.useOn(context);
+        }
         return InteractionResult.SUCCESS;
     }
 

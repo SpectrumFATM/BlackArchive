@@ -21,6 +21,7 @@ public class ModEntityRenderers {
         event.registerEntityRenderer(ModEntities.CYBERMAT.get(), CybermatRenderer::new);
         event.registerEntityRenderer(ModEntities.ANGEL.get(), WeepingAngelRenderer::new);
         event.registerEntityRenderer(ModEntities.TIME_FISSURE.get(), TimeFissureRenderer::new);
+        event.registerEntityRenderer(ModEntities.SILURIAN.get(), SilurianRenderer::new);
     }
 
     public static void onRegisterModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -30,5 +31,6 @@ public class ModEntityRenderers {
         event.registerLayerDefinition(ModModelLayers.CYBERMAT, CybermatModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.ANGEL, WeepingAngelModel::getTexturedModelData);
         event.registerLayerDefinition(ModModelLayers.TIME_FISSURE, TimeFissureModel::getTexturedModelData);
+        event.registerLayerDefinition(ModModelLayers.SILURIAN, SilurianModel::getTexturedModelData);
     }
 }

@@ -1,11 +1,11 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/SpectrumFATM/BlackArchive/issues"
 license = "All Rights Reserved"
 
 [[mods]]
 modId = "black_archive"
-version = "1.5.3"
+version = "1.6.1"
 displayName = "Black Archive"
 authors = "SpectrumFATM, Endertrekkie, Jeryn99"
 description = '''

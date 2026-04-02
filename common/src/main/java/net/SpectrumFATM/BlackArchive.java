@@ -1,6 +1,5 @@
 package net.SpectrumFATM;
 
-import earth.terrarium.adastra.api.systems.GravityApi;
 import net.SpectrumFATM.black_archive.block.ModBlocks;
 import net.SpectrumFATM.black_archive.blockentity.ModBlockEntities;
 import net.SpectrumFATM.black_archive.blockentity.ModConsoles;

@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,9 +21,9 @@ import whocraft.tardis_refined.common.items.ScrewdriverItem;
 import whocraft.tardis_refined.common.util.Platform;
 
 @Mixin(ScrewdriverItem.class)
-public class ScrewdriverMixin extends Item {
+public class ScrewdriverMixinFabric extends Item {
 
-    public ScrewdriverMixin(Properties properties) {
+    public ScrewdriverMixinFabric(Properties properties) {
         super(properties);
     }
 
@@ -39,7 +38,7 @@ public class ScrewdriverMixin extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
         SonicEngine.entityActivate(itemStack, player, livingEntity);
-        BlackArchive.LOGGER.info("ScrewdriverMixin: interactLivingEntity");
+        BlackArchive.LOGGER.info("ScrewdriverMixinFabric: interactLivingEntity");
         return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
     }
 

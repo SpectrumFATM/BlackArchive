@@ -1,0 +1,64 @@
+package net.SpectrumFATM.forge.mixin;
+
+import net.SpectrumFATM.BlackArchive;
+import net.SpectrumFATM.black_archive.util.ScreenUtil;
+import net.SpectrumFATM.black_archive.util.SonicEngine;
+import net.SpectrumFATM.black_archive.util.TARDISBindUtil;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import whocraft.tardis_refined.common.items.ScrewdriverItem;
+import whocraft.tardis_refined.common.util.Platform;
+
+@Mixin(ScrewdriverItem.class)
+public class ScrewdriverMixinForge extends Item {
+
+    public ScrewdriverMixinForge(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+        if (level.isClientSide()) {
+            SonicEngine.miscUse(level, player, interactionHand);
+        }
+        return super.use(level, player, interactionHand);
+    }
+
+    @Override
+    public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
+        SonicEngine.entityActivate(itemStack, player, livingEntity);
+        BlackArchive.LOGGER.info("ScrewdriverMixinFabric: interactLivingEntity");
+        return super.interactLivingEntity(itemStack, player, livingEntity, interactionHand);
+    }
+
+    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+    private void modifyUseOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+        Level level = context.getLevel();
+        String levelName = level.dimension().location().toString();
+        ItemStack itemStack = context.getItemInHand();
+        Player player = context.getPlayer();
+
+        if (player != null && player.isCrouching() && Platform.isClient()) {
+            if (levelName.startsWith("tardis_refined:") && !TARDISBindUtil.hasTardisLevelName(itemStack)) {
+                TARDISBindUtil.setTardisLevelName(itemStack, levelName);
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            } else {
+                ScreenUtil.openSonicScreen(0);
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            }
+        } else {
+            SonicEngine.blockActivate(context);
+        }
+    }
+}

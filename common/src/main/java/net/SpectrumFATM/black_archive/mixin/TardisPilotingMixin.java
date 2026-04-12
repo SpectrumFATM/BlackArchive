@@ -18,16 +18,8 @@ import whocraft.tardis_refined.common.tardis.manager.TardisPilotingManager;
 @Mixin(TardisPilotingManager.class)
 public abstract class TardisPilotingMixin {
 
-    private boolean oxygenShell;
-
     @Shadow
     private final TardisLevelOperator operator;
-
-    @Shadow private TardisNavLocation currentLocation;
-
-    @Shadow public abstract TardisNavLocation getTargetLocation();
-
-    @Shadow public abstract TardisNavLocation getCurrentLocation();
 
     protected TardisPilotingMixin(TardisLevelOperator operator) {
         this.operator = operator;
@@ -53,36 +45,6 @@ public abstract class TardisPilotingMixin {
         TardisPilotingManager pilotingManager = (TardisPilotingManager) (Object) this;
         if (this.operator.getFlightDanceManager().isDancing() && pilotingManager.getCurrentLocation().getDimensionKey().location() == ModDimensions.TIMEDIM_LEVEL_KEY.location() || pilotingManager.getCurrentLocation().getDimensionKey().location() == ModDimensions.TIMEDIM_LEVEL_KEY.location()) {
             this.operator.getFlightDanceManager().stopDancing();
-        }
-    }
-
-    @Inject(method = "endFlight", at = @At("HEAD"), remap = false, cancellable = false)
-    private void endFlight(boolean forceFlightEnd, boolean isCrashing, CallbackInfoReturnable<Boolean> cir) {
-        TardisNavLocation tardisNavLocation = getCurrentLocation();
-        int radius = BlackArchiveConfig.COMMON.tardisLifeSupportRange.get();
-        try {
-            if (!OxygenApi.API.hasOxygen(tardisNavLocation.getLevel())) {
-                oxygenShell = true;
-                OxygenApi.API.setOxygen(tardisNavLocation.getLevel(), AATools.getPositionsInRadius(tardisNavLocation.getPosition(), radius, radius), true);
-                TemperatureApi.API.setTemperature(tardisNavLocation.getLevel(), AATools.getPositionsInRadius(tardisNavLocation.getPosition(), radius, radius), (short)22);
-            }
-        } catch(Exception e) {
-            BlackArchive.LOGGER.error("Could not initiate Tardis life support systems: " + e.getMessage());
-        }
-    }
-
-    @Inject(method = "beginFlight", at = @At("HEAD"), remap = false, cancellable = true)
-    private void beginFlight(boolean autoLand, CallbackInfoReturnable<Boolean> cir) {
-        TardisNavLocation tardisNavLocation = getCurrentLocation();
-        int radius = BlackArchiveConfig.COMMON.tardisLifeSupportRange.get();
-        try {
-            if (oxygenShell) {
-                oxygenShell = false;
-                OxygenApi.API.removeOxygen(tardisNavLocation.getLevel(), AATools.getPositionsInRadius(tardisNavLocation.getPosition(), radius, radius));
-                TemperatureApi.API.removeTemperature(tardisNavLocation.getLevel(), AATools.getPositionsInRadius(tardisNavLocation.getPosition(), radius, radius));
-            }
-        } catch (Exception e) {
-            BlackArchive.LOGGER.error("Could not deactivate Tardis life support systems: " + e.getMessage());
         }
     }
 }
